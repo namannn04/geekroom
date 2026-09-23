@@ -6,6 +6,7 @@ import { ArrowUpRight } from "lucide-react";
 import SectionHead from "@/components/ui/SectionHead";
 import { team } from "@/data/site";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
+import { EASE_OUT, reveal } from "@/lib/motion";
 
 /** Portraits open like shutters, one after another, as the grid scrolls in. */
 export default function Team() {
@@ -16,13 +17,13 @@ export default function Team() {
       if (prefersReducedMotion()) return;
       gsap.utils.toArray<HTMLElement>("[data-member]").forEach((card, i) => {
         gsap
-          .timeline({ scrollTrigger: { trigger: card, start: "top 92%", end: "top 50%", scrub: 0.6 } })
+          .timeline({ scrollTrigger: reveal(card, "top 90%") })
           .fromTo(
             card.querySelector("[data-media]"),
             { clipPath: i % 2 ? "inset(0% 0% 100% 0%)" : "inset(100% 0% 0% 0%)" },
-            { clipPath: "inset(0% 0% 0% 0%)", ease: "power2.out" },
+            { clipPath: "inset(0% 0% 0% 0%)", duration: 1.1, ease: "expo.inOut", delay: (i % 3) * 0.08 },
           )
-          .from(card.querySelectorAll("[data-copy]"), { y: 24, opacity: 0, stagger: 0.08 }, 0.3);
+          .from(card.querySelectorAll("[data-copy]"), { y: 20, opacity: 0, duration: 0.6, stagger: 0.07, ease: EASE_OUT }, 0.6);
       });
     },
     { scope: root },
