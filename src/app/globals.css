@@ -103,15 +103,18 @@ body {
     mix-blend-mode: overlay;
   }
 
-  .btn {
-    @apply inline-flex items-center gap-2 rounded-full px-5 py-3 font-mono text-xs tracking-[0.12em] uppercase transition-all duration-300;
-  }
-  .btn-primary {
-    @apply btn bg-paper text-ink hover:bg-orange hover:text-ink;
-  }
-  .btn-ghost {
-    @apply btn border border-line-strong text-paper hover:border-paper hover:bg-paper/5;
-  }
+}
+
+@utility btn {
+  @apply inline-flex items-center gap-2 rounded-full px-5 py-3 font-mono text-xs tracking-[0.12em] uppercase transition-all duration-300;
+}
+
+@utility btn-primary {
+  @apply btn bg-paper text-ink hover:bg-orange hover:text-ink;
+}
+
+@utility btn-ghost {
+  @apply btn border border-line-strong text-paper hover:border-paper hover:bg-paper/5;
 }
 
 @keyframes marquee {
