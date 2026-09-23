@@ -47,7 +47,7 @@ export default async function EventPage({ params }: Props) {
             {meta.map((m, i) => (
               <div key={m.label} className={`border-b border-line py-5 sm:pr-6 ${i ? "sm:border-l sm:pl-6" : ""}`}>
                 <dt className="label">{m.label}</dt>
-                <dd className="mt-2 font-display text-lg leading-snug font-extrabold uppercase [font-stretch:85%]">{m.value}</dd>
+                <dd className="mt-2 font-display text-lg leading-snug font-bold [font-stretch:90%]">{m.value}</dd>
               </div>
             ))}
           </dl>
@@ -63,7 +63,7 @@ export default async function EventPage({ params }: Props) {
               {event.highlights.map((h, i) => (
                 <li key={h} className="flex items-baseline gap-5 border-b border-line py-5">
                   <span className="font-mono text-sm text-orange tabular-nums">0{i + 1}</span>
-                  <span className="font-display text-2xl font-extrabold uppercase [font-stretch:85%]">{h}</span>
+                  <span className="font-display text-2xl font-bold [font-stretch:90%]">{h}</span>
                 </li>
               ))}
             </ul>

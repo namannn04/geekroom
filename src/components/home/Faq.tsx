@@ -38,7 +38,7 @@ export default function Faq() {
                 className="group flex w-full items-center gap-6 py-7 text-left"
               >
                 <span className="font-mono text-sm text-orange tabular-nums">0{i + 1}</span>
-                <span className="flex-1 font-display text-xl font-extrabold uppercase [font-stretch:85%] md:text-2xl">{f.q}</span>
+                <span className="flex-1 font-display text-xl font-bold [font-stretch:90%] md:text-2xl">{f.q}</span>
                 <span
                   className={`grid size-10 shrink-0 place-items-center rounded-full border transition-all duration-300 ${
                     isOpen ? "rotate-45 border-orange bg-orange text-ink" : "border-line-strong group-hover:border-paper"
