@@ -43,7 +43,7 @@ export default function Partners() {
         intro="AI labs, fintech and developer tooling teams that power Geek Room hackathons and meetups."
       />
 
-      <div data-wall className="grid grid-cols-3 border-t border-l border-line [perspective:900px] sm:grid-cols-4">
+      <div data-wall className="grid grid-cols-3 overflow-hidden border-t border-l border-line [perspective:900px] sm:grid-cols-4">
         {partners.map((p) => (
           <div
             key={p.name}
