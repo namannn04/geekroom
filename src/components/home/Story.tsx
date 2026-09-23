@@ -5,11 +5,12 @@ import { useRef, useState } from "react";
 import SectionHead from "@/components/ui/SectionHead";
 import { features } from "@/data/site";
 import { gsap, prefersReducedMotion, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { EASE_OUT, reveal } from "@/lib/motion";
 
 /**
- * Sticky index on the left, panels on the right. Each photo is uncovered by a
- * wipe from below while it settles from an over-scaled crop; the index tracks
- * whichever panel is crossing the centre of the screen.
+ * Sticky index on the left, panels on the right. Each photo wipes up as it
+ * enters and then drifts inside its frame; the index tracks whichever panel
+ * is crossing the centre of the screen.
  */
 export default function Story() {
   const root = useRef<HTMLElement>(null);
@@ -28,10 +29,17 @@ export default function Story() {
         if (prefersReducedMotion()) return;
         const media = panel.querySelector("[data-media]");
         const img = panel.querySelector("img");
-        const tl = gsap.timeline({ scrollTrigger: { trigger: panel, start: "top 90%", end: "top 35%", scrub: 0.6 } });
-        tl.fromTo(media, { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", ease: "power2.out" })
-          .fromTo(img, { scale: 1.2 }, { scale: 1, ease: "none" }, 0)
-          .from(panel.querySelectorAll("[data-copy]"), { y: 36, opacity: 0, stagger: 0.1, ease: "power2.out" }, 0.25);
+        // Wipe up once as the panel enters…
+        gsap
+          .timeline({ scrollTrigger: reveal(panel, "top 88%") })
+          .fromTo(media, { clipPath: "inset(100% 0% 0% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.2, ease: "expo.inOut" })
+          .from(panel.querySelectorAll("[data-copy]"), { y: 28, opacity: 0, duration: 0.7, stagger: 0.08, ease: EASE_OUT }, 0.55);
+        // …while the photo drifts inside its frame for as long as it is on screen
+        gsap.fromTo(
+          img,
+          { yPercent: -6, scale: 1.12 },
+          { yPercent: 6, scale: 1.12, ease: "none", scrollTrigger: { trigger: panel, start: "top bottom", end: "bottom top", scrub: true } },
+        );
       });
     },
     { scope: root },
