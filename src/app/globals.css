@@ -34,7 +34,7 @@ html {
 body {
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--font-sans);
+  font-family: var(--font-jakarta), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
@@ -46,7 +46,7 @@ body {
 
 @layer components {
   .container-x {
-    @apply mx-auto w-full max-w-[1240px] px-5 md:px-[100px] lg:px-[100px];
+    @apply mx-auto w-full max-w-[1440px] px-5 md:px-10 lg:px-[100px];
   }
 
   .heading-xl {
