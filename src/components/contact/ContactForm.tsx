@@ -32,17 +32,17 @@ export default function ContactForm() {
   };
 
   const field =
-    "w-full rounded-2xl border border-line bg-ink px-4 py-3.5 text-paper outline-none transition-colors placeholder:text-subtle focus:border-teal";
+    "w-full rounded-2xl border border-line-strong bg-ink px-4 py-3.5 text-paper outline-none transition-colors placeholder:text-subtle focus:border-orange";
 
   return (
-    <form onSubmit={onSubmit} className="rounded-3xl border border-line-strong bg-ink-2 p-6 md:p-9">
+    <form onSubmit={onSubmit} className="rounded-[1.75rem] bg-ink-2 p-6 md:p-9">
       <fieldset>
         <legend className="label">I&apos;m reaching out about</legend>
         <div className="mt-4 flex flex-wrap gap-2">
           {topics.map((t) => (
             <label
               key={t}
-              className={`cursor-pointer rounded-full border px-4 py-2 text-sm transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-teal ${
+              className={`cursor-pointer rounded-full border px-4 py-2 text-sm transition-colors has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-orange ${
                 topic === t ? "border-orange bg-orange text-ink" : "border-line-strong text-muted hover:border-paper hover:text-paper"
               }`}
             >
