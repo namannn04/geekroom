@@ -1,18 +1,24 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, Plus_Jakarta_Sans } from "next/font/google";
+import { Instrument_Serif, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import "./globals.css";
 
-const jakarta = Plus_Jakarta_Sans({
+const grotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-jakarta",
+  variable: "--font-grotesk",
 });
 
-const bebas = Bebas_Neue({
+const instrument = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
-  variable: "--font-bebas-neue",
+  style: ["normal", "italic"],
+  variable: "--font-instrument",
+});
+
+const jetbrains = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains",
 });
 
 export const metadata: Metadata = {
@@ -49,15 +55,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        {/* Clash Display is served by Fontshare (free for commercial use) */}
-        <link rel="preconnect" href="https://api.fontshare.com" />
-        <link
-          rel="stylesheet"
-          href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&display=swap"
-        />
-      </head>
-      <body className={`${jakarta.variable} ${bebas.variable}`}>
+      <body className={`${grotesk.variable} ${instrument.variable} ${jetbrains.variable}`}>
         <Navbar />
         <main>{children}</main>
         <Footer />
