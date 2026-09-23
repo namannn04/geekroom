@@ -77,6 +77,17 @@ export default async function EventPage({ params }: Props) {
             ))}
           </dl>
 
+          {event.register && (
+            <a
+              href={event.register.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary mt-4 w-full justify-center lg:hidden"
+            >
+              {event.register.label} <ArrowUpRight className="size-4" />
+            </a>
+          )}
+
           {event.highlights && (
             <ul className="mt-10 grid gap-3 sm:grid-cols-2">
               {event.highlights.map((h, i) => (
