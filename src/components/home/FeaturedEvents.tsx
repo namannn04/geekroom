@@ -33,6 +33,7 @@ export default function FeaturedEvents() {
         const rail = root.current!.querySelector<HTMLElement>("[data-track]")!;
         const pin = root.current!.querySelector<HTMLElement>("[data-pin]")!;
         const distance = () => rail.scrollWidth - window.innerWidth + 80;
+        const setPlayhead = gsap.quickSetter("[data-playhead]", "left") as (v: string) => void;
 
         const run = gsap.to(rail, {
           x: () => -distance(),
@@ -55,7 +56,6 @@ export default function FeaturedEvents() {
             },
           },
         });
-        const setPlayhead = gsap.quickSetter("[data-playhead]", "left") as (v: string) => void;
 
         // Each ticket swings flat as it crosses into the viewport
         gsap.utils.toArray<HTMLElement>("[data-ticket-wrap]").forEach((el) => {
