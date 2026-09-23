@@ -7,6 +7,7 @@ import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import SectionHead from "@/components/ui/SectionHead";
 import { services, site } from "@/data/site";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
+import { EASE_IN_OUT, EASE_OUT, reveal } from "@/lib/motion";
 
 gsap.registerPlugin(DrawSVGPlugin);
 
@@ -40,24 +41,27 @@ export default function Offerings() {
     () => {
       if (prefersReducedMotion()) return;
       gsap.utils.toArray<HTMLElement>("[data-offer]").forEach((card, i) => {
-        const tl = gsap.timeline({
-          scrollTrigger: { trigger: card, start: "top 88%", end: "top 45%", scrub: 0.7 },
-        });
-        // Card opens along the slash of the </> mark
+        const tl = gsap.timeline({ scrollTrigger: reveal(card, "top 90%") });
+        // Card opens along the slash of the </> mark, then its glyph draws itself
         tl.fromTo(
           card,
           { clipPath: i % 2 ? "polygon(100% 0,100% 0,100% 100%,100% 100%)" : "polygon(0 0,0 0,0 100%,0 100%)" },
-          { clipPath: "polygon(0 0,100% 0,100% 100%,0 100%)", ease: "power2.inOut" },
+          { clipPath: "polygon(0 0,100% 0,100% 100%,0 100%)", duration: 1, ease: "expo.inOut", delay: i * 0.08 },
         )
-          .from(card.querySelectorAll("[data-draw]"), { drawSVG: "0%", stagger: 0.12, ease: "none" }, 0.2)
-          .from(card.querySelectorAll("[data-copy]"), { y: 40, opacity: 0, stagger: 0.08, ease: "power2.out" }, 0.3);
+          .from(card.querySelectorAll("[data-draw]"), { drawSVG: "0%", duration: 0.9, stagger: 0.1, ease: EASE_IN_OUT }, 0.45)
+          .from(card.querySelectorAll("[data-copy]"), { y: 28, opacity: 0, duration: 0.7, stagger: 0.07, ease: EASE_OUT }, 0.5);
       });
 
-      gsap.from("[data-cta-offer]", {
-        clipPath: "polygon(0 0, 0 0, -20% 100%, -20% 100%)",
-        ease: "power2.inOut",
-        scrollTrigger: { trigger: "[data-cta-offer]", start: "top 92%", end: "top 60%", scrub: 0.7 },
-      });
+      gsap.fromTo(
+        "[data-cta-offer]",
+        { clipPath: "polygon(0 0, 0 0, -20% 100%, -20% 100%)" },
+        {
+          clipPath: "polygon(0 0, 120% 0, 100% 100%, -20% 100%)",
+          duration: 1.1,
+          ease: "expo.inOut",
+          scrollTrigger: reveal("[data-cta-offer]", "top 94%"),
+        },
+      );
     },
     { scope: root },
   );
