@@ -7,6 +7,7 @@ import SectionHead from "@/components/ui/SectionHead";
 import EventTicket from "@/components/events/EventTicket";
 import { eventsByDate, formatChip } from "@/data/events";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
+import { EASE_EXPO, reveal } from "@/lib/motion";
 
 // Oldest → newest so the track reads left to right like a timeline
 const track = [...eventsByDate].reverse();
@@ -23,6 +24,7 @@ const years = Array.from(new Set(track.map((e) => e.iso.slice(0, 4))));
 export default function FeaturedEvents() {
   const root = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
+  const activeRef = useRef(0);
 
   useGSAP(
     () => {
@@ -43,7 +45,7 @@ export default function FeaturedEvents() {
             pin: true,
             start: "top top",
             end: () => `+=${distance()}`,
-            scrub: 0.8,
+            scrub: true,
             invalidateOnRefresh: true,
             onUpdate: (self) => {
               // Playhead follows real dates: interpolate between neighbouring events
@@ -52,7 +54,12 @@ export default function FeaturedEvents() {
               const a = pos(track[i].iso);
               const b = pos(track[Math.min(i + 1, track.length - 1)].iso);
               setPlayhead(`${(a + (b - a) * (f - i)) * 100}%`);
-              setActive(Math.round(f));
+              // Only touch React when the active event actually changes
+              const next = Math.round(f);
+              if (next !== activeRef.current) {
+                activeRef.current = next;
+                setActive(next);
+              }
             },
           },
         });
@@ -67,7 +74,7 @@ export default function FeaturedEvents() {
               yPercent: 0,
               scale: 1,
               ease: "none",
-              scrollTrigger: { trigger: el, containerAnimation: run, start: "left 100%", end: "left 55%", scrub: true },
+              scrollTrigger: { trigger: el, containerAnimation: run, start: "left 105%", end: "left 78%", scrub: true },
             },
           );
         });
@@ -75,17 +82,14 @@ export default function FeaturedEvents() {
 
       mm.add("(max-width: 767px)", () => {
         gsap.utils.toArray<HTMLElement>("[data-ticket-wrap]").forEach((el, i) => {
-          gsap.fromTo(
-            el,
-            { rotate: i % 2 ? 5 : -5, yPercent: 18, opacity: 0.4 },
-            {
-              rotate: 0,
-              yPercent: 0,
-              opacity: 1,
-              ease: "none",
-              scrollTrigger: { trigger: el, start: "top 95%", end: "top 55%", scrub: true },
-            },
-          );
+          gsap.from(el, {
+            rotate: i % 2 ? 4 : -4,
+            yPercent: 16,
+            opacity: 0,
+            duration: 0.9,
+            ease: EASE_EXPO,
+            scrollTrigger: reveal(el, "top 92%"),
+          });
         });
       });
 
