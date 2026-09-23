@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import PageHeader from "@/components/ui/PageHeader";
-import Blobs from "@/components/ui/Blobs";
+import { ArrowLeft, ArrowUpRight, CalendarDays, MapPin, Tag } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import JoinCta from "@/components/ui/JoinCta";
 import EventGrid from "@/components/events/EventGrid";
-import EventSidebar from "@/components/events/EventSidebar";
-import { events, getEvent } from "@/data/events";
+import { events, eventsByDate, getEvent } from "@/data/events";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -26,104 +25,128 @@ export default async function EventPage({ params }: Props) {
   const event = getEvent(slug);
   if (!event) notFound();
 
-  const related = events.filter((e) => e.slug !== slug);
+  const related = eventsByDate.filter((e) => e.slug !== slug).slice(0, 3);
+  const meta = [
+    { Icon: CalendarDays, label: "Date", value: event.date ?? "TBA" },
+    { Icon: MapPin, label: "Venue", value: event.location ?? event.city },
+    { Icon: Tag, label: "Format", value: event.kind },
+  ];
 
   return (
-    <div className="relative isolate">
-      <Blobs
-        className="-z-10 h-[1600px]"
-        blobs={[
-          { color: "#0fa39a", className: "-left-40 top-[420px] size-[520px] opacity-80" },
-          { color: "#1b3be0", className: "left-[20%] top-[800px] size-[600px] opacity-80" },
-          { color: "#d0457a", className: "-right-20 top-[500px] size-[560px] opacity-70" },
-          { color: "#c9621c", className: "right-[20%] top-[250px] size-[380px] opacity-60" },
-        ]}
-      />
-      <PageHeader title={event.title} />
-
-      <section className="container-x relative z-10 pt-10 md:pt-16">
-        <div className="grid gap-5 md:grid-cols-[1fr_380px] lg:gap-10">
-          <Reveal className="relative aspect-[800/702] overflow-hidden">
-            <Image
-              src={event.image}
-              alt={event.title}
-              fill
-              priority
-              sizes="(min-width: 768px) 60vw, 100vw"
-              className="object-cover"
-            />
-          </Reveal>
-          <Reveal delay={0.1}>
-            <EventSidebar current={event.slug} />
-          </Reveal>
+    <>
+      <section className="noise relative isolate overflow-hidden pt-32 md:pt-40">
+        <div aria-hidden className="absolute inset-0 -z-10">
+          <div className="grid-paper grid-fade absolute inset-0" />
+          <span className="absolute -left-20 top-20 size-[520px] rounded-full bg-teal/20 blur-[140px]" />
+          <span className="absolute right-0 top-0 size-[460px] rounded-full bg-orange/20 blur-[140px]" />
         </div>
 
-        <Reveal className="mt-12 max-w-[1000px] text-[15px] leading-relaxed text-fg/85">
-          {event.date && (
-            <h2 className="font-display text-2xl font-semibold text-fg md:text-3xl">
-              {event.title} — ({event.date})
-            </h2>
-          )}
-          {event.tagline && (
-            <h2 className="font-display text-2xl font-semibold text-fg md:text-3xl">{event.tagline}</h2>
-          )}
+        <div className="shell">
+          <Link href="/event" className="btn-ghost !py-2">
+            <ArrowLeft className="size-3.5" /> All events
+          </Link>
+          <Reveal>
+            <p className="eyebrow mt-10 flex items-center gap-3">
+              <span className="text-orange">{event.kind}</span>
+              <span className="h-px w-8 bg-line-strong" />
+              {event.city}
+            </p>
+            <h1 className="display mt-5 max-w-[1100px] text-[clamp(2.8rem,8vw,7.5rem)]">{event.title}</h1>
+            {event.tagline && <p className="accent mt-4 text-3xl text-signal md:text-4xl">{event.tagline}</p>}
+          </Reveal>
 
-          {(event.location || event.register) && (
-            <dl className="mt-6 space-y-2">
-              {event.location && (
-                <div className="flex flex-wrap gap-2">
-                  <dt className="font-semibold text-fg">Location :</dt>
-                  <dd>{event.location}</dd>
-                </div>
-              )}
-              {event.register && (
-                <div className="flex flex-wrap gap-2">
-                  <dt className="font-semibold text-fg">{event.register.label} :</dt>
-                  <dd>
-                    <a
-                      href={event.register.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="break-all text-teal underline-offset-4 hover:underline"
-                    >
-                      {event.register.url}
-                    </a>
-                  </dd>
-                </div>
-              )}
-            </dl>
-          )}
+          <Reveal delay={0.1} className="mt-12">
+            <div className="relative aspect-[16/9] overflow-hidden rounded-[2rem] border border-line md:aspect-[21/9]">
+              <Image src={event.image} alt={event.title} fill priority sizes="100vw" className="object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent" />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="shell grid gap-12 py-16 md:py-24 lg:grid-cols-[1.4fr_0.8fr]">
+        <div>
+          <dl className="grid gap-3 sm:grid-cols-3">
+            {meta.map(({ Icon, label, value }) => (
+              <div key={label} className="rounded-2xl border border-line bg-ink-2 p-5">
+                <dt className="flex items-center gap-2 font-mono text-[10px] tracking-[0.14em] text-subtle uppercase">
+                  <Icon className="size-3.5 text-teal" /> {label}
+                </dt>
+                <dd className="mt-3 font-display text-lg leading-snug font-bold">{value}</dd>
+              </div>
+            ))}
+          </dl>
 
           {event.highlights && (
-            <ul className="mt-8 list-disc space-y-1 pl-5">
-              {event.highlights.map((h) => (
-                <li key={h}>{h}</li>
+            <ul className="mt-10 grid gap-3 sm:grid-cols-2">
+              {event.highlights.map((h, i) => (
+                <Reveal key={h} delay={i * 0.05}>
+                  <li className="flex items-center gap-4 rounded-2xl border border-line p-5">
+                    <span className="font-mono text-xs text-orange">0{i + 1}</span>
+                    <span className="font-display text-lg font-bold">{h}</span>
+                  </li>
+                </Reveal>
               ))}
             </ul>
           )}
 
-          <div className="mt-6 space-y-4">
-            {event.description.map((p) => (
-              <p key={p}>{p}</p>
+          <Reveal className="mt-12 space-y-6 text-lg leading-relaxed text-muted md:text-xl">
+            {event.description.map((p, i) => (
+              <p key={p} className={i === 0 ? "text-paper" : ""}>
+                {p}
+              </p>
             ))}
-          </div>
+          </Reveal>
+        </div>
 
-          {event.register && (
-            <a
-              href={event.register.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-bebas mt-8 inline-block rounded-sm bg-fg px-8 py-3.5 text-base text-bg transition-transform hover:scale-105"
-            >
-              {event.register.label}
-            </a>
-          )}
-        </Reveal>
+        {/* Sticky action panel */}
+        <aside className="lg:sticky lg:top-28 lg:h-fit">
+          <div className="relative overflow-hidden rounded-3xl border border-line-strong bg-ink-2 p-7">
+            <span aria-hidden className="absolute -right-16 -top-16 size-48 rounded-full bg-orange/25 blur-3xl" />
+            <p className="eyebrow relative">Take part</p>
+            <p className="relative mt-4 font-display text-2xl leading-tight font-bold">
+              {event.register ? "Registrations are handled on the event page." : "Stay tuned for the next edition."}
+            </p>
+            {event.register ? (
+              <a
+                href={event.register.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary relative mt-7 w-full justify-center"
+              >
+                {event.register.label} <ArrowUpRight className="size-4" />
+              </a>
+            ) : (
+              <Link href="/contact-us" className="btn-primary relative mt-7 w-full justify-center">
+                Get notified <ArrowUpRight className="size-4" />
+              </Link>
+            )}
+
+            <p className="eyebrow relative mt-9">More events</p>
+            <ul className="relative mt-3 divide-y divide-line">
+              {eventsByDate
+                .filter((e) => e.slug !== slug)
+                .map((e) => (
+                  <li key={e.slug}>
+                    <Link
+                      href={`/event/${e.slug}`}
+                      className="group flex items-center justify-between gap-3 py-3 text-sm text-muted transition-colors hover:text-paper"
+                    >
+                      {e.title}
+                      <ArrowUpRight className="size-3.5 shrink-0 opacity-0 transition-opacity group-hover:opacity-100" />
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        </aside>
       </section>
 
-      <section className="container-x relative z-10 pt-24">
+      <section className="shell pb-24 md:pb-32">
         <Reveal>
-          <h2 className="heading-lg">Related events</h2>
+          <h2 className="display text-[clamp(2.2rem,5vw,4rem)]">
+            Related <em className="text-signal">events</em>
+          </h2>
         </Reveal>
         <div className="mt-10">
           <EventGrid items={related} />
@@ -131,6 +154,6 @@ export default async function EventPage({ params }: Props) {
       </section>
 
       <JoinCta />
-    </div>
+    </>
   );
 }
