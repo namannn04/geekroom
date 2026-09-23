@@ -6,10 +6,11 @@ import { ArrowUpRight } from "lucide-react";
 import SectionHead from "@/components/ui/SectionHead";
 import { speakers } from "@/data/site";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
+import { EASE_EXPO, reveal } from "@/lib/motion";
 
 /**
  * Speakers start as a fanned deck stacked in the middle of the grid and deal
- * out to their seats as the section scrolls through (desktop). On touch
+ * out to their seats the moment the grid comes into view (desktop). On touch
  * screens they simply lift into place one after another.
  */
 export default function Speakers() {
@@ -31,25 +32,31 @@ export default function Speakers() {
           const r = card.getBoundingClientRect();
           return axis === "x" ? g.left + g.width / 2 - (r.left + r.width / 2) : g.top + g.height / 2 - (r.top + r.height / 2);
         };
-        const tl = gsap.timeline({
-          scrollTrigger: { trigger: grid, start: "top 85%", end: "center 55%", scrub: 0.8, invalidateOnRefresh: true },
-        });
+        const tl = gsap.timeline({ scrollTrigger: reveal(grid, "top 85%") });
         cards.forEach((card, i) => {
           tl.from(
             card,
-            { x: () => offset(card, "x"), y: () => offset(card, "y"), rotate: (i - mid) * 7, ease: "power2.out" },
-            0,
+            {
+              x: () => offset(card, "x"),
+              y: () => offset(card, "y"),
+              rotate: (i - mid) * 7,
+              duration: 1.3,
+              ease: "expo.inOut",
+            },
+            i * 0.05,
           );
         });
       });
 
       mm.add("(max-width: 767px)", () => {
-        cards.forEach((card) =>
+        cards.forEach((card, i) =>
           gsap.from(card, {
-            yPercent: 25,
-            rotate: 3,
-            ease: "none",
-            scrollTrigger: { trigger: card, start: "top 95%", end: "top 65%", scrub: true },
+            yPercent: 20,
+            rotate: i % 2 ? 3 : -3,
+            opacity: 0,
+            duration: 0.9,
+            ease: EASE_EXPO,
+            scrollTrigger: reveal(card, "top 92%"),
           }),
         );
       });

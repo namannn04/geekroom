@@ -24,7 +24,7 @@ export default function Voices({ index = "07" }: { index?: string }) {
             color: "rgba(238,236,230,1)",
             stagger: 0.08,
             ease: "none",
-            scrollTrigger: { trigger: q, start: "top 80%", end: "bottom 50%", scrub: true },
+            scrollTrigger: { trigger: q, start: "top 88%", end: "top 45%", scrub: true },
           },
         );
         return split;

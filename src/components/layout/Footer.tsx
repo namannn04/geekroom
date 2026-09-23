@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
+import { EASE_EXPO, reveal } from "@/lib/motion";
 import { ArrowUpRight } from "lucide-react";
 import { footerColumns, site } from "@/data/site";
 import { InstagramIcon, LinkedinIcon } from "@/components/ui/Icons";
@@ -19,10 +20,10 @@ export default function Footer() {
       if (prefersReducedMotion()) return;
       gsap.from("[data-letter]", {
         yPercent: 100,
-        fontStretch: "50%",
-        stagger: 0.04,
-        ease: "none",
-        scrollTrigger: { trigger: "[data-wordmark]", start: "top bottom", end: "bottom bottom", scrub: 0.6 },
+        duration: 1.1,
+        stagger: 0.045,
+        ease: EASE_EXPO,
+        scrollTrigger: reveal("[data-wordmark]", "top 95%"),
       });
     },
     { scope: root },

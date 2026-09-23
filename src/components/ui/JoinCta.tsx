@@ -5,6 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import GeekMark from "./GeekMark";
 import { site } from "@/data/site";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
+import { EASE_EXPO, EASE_OUT, reveal } from "@/lib/motion";
 
 /** Closing band: a solid orange panel that opens along the slash as it scrolls in. */
 export default function JoinCta() {
@@ -13,16 +14,14 @@ export default function JoinCta() {
   useGSAP(
     () => {
       if (prefersReducedMotion()) return;
-      const tl = gsap.timeline({
-        scrollTrigger: { trigger: root.current, start: "top 90%", end: "top 35%", scrub: 0.7 },
-      });
+      const tl = gsap.timeline({ scrollTrigger: reveal(root.current, "top 85%") });
       tl.fromTo(
         "[data-panel]",
         { clipPath: "polygon(45% 0, 55% 0, 45% 100%, 35% 100%)" },
-        { clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", ease: "power2.inOut" },
+        { clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1.2, ease: "expo.inOut" },
       )
-        .from("[data-mark]", { rotate: -25, scale: 0.7, ease: "none" }, 0)
-        .from("[data-copy]", { y: 50, opacity: 0, stagger: 0.08, ease: "power2.out" }, 0.35);
+        .from("[data-mark]", { rotate: -25, scale: 0.7, duration: 1.4, ease: EASE_EXPO }, 0.2)
+        .from("[data-copy]", { y: 36, opacity: 0, duration: 0.8, stagger: 0.08, ease: EASE_OUT }, 0.55);
     },
     { scope: root },
   );

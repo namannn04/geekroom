@@ -7,10 +7,11 @@ import { Plus } from "lucide-react";
 import SectionHead from "@/components/ui/SectionHead";
 import { partners } from "@/data/site";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
+import { EASE_EXPO, reveal } from "@/lib/motion";
 
 /**
  * Logo wall drawn as a hairline grid (no cards). Cells flip up on their bottom
- * edge in a diagonal wave tied to scroll.
+ * edge in a diagonal wave as the wall enters.
  */
 export default function Partners() {
   const root = useRef<HTMLElement>(null);
@@ -22,9 +23,10 @@ export default function Partners() {
         rotateX: -90,
         opacity: 0,
         transformOrigin: "50% 100%",
-        ease: "power2.out",
-        stagger: { each: 0.06, grid: "auto", from: "start", axis: undefined },
-        scrollTrigger: { trigger: "[data-wall]", start: "top 85%", end: "center 60%", scrub: 0.8 },
+        duration: 0.9,
+        ease: EASE_EXPO,
+        stagger: { each: 0.05, grid: "auto", from: "start" },
+        scrollTrigger: reveal("[data-wall]", "top 85%"),
       });
     },
     { scope: root },
