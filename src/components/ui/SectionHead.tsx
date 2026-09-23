@@ -3,6 +3,7 @@
 import { useRef, type ReactNode } from "react";
 import { SplitText } from "gsap/SplitText";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
+import { EASE_EXPO, EASE_OUT, reveal } from "@/lib/motion";
 
 gsap.registerPlugin(SplitText);
 
@@ -18,9 +19,9 @@ type Props = {
 };
 
 /**
- * Section header. The title's characters rise out of a mask while the Anybody
- * width axis contracts from expanded to its resting cut, so each heading
- * "tightens" into place. The index sits beside the title, not above it.
+ * Section header. The title's characters rise out of a mask while unsquashing
+ * horizontally, so each heading "tightens" into place. Transform-only, so it
+ * stays on the compositor. The index sits beside the title, not above it.
  */
 export default function SectionHead({ index, title, intro, align = "left", className = "", as: Tag = "h2", size = "lg" }: Props) {
   const root = useRef<HTMLDivElement>(null);
@@ -32,16 +33,18 @@ export default function SectionHead({ index, title, intro, align = "left", class
       const heading = root.current?.querySelector("[data-title]");
       if (!heading) return;
       const split = SplitText.create(heading, { type: "words,chars", mask: "words", wordsClass: "whitespace-nowrap" });
-      const tl = gsap.timeline({ scrollTrigger: { trigger: root.current, start: "top 82%" } });
+      const tl = gsap.timeline({ scrollTrigger: reveal(root.current, "top 90%") });
+      // Transform-only: chars start squashed and low, then snap to their resting shape
       tl.from(split.chars, {
-        yPercent: 110,
-        fontStretch: "150%",
-        duration: 1.1,
-        stagger: { each: 0.018, from: centered ? "center" : "start" },
-        ease: "power4.out",
+        yPercent: 105,
+        scaleX: 1.6,
+        transformOrigin: "0% 100%",
+        duration: 0.9,
+        stagger: { each: 0.014, from: centered ? "center" : "start" },
+        ease: EASE_EXPO,
       })
-        .from("[data-index]", { xPercent: -40, opacity: 0, duration: 0.6 }, 0.2)
-        .from("[data-intro]", { y: 24, opacity: 0, duration: 0.8 }, 0.35);
+        .from("[data-index]", { xPercent: -40, opacity: 0, duration: 0.5, ease: EASE_OUT }, 0.15)
+        .from("[data-intro]", { y: 20, opacity: 0, duration: 0.7, ease: EASE_OUT }, 0.25);
       return () => split.revert();
     },
     { scope: root },
