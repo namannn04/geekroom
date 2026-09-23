@@ -1,21 +1,25 @@
 @import "tailwindcss";
 
 /*
- * Geek Room — "Signal" design system
- * Ink-dark canvas, paper-grid texture, teal + orange signal colours taken from the </> mark.
+ * Geek Room — "Signal" v2
+ * Tinted ink canvas, off-white paper, one loud accent (signal orange).
+ * Teal is reserved for the </> brand mark itself.
+ * Typographic accent comes from the Anybody width axis, not from colour tricks.
  */
 :root {
-  --ink: #08090a;
-  --ink-2: #101113;
-  --ink-3: #17181b;
-  --paper: #f4f1ea;
-  --muted: rgba(244, 241, 234, 0.62);
-  --subtle: rgba(244, 241, 234, 0.38);
-  --line: rgba(244, 241, 234, 0.09);
-  --line-strong: rgba(244, 241, 234, 0.18);
-  --teal: #19b3bf;
+  --ink: #0d0e0c;
+  --ink-2: #151714;
+  --ink-3: #1e201c;
+  --paper: #eeece6;
+  --muted: rgba(238, 236, 230, 0.7);
+  --subtle: rgba(238, 236, 230, 0.52);
+  --line: rgba(238, 236, 230, 0.1);
+  --line-strong: rgba(238, 236, 230, 0.2);
   --orange: #ff5a1f;
-  --signal: linear-gradient(100deg, var(--teal) 0%, #7fd6c9 45%, var(--orange) 100%);
+  --orange-deep: #d9430e;
+  --teal: #19b3bf;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 @theme inline {
@@ -27,24 +31,36 @@
   --color-subtle: var(--subtle);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
-  --color-teal: var(--teal);
   --color-orange: var(--orange);
-  --font-display: var(--font-grotesk), system-ui, sans-serif;
-  --font-serif: var(--font-instrument), Georgia, serif;
+  --color-orange-deep: var(--orange-deep);
+  --color-teal: var(--teal);
+  --font-display: var(--font-anybody), system-ui, sans-serif;
+  --font-sans: var(--font-schibsted), system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 }
 
 html {
-  scroll-behavior: smooth;
   color-scheme: dark;
+}
+
+/* Lenis owns smooth scrolling; keep native behaviour predictable */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 body {
   background: var(--ink);
   color: var(--paper);
-  font-family: var(--font-grotesk), system-ui, sans-serif;
+  font-family: var(--font-schibsted), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 ::selection {
@@ -52,45 +68,37 @@ body {
   color: var(--ink);
 }
 
+:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 3px;
+}
+
 @layer components {
   .shell {
     @apply mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-10;
   }
 
-  /* Uppercase grotesk headline; pair with <em> for the italic serif accent */
+  /* Condensed heavy uppercase display; <em> switches to the expanded light cut */
   .display {
-    @apply font-display font-bold tracking-[-0.03em] uppercase leading-[0.92];
+    @apply font-display uppercase;
+    font-weight: 800;
+    font-stretch: 72%;
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
   }
   .display em,
-  .accent {
-    @apply font-serif font-normal tracking-[-0.01em] normal-case italic;
+  .wide {
+    font-style: normal;
+    font-weight: 300;
+    font-stretch: 150%;
+    color: var(--orange);
+    letter-spacing: -0.03em;
   }
 
-  .eyebrow {
-    @apply font-mono text-[11px] tracking-[0.18em] text-subtle uppercase;
-  }
-
-  .text-signal {
-    background: var(--signal);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  .bg-signal {
-    background: var(--signal);
-  }
-
-  /* Paper-grid texture */
-  .grid-paper {
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 56px 56px;
-  }
-
-  .grid-fade {
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 100%);
+  .label {
+    @apply font-mono text-xs text-subtle;
+    letter-spacing: 0.04em;
   }
 
   .noise::after {
@@ -98,49 +106,37 @@ body {
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.06;
+    opacity: 0.05;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     mix-blend-mode: overlay;
   }
-
 }
 
 @utility btn {
-  @apply inline-flex items-center gap-2 rounded-full px-5 py-3 font-mono text-xs tracking-[0.12em] uppercase transition-all duration-300;
+  @apply inline-flex min-h-11 items-center gap-2 rounded-full px-5 py-3 font-mono text-xs font-medium tracking-[0.06em] uppercase;
+  transition:
+    transform 150ms var(--ease-out),
+    background-color 200ms var(--ease-out),
+    color 200ms var(--ease-out),
+    border-color 200ms var(--ease-out);
+  &:hover {
+    transform: translateY(-1px);
+  }
 }
 
 @utility btn-primary {
-  @apply btn bg-paper text-ink hover:bg-orange hover:text-ink;
+  @apply btn bg-paper text-ink hover:bg-orange;
 }
 
 @utility btn-ghost {
-  @apply btn border border-line-strong text-paper hover:border-paper hover:bg-paper/5;
-}
-
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-.animate-marquee {
-  animation: marquee 40s linear infinite;
-}
-
-@keyframes spin-slow {
-  to {
-    transform: rotate(360deg);
-  }
-}
-.animate-spin-slow {
-  animation: spin-slow 40s linear infinite;
+  @apply btn border border-line-strong text-paper hover:border-paper;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  .animate-marquee,
-  .animate-spin-slow {
-    animation: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
