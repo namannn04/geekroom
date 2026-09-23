@@ -1,44 +1,82 @@
-import CountUp from "@/components/ui/CountUp";
-import Reveal from "@/components/ui/Reveal";
+"use client";
+
+import { useRef } from "react";
+import SectionHead from "@/components/ui/SectionHead";
 import { impact } from "@/data/site";
+import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 
+const max = Math.max(...impact.map((s) => s.value));
+// Log scale so 50 events and 70,000 views can share one axis honestly
+const share = (v: number) => Math.log10(v) / Math.log10(max);
+const fmt = (v: number) => Math.round(v).toLocaleString("en-IN");
+
+/**
+ * Impact as a horizontal bar readout. Scroll position drives both the bar
+ * length and the number, so scrolling back up winds the counters down.
+ */
 export default function Impact() {
+  const root = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      const rows = gsap.utils.toArray<HTMLElement>("[data-stat]");
+      rows.forEach((row, i) => {
+        const value = impact[i].value;
+        const num = row.querySelector<HTMLElement>("[data-num]")!;
+        if (prefersReducedMotion()) {
+          num.textContent = fmt(value);
+          return;
+        }
+        const state = { v: 0 };
+        const tl = gsap.timeline({
+          scrollTrigger: { trigger: row, start: "top 85%", end: "top 40%", scrub: 0.5 },
+        });
+        tl.from(row.querySelector("[data-bar]"), { scaleX: 0, transformOrigin: "0% 50%", ease: "none" }).to(
+          state,
+          { v: value, ease: "none", onUpdate: () => (num.textContent = fmt(state.v)) },
+          0,
+        );
+      });
+    },
+    { scope: root },
+  );
+
   return (
-    <section className="shell py-10">
-      <Reveal className="noise relative overflow-hidden rounded-[2rem] border border-line-strong bg-ink-2 px-6 py-16 md:px-14 md:py-20">
-        {/* Concentric rings + glow */}
-        <div aria-hidden className="pointer-events-none absolute inset-0">
-          <span className="absolute -left-24 -top-24 size-[420px] rounded-full bg-teal/25 blur-[110px]" />
-          <span className="absolute -bottom-32 -right-10 size-[460px] rounded-full bg-orange/25 blur-[120px]" />
-          {[260, 380, 500].map((s) => (
-            <span
-              key={s}
-              className="absolute right-[-120px] top-1/2 -translate-y-1/2 rounded-full border border-line-strong"
-              style={{ width: s, height: s }}
-            />
-          ))}
-        </div>
-
-        <div className="relative">
-          <p className="label text-center">
-            <span className="text-orange">03</span> — Delivered impact
-          </p>
-          <h2 className="display mx-auto mt-5 max-w-[800px] text-center text-[clamp(2rem,5vw,4rem)]">
+    <section ref={root} className="shell py-24 md:py-32">
+      <SectionHead
+        index="03"
+        title={
+          <>
             Numbers that <em>compound</em>
-          </h2>
+          </>
+        }
+        intro="Three years of events, measured. Bars use a log scale so every figure stays readable."
+      />
 
-          <dl className="mt-14 grid grid-cols-2 gap-y-10 md:grid-cols-4">
-            {impact.map((s, i) => (
-              <div key={s.label} className={`px-4 text-center ${i > 0 ? "md:border-l md:border-line-strong" : ""}`}>
-                <dd className="display text-[clamp(2.2rem,5vw,4rem)]">
-                  <CountUp to={s.value} suffix={s.suffix} />
-                </dd>
-                <dt className="mt-3 font-mono text-xs tracking-[0.12em] text-muted uppercase">{s.label}</dt>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </Reveal>
+      <dl className="mt-14 border-t border-line">
+        {impact.map((s) => (
+          <div
+            key={s.label}
+            data-stat
+            className="grid gap-3 border-b border-line py-7 md:grid-cols-[minmax(0,22rem)_1fr] md:items-center md:gap-10 md:py-9"
+          >
+            <div>
+              <dd className="display text-[clamp(3rem,7vw,5.5rem)] tabular-nums">
+                <span data-num>{fmt(s.value)}</span>
+                <span className="text-orange">{s.suffix}</span>
+              </dd>
+              <dt className="mt-2 text-muted">{s.label}</dt>
+            </div>
+            <div className="relative h-3 overflow-hidden rounded-full bg-ink-3 md:h-4">
+              <span
+                data-bar
+                className="absolute inset-y-0 left-0 rounded-full bg-orange"
+                style={{ width: `${share(s.value) * 100}%` }}
+              />
+            </div>
+          </div>
+        ))}
+      </dl>
     </section>
   );
 }
