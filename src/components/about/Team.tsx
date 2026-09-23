@@ -1,12 +1,35 @@
+"use client";
+
 import Image from "next/image";
+import { useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
-import Reveal from "@/components/ui/Reveal";
 import SectionHead from "@/components/ui/SectionHead";
 import { team } from "@/data/site";
+import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 
+/** Portraits open like shutters, one after another, as the grid scrolls in. */
 export default function Team() {
+  const root = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+      gsap.utils.toArray<HTMLElement>("[data-member]").forEach((card, i) => {
+        gsap
+          .timeline({ scrollTrigger: { trigger: card, start: "top 92%", end: "top 50%", scrub: 0.6 } })
+          .fromTo(
+            card.querySelector("[data-media]"),
+            { clipPath: i % 2 ? "inset(0% 0% 100% 0%)" : "inset(100% 0% 0% 0%)" },
+            { clipPath: "inset(0% 0% 0% 0%)", ease: "power2.out" },
+          )
+          .from(card.querySelectorAll("[data-copy]"), { y: 24, opacity: 0, stagger: 0.08 }, 0.3);
+      });
+    },
+    { scope: root },
+  );
+
   return (
-    <section className="shell py-24 md:py-32">
+    <section ref={root} className="shell py-24 md:py-32">
       <SectionHead
         index="02"
         title={
@@ -17,42 +40,30 @@ export default function Team() {
         intro="Co-founders and founding members who turned a group chat into a nationwide community."
       />
 
-      <div className="mt-14 grid grid-cols-2 gap-4 md:grid-cols-3">
-        {team.map((p, i) => (
-          <Reveal key={p.name} delay={(i % 3) * 0.08}>
-            <a
-              href={p.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative block overflow-hidden rounded-3xl border border-line bg-ink-2"
-            >
-              <div className="relative aspect-[4/5] overflow-hidden">
-                <Image
-                  src={p.image}
-                  alt={p.name}
-                  fill
-                  sizes="(min-width: 768px) 33vw, 50vw"
-                  className="object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/10 to-transparent" />
+      <div className="mt-14 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3">
+        {team.map((p) => (
+          <a key={p.name} data-member href={p.linkedin} target="_blank" rel="noopener noreferrer" className="group block">
+            <div data-media className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem]">
+              <Image
+                src={p.image}
+                alt={p.name}
+                fill
+                sizes="(min-width: 768px) 33vw, 50vw"
+                className="object-cover grayscale transition-[filter] duration-500 group-hover:grayscale-0"
+              />
+            </div>
+            <div className="mt-4 flex items-start justify-between gap-3">
+              <div>
+                <h3 data-copy className="font-display text-xl leading-tight font-extrabold uppercase [font-stretch:80%] md:text-2xl">
+                  {p.name}
+                </h3>
+                <p data-copy className={`mt-1 text-sm ${p.role === "Co-Founder" ? "text-orange" : "text-muted"}`}>
+                  {p.role}
+                </p>
               </div>
-              <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5 md:p-6">
-                <div>
-                  <span
-                    className={`inline-block rounded-full px-2.5 py-1 font-mono text-xs tracking-[0.12em] uppercase ${
-                      p.role === "Co-Founder" ? "bg-orange text-ink" : "border border-white/25 bg-ink/50 backdrop-blur"
-                    }`}
-                  >
-                    {p.role}
-                  </span>
-                  <h3 className="mt-3 font-display text-xl font-bold md:text-2xl">{p.name}</h3>
-                </div>
-                <span className="grid size-10 shrink-0 place-items-center rounded-full bg-paper text-ink opacity-0 transition-all duration-300 group-hover:opacity-100">
-                  <ArrowUpRight className="size-4" />
-                </span>
-              </div>
-            </a>
-          </Reveal>
+              <ArrowUpRight className="mt-1 size-4 shrink-0 text-subtle transition-colors group-hover:text-orange" />
+            </div>
+          </a>
         ))}
       </div>
     </section>
