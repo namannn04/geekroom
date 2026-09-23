@@ -62,11 +62,11 @@ export default function AboutHero() {
         </div>
       </div>
 
-      <dl data-stats className="mt-16 grid grid-cols-2 border-t border-line md:grid-cols-4">
+      <dl data-stats className="mt-16 grid grid-cols-2 border-t border-line lg:grid-cols-4">
         {cells.map((s, i) => (
-          <div key={s.label} className={`overflow-hidden border-b border-line ${i % 2 ? "border-l" : ""} ${i === 2 ? "md:border-l" : ""}`}>
+          <div key={s.label} className={`overflow-hidden border-b border-line ${i % 2 ? "border-l" : ""} ${i === 2 ? "lg:border-l" : ""}`}>
             <div data-cell className="p-6 md:p-8">
-              <dd className="display text-[clamp(2.6rem,5vw,4.5rem)] tabular-nums">
+              <dd className="display text-[clamp(2.4rem,6vw,4.5rem)] tabular-nums">
                 <span data-num>{fmt(s.value)}</span>
                 <span className="text-orange">{s.suffix}</span>
               </dd>
