@@ -206,12 +206,12 @@ export const stats = [
 ];
 
 export const milestones = [
-  { date: "2023", text: "Manas, Arnav and Pratham start Geek Room as a WhatsApp group for students at MSIT." },
-  { date: "Feb 2024", text: "Hosted Code Kshetra 1 at JIMS and set up the Geek Room JIMS Chapter." },
-  { date: "May 2024", text: "Organised Code Cubicle 1, our first solo hackathon, while crossing 30,000 members across channels." },
-  { date: "Aug 2024", text: "Hosted Code Cubicle 2.0 at the Microsoft office." },
-  { date: "Sept 2024", text: "Landed our first exclusive hackathon with Mastercard." },
-  { date: "Feb 2025", text: "Organised Code Kshetra 2.0, North India's biggest hackathon, with Groq." },
+  { date: "2023", short: "Founded at MSIT", text: "Manas, Arnav and Pratham start Geek Room as a WhatsApp group for students at MSIT." },
+  { date: "Feb 2024", short: "Code Kshetra 1", text: "Hosted Code Kshetra 1 at JIMS and set up the Geek Room JIMS Chapter." },
+  { date: "May 2024", short: "30,000 members", text: "Organised Code Cubicle 1, our first solo hackathon, while crossing 30,000 members across channels." },
+  { date: "Aug 2024", short: "CC 2.0 at Microsoft", text: "Hosted Code Cubicle 2.0 at the Microsoft office." },
+  { date: "Sept 2024", short: "Mastercard hackathon", text: "Landed our first exclusive hackathon with Mastercard." },
+  { date: "Feb 2025", short: "Code Kshetra 2.0", text: "Organised Code Kshetra 2.0, North India's biggest hackathon, with Groq." },
 ];
 
 export const reviews = [
