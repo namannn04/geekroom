@@ -139,7 +139,7 @@ export default function Hero() {
                     alt={i < row.items.length ? p.name : ""}
                     width={120}
                     height={40}
-                    className="max-h-8 w-auto object-contain opacity-80"
+                    className="max-h-8 h-auto w-auto object-contain opacity-80"
                   />
                 </span>
               ))}

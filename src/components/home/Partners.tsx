@@ -53,7 +53,7 @@ export default function Partners() {
             title={p.name}
             className="grid aspect-square place-items-center border-r border-b border-line p-5"
           >
-            <Image src={p.logo} alt={p.name} width={120} height={60} className="max-h-11 w-auto object-contain opacity-85" />
+            <Image src={p.logo} alt={p.name} width={120} height={60} className="max-h-11 h-auto w-auto object-contain opacity-85" />
           </div>
         ))}
         <Link
