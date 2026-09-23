@@ -44,15 +44,18 @@ export default function FeaturedEvents() {
             end: () => `+=${distance()}`,
             scrub: 0.8,
             invalidateOnRefresh: true,
-            onUpdate: (self) => setActive(Math.round(self.progress * (track.length - 1))),
+            onUpdate: (self) => {
+              // Playhead follows real dates: interpolate between neighbouring events
+              const f = self.progress * (track.length - 1);
+              const i = Math.floor(f);
+              const a = pos(track[i].iso);
+              const b = pos(track[Math.min(i + 1, track.length - 1)].iso);
+              setPlayhead(`${(a + (b - a) * (f - i)) * 100}%`);
+              setActive(Math.round(f));
+            },
           },
         });
-
-        gsap.to("[data-playhead]", {
-          left: "100%",
-          ease: "none",
-          scrollTrigger: { trigger: pin, start: "top top", end: () => `+=${distance()}`, scrub: 0.8 },
-        });
+        const setPlayhead = gsap.quickSetter("[data-playhead]", "left") as (v: string) => void;
 
         // Each ticket swings flat as it crosses into the viewport
         gsap.utils.toArray<HTMLElement>("[data-ticket-wrap]").forEach((el) => {
