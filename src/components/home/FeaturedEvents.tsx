@@ -53,7 +53,7 @@ export default function FeaturedEvents() {
 
       <div
         ref={track}
-        className="mt-14 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth px-4 pb-4 [scrollbar-width:none] sm:px-6 lg:px-[max(2.5rem,calc((100vw-1320px)/2+2.5rem))] [&::-webkit-scrollbar]:hidden"
+        className="mt-14 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth px-4 pb-4 [scrollbar-width:none] sm:px-6 lg:px-[max(2.5rem,calc((100vw_-_1320px)/2_+_2.5rem))] [&::-webkit-scrollbar]:hidden"
       >
         {eventsByDate.map((e) => (
           <EventCard key={e.slug} event={e} className="w-[82vw] shrink-0 snap-start sm:w-[380px]" />
