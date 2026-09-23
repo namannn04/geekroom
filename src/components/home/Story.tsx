@@ -41,6 +41,7 @@ export default function Story() {
     <section ref={root} className="shell grid gap-12 py-24 md:py-32 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
       <div className="lg:sticky lg:top-32 lg:h-fit">
         <SectionHead
+          size="sm"
           index="04"
           title={
             <>

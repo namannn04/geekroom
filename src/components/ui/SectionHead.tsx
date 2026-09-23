@@ -13,6 +13,8 @@ type Props = {
   align?: "left" | "center";
   className?: string;
   as?: "h1" | "h2";
+  /** "sm" for headings that live in a narrow sidebar column */
+  size?: "lg" | "sm";
 };
 
 /**
@@ -20,7 +22,7 @@ type Props = {
  * width axis contracts from expanded to its resting cut, so each heading
  * "tightens" into place. The index sits beside the title, not above it.
  */
-export default function SectionHead({ index, title, intro, align = "left", className = "", as: Tag = "h2" }: Props) {
+export default function SectionHead({ index, title, intro, align = "left", className = "", as: Tag = "h2", size = "lg" }: Props) {
   const root = useRef<HTMLDivElement>(null);
   const centered = align === "center";
 
@@ -29,7 +31,7 @@ export default function SectionHead({ index, title, intro, align = "left", class
       if (prefersReducedMotion()) return;
       const heading = root.current?.querySelector("[data-title]");
       if (!heading) return;
-      const split = SplitText.create(heading, { type: "words,chars", mask: "words" });
+      const split = SplitText.create(heading, { type: "words,chars", mask: "words", wordsClass: "whitespace-nowrap" });
       const tl = gsap.timeline({ scrollTrigger: { trigger: root.current, start: "top 82%" } });
       tl.from(split.chars, {
         yPercent: 110,
@@ -48,7 +50,10 @@ export default function SectionHead({ index, title, intro, align = "left", class
   return (
     <div ref={root} className={`${centered ? "mx-auto text-center" : ""} ${className}`}>
       <div className={`flex items-start gap-4 ${centered ? "justify-center" : ""}`}>
-        <Tag data-title className="display text-[clamp(2.5rem,6.5vw,5.5rem)]">
+        <Tag
+          data-title
+          className={`display ${size === "sm" ? "text-[clamp(2.3rem,4.4vw,3.9rem)]" : "text-[clamp(2.5rem,6.5vw,5.5rem)]"}`}
+        >
           {title}
         </Tag>
         <span data-index className="label mt-2 shrink-0 tabular-nums">

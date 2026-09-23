@@ -28,6 +28,7 @@ export default function Hero() {
       if (prefersReducedMotion()) return;
       const lines = gsap.utils.toArray<HTMLElement>("[data-line]");
       const split = SplitText.create(lines, { type: "chars", mask: "chars" });
+      // Lines never wrap: each is a single word or phrase sized to fit its column
 
       // Intro
       const intro = gsap.timeline({ delay: 0.35 });
@@ -63,13 +64,13 @@ export default function Hero() {
     <section ref={root} className="relative isolate overflow-x-clip pt-28 md:pt-32">
       <DotField className="absolute inset-0 -z-10 opacity-80" />
 
-      <div className="shell grid min-h-[calc(100svh-8rem)] items-center gap-10 pb-12 lg:grid-cols-[1.35fr_1fr]">
+      <div className="shell grid min-h-[calc(100svh-8rem)] items-center gap-10 pb-12 lg:grid-cols-[1.6fr_1fr]">
         <div>
-          <h1 className="display text-[clamp(3.4rem,11.5vw,10.5rem)]">
+          <h1 className="display text-[clamp(3.2rem,13vw,6rem)] whitespace-nowrap sm:text-[clamp(4rem,11vw,8.5rem)] lg:text-[clamp(5rem,8.6vw,9rem)]">
             <span data-line className="block">
               Meet the
             </span>
-            <span data-line className="wide block">
+            <span data-line className="wide block text-[0.78em]">
               smarter
             </span>
             <span data-line className="block">

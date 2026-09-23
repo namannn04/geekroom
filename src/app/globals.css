@@ -91,7 +91,7 @@ body {
   .wide {
     font-style: normal;
     font-weight: 300;
-    font-stretch: 150%;
+    font-stretch: 125%;
     color: var(--orange);
     letter-spacing: -0.03em;
   }

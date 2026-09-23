@@ -13,6 +13,7 @@ export default function Faq() {
     <section className="shell grid gap-12 py-24 md:py-32 lg:grid-cols-[0.8fr_1.2fr]">
       <div>
         <SectionHead
+          size="sm"
           index="08"
           title={
             <>
