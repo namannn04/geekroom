@@ -2,26 +2,40 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useRef } from "react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { SplitText } from "gsap/SplitText";
 import DotField from "@/components/ui/DotField";
 import GeekMark from "@/components/ui/GeekMark";
+import { EASE_EXPO } from "@/lib/motion";
 import { partners } from "@/data/site";
-import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
+import { gsap, prefersReducedMotion, ScrollTrigger, useGSAP } from "@/lib/gsap";
 
 gsap.registerPlugin(SplitText);
+
+// three.js only loads in the browser; the flat SVG mark holds the space until it does
+const GeekMark3D = dynamic(() => import("@/components/three/GeekMark3D"), {
+  ssr: false,
+  loading: () => (
+    <div className="grid h-full w-full place-items-center">
+      <GeekMark className="w-[46%]" />
+    </div>
+  ),
+});
 
 const rowA = partners.slice(0, 6);
 const rowB = partners.slice(6);
 
 /**
- * Hero. On load the headline's letters stretch in from a compressed cut.
- * On scroll the three lines drift apart, the </> mark comes apart at the
- * seams, and the partner rows slide against each other.
+ * Hero. On load the headline's letters rise and unsquash while a glossy 3D
+ * </> mark fades up inside its orbit of milestones. On scroll the headline
+ * lines drift apart, the mark comes apart at the seams, and the partner rows
+ * slide against each other.
  */
 export default function Hero() {
   const root = useRef<HTMLElement>(null);
+  const progress = useRef(0);
 
   useGSAP(
     () => {
@@ -30,28 +44,35 @@ export default function Hero() {
       const split = SplitText.create(lines, { type: "chars", mask: "chars" });
       // Lines never wrap: each is a single word or phrase sized to fit its column
 
-      // Intro
-      const intro = gsap.timeline({ delay: 0.35 });
-      intro
-        .from(split.chars, { yPercent: 120, fontStretch: "50%", duration: 1.2, stagger: 0.025, ease: "power4.out" })
-        .from("[data-mark] [data-part='left']", { x: 40, opacity: 0, duration: 0.9 }, 0.3)
-        .from("[data-mark] [data-part='right']", { x: -40, opacity: 0, duration: 0.9 }, 0.3)
-        .from("[data-mark] [data-part='slash']", { scaleY: 0, transformOrigin: "50% 50%", duration: 0.9 }, 0.45)
-        .from("[data-mark] [data-part='eye']", { scale: 0, transformOrigin: "50% 50%", stagger: 0.08, duration: 0.5 }, 0.8)
-        .from("[data-fadeup]", { y: 30, opacity: 0, stagger: 0.1, duration: 0.8 }, 0.7);
+      // Intro: chars rise and unsquash (transform-only)
+      gsap
+        .timeline({ delay: 0.3 })
+        .from(split.chars, {
+          yPercent: 115,
+          scaleX: 1.7,
+          transformOrigin: "0% 100%",
+          duration: 1.1,
+          stagger: 0.022,
+          ease: EASE_EXPO,
+        })
+        .from("[data-fadeup]", { y: 24, opacity: 0, stagger: 0.08, duration: 0.8, ease: "power3.out" }, 0.55)
+        .from("[data-stage]", { opacity: 0, scale: 0.92, duration: 1.4, ease: EASE_EXPO }, 0.2);
 
-      // Scroll: lines diverge, mark separates
-      const st = { trigger: root.current, start: "top top", end: "bottom top", scrub: 0.6 };
-      gsap.to(lines[0], { xPercent: -12, ease: "none", scrollTrigger: st });
-      gsap.to(lines[1], { fontStretch: "150%", ease: "none", scrollTrigger: st });
-      gsap.to(lines[2], { xPercent: 10, ease: "none", scrollTrigger: st });
-      gsap.to("[data-mark] [data-part='left']", { x: -70, ease: "none", scrollTrigger: st });
-      gsap.to("[data-mark] [data-part='right']", { x: 70, ease: "none", scrollTrigger: st });
-      gsap.to("[data-mark] [data-part='slash']", { rotate: 90, transformOrigin: "50% 50%", ease: "none", scrollTrigger: st });
-      gsap.to("[data-mark]", { yPercent: 30, ease: "none", scrollTrigger: st });
+      // Scroll: lines diverge, and the 3D mark reads the same progress to pull itself apart
+      const st = {
+        trigger: root.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+        onUpdate: (self: ScrollTrigger) => (progress.current = self.progress),
+      };
+      gsap.to(lines[0], { xPercent: -10, ease: "none", scrollTrigger: st });
+      gsap.to(lines[1], { xPercent: 6, ease: "none", scrollTrigger: { ...st, onUpdate: undefined } });
+      gsap.to(lines[2], { xPercent: 12, ease: "none", scrollTrigger: { ...st, onUpdate: undefined } });
+      gsap.to("[data-stage]", { yPercent: 18, ease: "none", scrollTrigger: { ...st, onUpdate: undefined } });
 
       // Partner rows slide against each other while the strip is on screen
-      const strip = { trigger: "[data-strip]", start: "top bottom", end: "bottom top", scrub: 0.4 };
+      const strip = { trigger: "[data-strip]", start: "top bottom", end: "bottom top", scrub: true };
       gsap.fromTo("[data-row='a']", { xPercent: 0 }, { xPercent: -18, ease: "none", scrollTrigger: strip });
       gsap.fromTo("[data-row='b']", { xPercent: -18 }, { xPercent: 0, ease: "none", scrollTrigger: strip });
 
@@ -93,8 +114,9 @@ export default function Hero() {
           </div>
         </div>
 
-        <div data-mark className="relative mx-auto hidden w-full max-w-[440px] lg:block">
-          <GeekMark className="w-full" />
+        {/* 3D mark with revolving milestones */}
+        <div data-stage className="relative -mx-4 h-[380px] sm:h-[460px] lg:mx-0 lg:h-[min(640px,78svh)]">
+          <GeekMark3D progress={progress} className="absolute inset-0 lg:-inset-x-16" />
         </div>
       </div>
 
