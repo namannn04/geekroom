@@ -7,7 +7,7 @@ export default function AboutIntro() {
   const [rating, eventsCount, years] = stats;
 
   return (
-    <section className="container-x relative z-10 pb-20">
+    <section className="container-x relative z-10 pt-10 pb-20 md:pt-20">
       <Reveal className="mx-auto max-w-[1000px] text-center">
         <h2 className="heading-lg">
           Our journey is a testament to our dedication and passion for creating extraordinary events.
