@@ -20,7 +20,8 @@ export default function DotField({ className = "", gap = 26 }: { className?: str
     let w = 0;
     let h = 0;
     let raf = 0;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    let visible = true;
 
     const resize = () => {
       const r = canvas.getBoundingClientRect();
@@ -62,8 +63,17 @@ export default function DotField({ className = "", gap = 26 }: { className?: str
           ctx.fill();
         }
       }
-      if (!reduced) raf = requestAnimationFrame(draw);
+      if (!reduced && visible) raf = requestAnimationFrame(draw);
     };
+
+    // Stop drawing entirely while the canvas is off screen
+    const io = new IntersectionObserver(([entry]) => {
+      const was = visible;
+      visible = entry.isIntersecting;
+      if (visible && !was && !reduced) raf = requestAnimationFrame(draw);
+      if (!visible) cancelAnimationFrame(raf);
+    });
+    io.observe(canvas);
 
     resize();
     draw(0);
@@ -71,6 +81,7 @@ export default function DotField({ className = "", gap = 26 }: { className?: str
     window.addEventListener("pointermove", onMove, { passive: true });
     document.addEventListener("pointerleave", onLeave);
     return () => {
+      io.disconnect();
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", onMove);
