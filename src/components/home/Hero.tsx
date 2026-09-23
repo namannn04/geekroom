@@ -2,140 +2,128 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { SplitText } from "gsap/SplitText";
 import DotField from "@/components/ui/DotField";
 import GeekMark from "@/components/ui/GeekMark";
-import Marquee from "@/components/ui/Marquee";
 import { partners } from "@/data/site";
+import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 
-const ease = [0.22, 1, 0.36, 1] as const;
+gsap.registerPlugin(SplitText);
 
+const rowA = partners.slice(0, 6);
+const rowB = partners.slice(6);
+
+/**
+ * Hero. On load the headline's letters stretch in from a compressed cut.
+ * On scroll the three lines drift apart, the </> mark comes apart at the
+ * seams, and the partner rows slide against each other.
+ */
 export default function Hero() {
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const markY = useTransform(scrollYProgress, [0, 1], [0, 160]);
-  const markRotate = useTransform(scrollYProgress, [0, 1], [0, 25]);
-  const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const root = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+      const lines = gsap.utils.toArray<HTMLElement>("[data-line]");
+      const split = SplitText.create(lines, { type: "chars", mask: "chars" });
+
+      // Intro
+      const intro = gsap.timeline({ delay: 0.35 });
+      intro
+        .from(split.chars, { yPercent: 120, fontStretch: "50%", duration: 1.2, stagger: 0.025, ease: "power4.out" })
+        .from("[data-mark] [data-part='left']", { x: 40, opacity: 0, duration: 0.9 }, 0.3)
+        .from("[data-mark] [data-part='right']", { x: -40, opacity: 0, duration: 0.9 }, 0.3)
+        .from("[data-mark] [data-part='slash']", { scaleY: 0, transformOrigin: "50% 50%", duration: 0.9 }, 0.45)
+        .from("[data-mark] [data-part='eye']", { scale: 0, transformOrigin: "50% 50%", stagger: 0.08, duration: 0.5 }, 0.8)
+        .from("[data-fadeup]", { y: 30, opacity: 0, stagger: 0.1, duration: 0.8 }, 0.7);
+
+      // Scroll: lines diverge, mark separates
+      const st = { trigger: root.current, start: "top top", end: "bottom top", scrub: 0.6 };
+      gsap.to(lines[0], { xPercent: -12, ease: "none", scrollTrigger: st });
+      gsap.to(lines[1], { fontStretch: "150%", ease: "none", scrollTrigger: st });
+      gsap.to(lines[2], { xPercent: 10, ease: "none", scrollTrigger: st });
+      gsap.to("[data-mark] [data-part='left']", { x: -70, ease: "none", scrollTrigger: st });
+      gsap.to("[data-mark] [data-part='right']", { x: 70, ease: "none", scrollTrigger: st });
+      gsap.to("[data-mark] [data-part='slash']", { rotate: 90, transformOrigin: "50% 50%", ease: "none", scrollTrigger: st });
+      gsap.to("[data-mark]", { yPercent: 30, ease: "none", scrollTrigger: st });
+
+      // Partner rows slide against each other while the strip is on screen
+      const strip = { trigger: "[data-strip]", start: "top bottom", end: "bottom top", scrub: 0.4 };
+      gsap.fromTo("[data-row='a']", { xPercent: 0 }, { xPercent: -18, ease: "none", scrollTrigger: strip });
+      gsap.fromTo("[data-row='b']", { xPercent: -18 }, { xPercent: 0, ease: "none", scrollTrigger: strip });
+
+      return () => split.revert();
+    },
+    { scope: root },
+  );
 
   return (
-    <section ref={ref} className="noise relative isolate flex min-h-[100svh] flex-col overflow-hidden pt-28">
-      {/* Backdrop layers */}
-      <div aria-hidden className="absolute inset-0 -z-10">
-        <div className="grid-paper grid-fade absolute inset-0" />
-        <DotField className="absolute inset-0 opacity-70" />
-        <span className="absolute left-1/2 top-[38%] size-[720px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-teal/20 blur-[140px]" />
-        <span className="absolute right-[-10%] top-[10%] size-[420px] rounded-full bg-orange/20 blur-[130px]" />
-      </div>
+    <section ref={root} className="relative isolate overflow-x-clip pt-28 md:pt-32">
+      <DotField className="absolute inset-0 -z-10 opacity-80" />
 
-      <div className="shell relative grid flex-1 items-center gap-10 lg:grid-cols-[1.25fr_1fr]">
-        <motion.div style={{ opacity: fade }}>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease }}
-            className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-ink/60 px-3 py-1.5 font-mono text-xs tracking-[0.14em] text-muted uppercase backdrop-blur"
-          >
-            <span className="relative flex size-2">
-              <span className="absolute inset-0 animate-ping rounded-full bg-orange opacity-70" />
-              <span className="relative size-2 rounded-full bg-orange" />
+      <div className="shell grid min-h-[calc(100svh-8rem)] items-center gap-10 pb-12 lg:grid-cols-[1.35fr_1fr]">
+        <div>
+          <h1 className="display text-[clamp(3.4rem,11.5vw,10.5rem)]">
+            <span data-line className="block">
+              Meet the
             </span>
-            50,000+ builders · Est. 2023
-          </motion.p>
-
-          <h1 className="display mt-7 text-[clamp(3.2rem,10vw,9.5rem)]">
-            {["Meet the", "smarter", "community"].map((line, i) => (
-              <span key={line} className="block overflow-hidden pb-[0.06em]">
-                <motion.span
-                  className={`block ${i === 1 ? "accent pr-2" : ""}`}
-                  initial={{ y: "110%" }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 1, delay: 0.1 + i * 0.12, ease }}
-                >
-                  {line}
-                </motion.span>
-              </span>
-            ))}
+            <span data-line className="wide block">
+              smarter
+            </span>
+            <span data-line className="block">
+              community
+            </span>
           </h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5, ease }}
-            className="mt-7 max-w-[520px] text-lg leading-relaxed text-muted"
-          >
-            Hackathons, meetups and speaker sessions where India&apos;s students learn, connect and grow — by building in
-            public.
-          </motion.p>
+          <p data-fadeup className="mt-8 max-w-[31rem] text-lg leading-relaxed text-muted">
+            Geek Room runs hackathons, meetups and speaker sessions where 50,000+ students across India learn,
+            connect and build in public.
+          </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.62, ease }}
-            className="mt-9 flex flex-wrap gap-3"
-          >
+          <div data-fadeup className="mt-9 flex flex-wrap gap-3">
             <Link href="/event" className="btn-primary">
-              Explore events <ArrowDownRight className="size-4" />
+              See the events <ArrowDownRight className="size-4" />
             </Link>
             <Link href="/contact-us" className="btn-ghost">
               Partner with us <ArrowUpRight className="size-4" />
             </Link>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        {/* Abstract mark with orbit rings and floating chips */}
-        <motion.div
-          style={{ y: markY, rotate: markRotate }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, delay: 0.2, ease }}
-          className="relative mx-auto hidden aspect-square w-full max-w-[520px] lg:block"
-        >
-          <div className="animate-spin-slow absolute inset-0 rounded-full border border-dashed border-line-strong" />
-          <div className="absolute inset-[12%] rounded-full border border-line" />
-          <div className="absolute inset-[26%] rounded-full border border-teal/30 bg-teal/[0.04]" />
-          <span className="absolute left-1/2 top-0 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-orange shadow-[0_0_24px_#ff5a1f]" />
-          <span className="absolute bottom-[12%] left-[12%] size-2 rounded-full bg-teal shadow-[0_0_18px_#19b3bf]" />
-          <GeekMark className="absolute inset-[30%] drop-shadow-[0_0_40px_rgba(25,179,191,0.35)]" />
-
-          <FloatChip className="left-[-8%] top-[14%]" delay={0.9} label="Hackathons" value="Code Cubicle" />
-          <FloatChip className="right-[-12%] top-[58%]" delay={1.05} label="Largest in North India" value="Code Kshetra" />
-          <FloatChip className="bottom-[4%] left-[6%]" delay={1.2} label="Prize pool" value="₹5L+" />
-        </motion.div>
+        <div data-mark className="relative mx-auto hidden w-full max-w-[440px] lg:block">
+          <GeekMark className="w-full" />
+        </div>
       </div>
 
-      {/* Partner logo strip */}
-      <div className="relative mt-16 border-y border-line bg-ink/60 py-6 backdrop-blur">
-        <p className="label mb-5 text-center">Trusted by teams at</p>
-        <Marquee>
-          {partners.map((p) => (
-            <span key={p.name} className="mx-10 flex h-10 w-[120px] items-center justify-center">
-              <Image
-                src={p.logo}
-                alt={p.name}
-                width={120}
-                height={40}
-                className="max-h-9 w-auto object-contain opacity-50 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
-              />
-            </span>
+      {/* Partner strip: two rows moving against each other on scroll */}
+      <div data-strip className="border-y border-line py-7">
+        <p className="label shell mb-5">Hackathons powered by</p>
+        <div className="flex flex-col gap-4 overflow-hidden">
+          {[
+            { key: "a", items: rowA },
+            { key: "b", items: rowB },
+          ].map((row) => (
+            <div key={row.key} data-row={row.key} className="flex w-max gap-4 pl-4">
+              {[...row.items, ...row.items, ...row.items].map((p, i) => (
+                <span
+                  key={`${p.name}-${i}`}
+                  className="flex h-16 w-44 shrink-0 items-center justify-center rounded-full border border-line px-6"
+                >
+                  <Image
+                    src={p.logo}
+                    alt={i < row.items.length ? p.name : ""}
+                    width={120}
+                    height={40}
+                    className="max-h-8 w-auto object-contain opacity-80"
+                  />
+                </span>
+              ))}
+            </div>
           ))}
-        </Marquee>
+        </div>
       </div>
     </section>
-  );
-}
-
-function FloatChip({ className, delay, label, value }: { className: string; delay: number; label: string; value: string }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: [0, -8, 0] }}
-      transition={{ opacity: { delay, duration: 0.6 }, y: { delay, duration: 5, repeat: Infinity, ease: "easeInOut" } }}
-      className={`absolute rounded-2xl border border-line-strong bg-ink-2/80 px-4 py-3 backdrop-blur-md ${className}`}
-    >
-      <p className="font-mono text-xs tracking-[0.14em] text-subtle uppercase">{label}</p>
-      <p className="mt-1 font-display text-lg font-bold">{value}</p>
-    </motion.div>
   );
 }
