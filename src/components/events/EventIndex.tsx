@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
 import { eventsByDate, formatChip, type EventKind } from "@/data/events";
 import { gsap, prefersReducedMotion, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { EASE_EXPO, reveal } from "@/lib/motion";
 import { useLenis } from "@/components/motion/SmoothScroll";
 
 type Filter = "All" | EventKind;
@@ -40,14 +41,10 @@ export default function EventIndex() {
     () => {
       if (prefersReducedMotion()) return;
       gsap.utils.toArray<HTMLElement>("[data-row]").forEach((row) => {
-        const tl = gsap.timeline({
-          scrollTrigger: { trigger: row, start: "top 92%", end: "top 62%", scrub: 0.6 },
-        });
-        tl.from(row.querySelector("[data-rule]"), { scaleX: 0, transformOrigin: "0% 50%", ease: "none" }).from(
-          row.querySelectorAll("[data-lift]"),
-          { yPercent: 110, stagger: 0.04, ease: "none" },
-          0,
-        );
+        gsap
+          .timeline({ scrollTrigger: reveal(row, "top 94%") })
+          .from(row.querySelector("[data-rule]"), { scaleX: 0, transformOrigin: "0% 50%", duration: 1, ease: "expo.inOut" })
+          .from(row.querySelectorAll("[data-lift]"), { yPercent: 110, duration: 0.8, stagger: 0.05, ease: EASE_EXPO }, 0.2);
       });
       ScrollTrigger.refresh();
     },
