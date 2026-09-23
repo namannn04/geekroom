@@ -98,7 +98,7 @@ export default function FeaturedEvents() {
   const chip = formatChip(current.iso);
 
   return (
-    <section ref={root} className="relative pt-24 md:pt-32">
+    <section ref={root} className="relative overflow-x-clip pt-24 md:pt-32">
       <div className="shell flex flex-col justify-between gap-8 md:flex-row md:items-end">
         <SectionHead
           index="01"
