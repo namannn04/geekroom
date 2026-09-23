@@ -180,7 +180,7 @@ export default function EventIndex() {
                 onPointerEnter={() => setHovered(e.slug)}
                 onFocus={() => setHovered(e.slug)}
                 onBlur={() => setHovered(null)}
-                className="group relative grid grid-cols-[2.5rem_1fr_auto] items-center gap-x-4 gap-y-1 overflow-hidden py-6 md:grid-cols-[3.5rem_1fr_6rem_8rem_9rem] md:py-8"
+                className="group relative -mx-3 grid grid-cols-[2.5rem_1fr_auto] items-center gap-x-4 gap-y-1 overflow-hidden rounded-2xl px-3 py-6 md:-mx-5 md:px-5 md:grid-cols-[3.5rem_1fr_6rem_8rem_9rem] md:py-8"
               >
                 {/* Paper fill that sweeps in on hover */}
                 <span
