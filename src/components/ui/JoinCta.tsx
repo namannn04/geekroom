@@ -1,26 +1,41 @@
+import { ArrowUpRight } from "lucide-react";
+import GeekMark from "./GeekMark";
 import Reveal from "./Reveal";
 import { site } from "@/data/site";
 
-/** "Join the community" banner shown above the footer on inner pages. */
+/** Closing call-to-action band used at the bottom of most pages. */
 export default function JoinCta() {
   return (
-    <section className="container-x relative z-10 py-20">
-      <Reveal className="relative overflow-hidden rounded-md border border-line bg-surface px-6 py-12 md:px-12">
-        <span
-          aria-hidden
-          className="blob -right-20 -top-20 size-80 opacity-60"
-          style={{ background: "linear-gradient(135deg, var(--brand-teal), var(--brand-orange))" }}
-        />
-        <div className="relative flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-          <h2 className="heading-md max-w-xl">Hear new announcements & join a wonderful community</h2>
-          <a
-            href={site.socials.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-bebas rounded-md bg-fg px-10 py-4 text-base text-bg transition-transform hover:scale-[1.03]"
-          >
-            Join Now
-          </a>
+    <section className="shell pb-24 md:pb-32">
+      <Reveal className="noise relative overflow-hidden rounded-[2rem] bg-signal px-6 py-16 text-ink md:px-16 md:py-24">
+        <div aria-hidden className="grid-paper absolute inset-0 opacity-40 [--line:rgba(8,9,10,0.12)]" />
+        <GeekMark animated={false} className="absolute -right-10 -bottom-16 w-[340px] opacity-20 mix-blend-multiply md:w-[480px]" />
+        <div className="relative max-w-[820px]">
+          <p className="font-mono text-[11px] tracking-[0.18em] uppercase">Stay in the loop</p>
+          <h2 className="display mt-5 text-[clamp(2.4rem,6vw,5.5rem)]">
+            Hear it first. <em>Join the room.</em>
+          </h2>
+          <p className="mt-6 max-w-[520px] text-lg leading-relaxed text-ink/75">
+            New hackathons, meetups and announcements land on our socials before anywhere else.
+          </p>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <a
+              href={site.socials.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn bg-ink text-paper hover:bg-ink/85"
+            >
+              Join on LinkedIn <ArrowUpRight className="size-3.5" />
+            </a>
+            <a
+              href={site.socials.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn border border-ink/30 hover:bg-ink/10"
+            >
+              Follow on Instagram <ArrowUpRight className="size-3.5" />
+            </a>
+          </div>
         </div>
       </Reveal>
     </section>
