@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, Html, Lightformer } from "@react-three/drei";
+import { Environment, Lightformer } from "@react-three/drei";
 import { useEffect, useMemo, useRef, useState, type MutableRefObject } from "react";
 import * as THREE from "three";
 import { milestones } from "@/data/site";
@@ -115,26 +115,31 @@ function Mark({ progress, reduced }: { progress: Progress; reduced: boolean }) {
 
 /* ---------- milestone orbit ---------- */
 
-const ORBIT_R = 3.1;
+const ORBIT_R = 2.85;
 
-function Orbit({ reduced, compact }: { reduced: boolean; compact: boolean }) {
+type Labels = MutableRefObject<(HTMLDivElement | null)[]>;
+
+function Orbit({ reduced, labels }: { reduced: boolean; labels: Labels }) {
   const m = useMaterials();
   const spin = useRef<THREE.Group>(null);
   const nodes = useRef<(THREE.Group | null)[]>([]);
-  const labels = useRef<(HTMLDivElement | null)[]>([]);
   const world = useMemo(() => new THREE.Vector3(), []);
+  const screen = useMemo(() => new THREE.Vector3(), []);
 
-  useFrame((_, delta) => {
+  useFrame(({ camera, size }, delta) => {
     if (!spin.current) return;
     if (!reduced) spin.current.rotation.y += delta * 0.22;
-    // Depth cue: satellites behind the mark dim and shrink
     nodes.current.forEach((node, i) => {
       const el = labels.current[i];
       if (!node || !el) return;
       node.getWorldPosition(world);
+      // Depth cue: satellites behind the mark dim and shrink
       const front = THREE.MathUtils.clamp((world.z + ORBIT_R) / (2 * ORBIT_R), 0, 1);
-      el.style.opacity = String(0.18 + front * 0.82);
-      el.style.transform = `scale(${0.78 + front * 0.22})`;
+      screen.copy(world).project(camera);
+      const x = ((screen.x + 1) / 2) * size.width;
+      const y = ((1 - screen.y) / 2) * size.height;
+      el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) translate(-50%, -160%) scale(${(0.78 + front * 0.22).toFixed(3)})`;
+      el.style.opacity = (0.16 + front * 0.84).toFixed(3);
       el.style.zIndex = String(Math.round(front * 10));
     });
   });
@@ -163,17 +168,6 @@ function Orbit({ reduced, compact }: { reduced: boolean; compact: boolean }) {
               <mesh material={m.node}>
                 <sphereGeometry args={[0.07, 24, 24]} />
               </mesh>
-              <Html center distanceFactor={compact ? 9 : 7.5} zIndexRange={[20, 0]} style={{ pointerEvents: "none" }}>
-                <div
-                  ref={(el) => {
-                    labels.current[i] = el;
-                  }}
-                  className="origin-center translate-y-[-150%] rounded-full border border-line-strong bg-ink/85 px-3 py-1.5 whitespace-nowrap backdrop-blur-sm transition-none"
-                >
-                  <span className="font-mono text-[12px] text-orange">{ms.date}</span>
-                  <span className="ml-2 text-[13px] text-paper">{ms.short}</span>
-                </div>
-              </Html>
             </group>
           );
         })}
@@ -189,6 +183,7 @@ export default function GeekMark3D({ progress, className = "" }: { progress: Pro
   const [inView, setInView] = useState(true);
   const [reduced, setReduced] = useState(false);
   const [compact, setCompact] = useState(false);
+  const labels = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -205,7 +200,7 @@ export default function GeekMark3D({ progress, className = "" }: { progress: Pro
   }, []);
 
   return (
-    <div ref={wrap} className={className} aria-hidden>
+    <div ref={wrap} className={`relative ${className}`} aria-hidden>
       <Canvas
         dpr={[1, 1.6]}
         frameloop={inView ? "always" : "never"}
@@ -223,8 +218,24 @@ export default function GeekMark3D({ progress, className = "" }: { progress: Pro
           <Lightformer form="ring" intensity={2} position={[0, 0, -6]} scale={4} />
         </Environment>
         <Mark progress={progress} reduced={reduced} />
-        <Orbit reduced={reduced} compact={compact} />
+        <Orbit reduced={reduced} labels={labels} />
       </Canvas>
+
+      {/* Milestone labels live in plain DOM above the canvas, positioned every frame */}
+      <div className="pointer-events-none absolute inset-0">
+        {milestones.map((ms, i) => (
+          <div
+            key={ms.date}
+            ref={(el) => {
+              labels.current[i] = el;
+            }}
+            className="absolute top-0 left-0 rounded-full border border-line-strong bg-ink/85 px-3 py-1.5 whitespace-nowrap opacity-0 will-change-transform"
+          >
+            <span className="font-mono text-xs text-orange">{ms.date}</span>
+            <span className={`ml-2 text-paper ${compact ? "text-xs" : "text-sm"}`}>{ms.short}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
