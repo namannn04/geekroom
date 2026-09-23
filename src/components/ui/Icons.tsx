@@ -17,15 +17,3 @@ export function InstagramIcon({ className = "size-5" }: IconProps) {
     </svg>
   );
 }
-
-/** The little "share" node glyph shown on person cards */
-export function ShareIcon({ className = "size-4" }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className={className} aria-hidden>
-      <circle cx="18" cy="5" r="3" />
-      <circle cx="6" cy="12" r="3" />
-      <circle cx="18" cy="19" r="3" />
-      <path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4" />
-    </svg>
-  );
-}
