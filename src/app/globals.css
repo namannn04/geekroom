@@ -1,103 +1,143 @@
 @import "tailwindcss";
 
+/*
+ * Geek Room — "Signal" design system
+ * Ink-dark canvas, paper-grid texture, teal + orange signal colours taken from the </> mark.
+ */
 :root {
-  --bg: #111111;
-  --surface: #000000;
-  --surface-2: #1a1a1a;
-  --fg: #ffffff;
-  --muted: rgba(255, 255, 255, 0.6);
-  --subtle: rgba(255, 255, 255, 0.4);
-  --line: rgba(255, 255, 255, 0.12);
-  --brand-teal: #13a7b4;
-  --brand-orange: #f15a22;
+  --ink: #08090a;
+  --ink-2: #101113;
+  --ink-3: #17181b;
+  --paper: #f4f1ea;
+  --muted: rgba(244, 241, 234, 0.62);
+  --subtle: rgba(244, 241, 234, 0.38);
+  --line: rgba(244, 241, 234, 0.09);
+  --line-strong: rgba(244, 241, 234, 0.18);
+  --teal: #19b3bf;
+  --orange: #ff5a1f;
+  --signal: linear-gradient(100deg, var(--teal) 0%, #7fd6c9 45%, var(--orange) 100%);
 }
 
 @theme inline {
-  --color-bg: var(--bg);
-  --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
-  --color-fg: var(--fg);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-paper: var(--paper);
   --color-muted: var(--muted);
   --color-subtle: var(--subtle);
   --color-line: var(--line);
-  --color-teal: var(--brand-teal);
-  --color-orange: var(--brand-orange);
-  --font-display: "Clash Display", var(--font-jakarta), sans-serif;
-  --font-sans: var(--font-jakarta), system-ui, sans-serif;
-  --font-bebas: var(--font-bebas-neue), sans-serif;
+  --color-line-strong: var(--line-strong);
+  --color-teal: var(--teal);
+  --color-orange: var(--orange);
+  --font-display: var(--font-grotesk), system-ui, sans-serif;
+  --font-serif: var(--font-instrument), Georgia, serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 }
 
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--font-jakarta), system-ui, sans-serif;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-grotesk), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
 ::selection {
-  background: var(--brand-orange);
-  color: #fff;
+  background: var(--orange);
+  color: var(--ink);
 }
 
 @layer components {
-  .container-x {
-    @apply mx-auto w-full max-w-[1440px] px-5 md:px-10 lg:px-[100px];
+  .shell {
+    @apply mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-10;
   }
 
-  .heading-xl {
-    @apply font-display text-5xl leading-[1.05] font-semibold capitalize md:text-7xl lg:text-[88px];
+  /* Uppercase grotesk headline; pair with <em> for the italic serif accent */
+  .display {
+    @apply font-display font-bold tracking-[-0.03em] uppercase leading-[0.92];
+  }
+  .display em,
+  .accent {
+    @apply font-serif font-normal tracking-[-0.01em] normal-case italic;
   }
 
-  .heading-lg {
-    @apply font-display text-4xl leading-[1.15] font-semibold capitalize md:text-5xl lg:text-[64px];
+  .eyebrow {
+    @apply font-mono text-[11px] tracking-[0.18em] text-subtle uppercase;
   }
 
-  .heading-md {
-    @apply font-display text-3xl leading-[1.2] font-semibold capitalize md:text-[44px];
+  .text-signal {
+    background: var(--signal);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
-  .btn-bebas {
-    @apply font-bebas text-sm tracking-[0.12em] uppercase;
+  .bg-signal {
+    background: var(--signal);
   }
 
-  /* Soft blurred colour blobs used as page backdrops */
-  .blob {
-    @apply pointer-events-none absolute rounded-full blur-[120px];
+  /* Paper-grid texture */
+  .grid-paper {
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .grid-fade {
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 100%);
+  }
+
+  .noise::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-full px-5 py-3 font-mono text-xs tracking-[0.12em] uppercase transition-all duration-300;
+  }
+  .btn-primary {
+    @apply btn bg-paper text-ink hover:bg-orange hover:text-ink;
+  }
+  .btn-ghost {
+    @apply btn border border-line-strong text-paper hover:border-paper hover:bg-paper/5;
   }
 }
 
-/* Infinite horizontal marquee */
 @keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
   to {
     transform: translateX(-50%);
   }
 }
-
 .animate-marquee {
-  animation: marquee 30s linear infinite;
+  animation: marquee 40s linear infinite;
 }
 
-/* Gradient border for the Contact CTA */
-.gradient-border {
-  border: 1px solid transparent;
-  background:
-    linear-gradient(#000, #000) padding-box,
-    linear-gradient(90deg, var(--brand-teal), var(--brand-orange)) border-box;
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 40s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
-    animation: none;
-  }
   html {
     scroll-behavior: auto;
+  }
+  .animate-marquee,
+  .animate-spin-slow {
+    animation: none;
   }
 }
