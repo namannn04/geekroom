@@ -1,18 +1,45 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import SectionHead from "@/components/ui/SectionHead";
 import { milestones } from "@/data/site";
+import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 
-/** Vertical timeline whose rail fills with the signal gradient as you scroll. */
+/**
+ * Vertical timeline. The rail fills with scroll, and each date widens and turns
+ * orange while it crosses the middle of the screen, then relaxes again.
+ */
 export default function Timeline() {
-  const ref = useRef<HTMLOListElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 70%", "end 60%"] });
-  const fill = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const root = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+      gsap.from("[data-fill]", {
+        scaleY: 0,
+        transformOrigin: "50% 0%",
+        ease: "none",
+        scrollTrigger: { trigger: "[data-list]", start: "top 60%", end: "bottom 60%", scrub: true },
+      });
+      gsap.utils.toArray<HTMLElement>("[data-item]").forEach((item) => {
+        const date = item.querySelector("[data-date]");
+        gsap
+          .timeline({ scrollTrigger: { trigger: item, start: "top 75%", end: "bottom 35%", scrub: true } })
+          .fromTo(date, { fontStretch: "60%", color: "rgba(238,236,230,0.35)" }, { fontStretch: "130%", color: "#ff5a1f", ease: "sine.inOut" })
+          .to(date, { fontStretch: "80%", color: "rgba(238,236,230,1)", ease: "sine.inOut" });
+        gsap.from(item.querySelector("[data-text]"), {
+          y: 40,
+          opacity: 0,
+          ease: "power2.out",
+          scrollTrigger: { trigger: item, start: "top 85%", end: "top 55%", scrub: true },
+        });
+      });
+    },
+    { scope: root },
+  );
 
   return (
-    <section className="shell py-24 md:py-32">
+    <section ref={root} className="shell py-24 md:py-32">
       <SectionHead
         index="01"
         title={
@@ -22,29 +49,21 @@ export default function Timeline() {
         }
       />
 
-      <ol ref={ref} className="relative mt-16 md:mt-20">
-        <span className="absolute left-[7px] top-0 h-full w-px bg-line-strong md:left-1/2" />
-        <motion.span style={{ height: fill }} className="absolute left-[7px] top-0 w-px bg-signal md:left-1/2" />
+      <ol data-list className="relative mt-16 md:mt-20">
+        <span className="absolute top-0 left-[5px] h-full w-px bg-line-strong md:left-[11.5rem]" />
+        <span data-fill className="absolute top-0 left-[5px] h-full w-px bg-orange md:left-[11.5rem]" />
 
-        {milestones.map((m, i) => {
-          const right = i % 2 === 1;
-          return (
-            <motion.li
-              key={m.date}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="relative grid pb-14 pl-10 last:pb-0 md:grid-cols-2 md:pl-0"
-            >
-              <span className="absolute left-0 top-2 size-[15px] rounded-full border-2 border-ink bg-orange shadow-[0_0_0_4px_rgba(255,90,31,0.15)] md:left-1/2 md:-translate-x-1/2" />
-              <div className={`${right ? "md:col-start-2 md:pl-16" : "md:pr-16 md:text-right"}`}>
-                <p className="display text-4xl md:text-5xl">{m.date}</p>
-                <p className="mt-4 max-w-[440px] text-lg leading-relaxed text-muted md:inline-block">{m.text}</p>
-              </div>
-            </motion.li>
-          );
-        })}
+        {milestones.map((m) => (
+          <li key={m.date} data-item className="relative grid gap-3 pb-16 pl-8 last:pb-0 md:grid-cols-[11rem_1fr] md:gap-16 md:pl-0">
+            <span className="absolute top-3 left-0 size-[11px] rounded-full bg-orange md:left-[11.5rem] md:-translate-x-[5px]" />
+            <p data-date className="display text-4xl whitespace-nowrap md:text-right md:text-5xl">
+              {m.date}
+            </p>
+            <p data-text className="max-w-[34rem] text-lg leading-relaxed text-muted md:pl-4 md:text-xl">
+              {m.text}
+            </p>
+          </li>
+        ))}
       </ol>
     </section>
   );
