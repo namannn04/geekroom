@@ -99,9 +99,9 @@ export default function Hero() {
           <span className="absolute bottom-[12%] left-[12%] size-2 rounded-full bg-teal shadow-[0_0_18px_#19b3bf]" />
           <GeekMark className="absolute inset-[30%] drop-shadow-[0_0_40px_rgba(25,179,191,0.35)]" />
 
-          <FloatChip className="left-[-4%] top-[18%]" delay={0.9} label="Hackathons" value="Code Cubicle" />
-          <FloatChip className="right-[-6%] top-[44%]" delay={1.05} label="Largest in North India" value="Code Kshetra" />
-          <FloatChip className="bottom-[8%] left-[18%]" delay={1.2} label="Prize pool" value="₹5L+" />
+          <FloatChip className="left-[-8%] top-[14%]" delay={0.9} label="Hackathons" value="Code Cubicle" />
+          <FloatChip className="right-[-12%] top-[58%]" delay={1.05} label="Largest in North India" value="Code Kshetra" />
+          <FloatChip className="bottom-[4%] left-[6%]" delay={1.2} label="Prize pool" value="₹5L+" />
         </motion.div>
       </div>
 
