@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Plus } from "lucide-react";
+import { ArrowUpRight, Plus } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import { faqs, site } from "@/data/site";
 
@@ -11,60 +10,60 @@ export default function Faq() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="container-x relative z-10 py-16 md:py-24">
+    <section className="shell grid gap-12 py-24 md:py-32 lg:grid-cols-[0.8fr_1.2fr]">
       <Reveal>
-        <h2 className="heading-lg">Frequently asked question</h2>
-      </Reveal>
-
-      <div className="mt-10 grid gap-10 md:mt-14 md:grid-cols-[1.4fr_1fr]">
-        <Reveal className="relative aspect-[710/414] overflow-hidden">
-          <Image src="/images/home/faq.jpg" alt="Geek Room event" fill sizes="(min-width: 768px) 60vw, 100vw" className="object-cover" />
-        </Reveal>
-
-        <div className="flex flex-col">
-          {faqs.map((f, i) => {
-            const isOpen = open === i;
-            return (
-              <div key={f.q} className="border-b border-line">
-                <button
-                  type="button"
-                  aria-expanded={isOpen}
-                  onClick={() => setOpen(isOpen ? null : i)}
-                  className="flex w-full items-center justify-between gap-6 py-5 text-left font-display text-lg font-medium capitalize"
-                >
-                  {f.q}
-                  <Plus
-                    className={`size-5 shrink-0 transition-transform duration-300 ${isOpen ? "rotate-45" : ""}`}
-                  />
-                </button>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.p
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden text-[15px] leading-relaxed text-muted"
-                    >
-                      <span className="block pb-5">{f.a}</span>
-                    </motion.p>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      <Reveal className="mt-16 text-center">
-        <p className="font-display text-2xl font-semibold capitalize md:text-4xl">Get in touch with us</p>
-        <a
-          href={`mailto:${site.email}`}
-          className="mt-3 inline-block bg-gradient-to-r from-teal to-orange bg-clip-text font-display text-2xl font-semibold text-transparent md:text-4xl"
-        >
-          {site.email}
+        <p className="eyebrow flex items-center gap-3">
+          <span className="text-orange">08</span>
+          <span className="h-px w-8 bg-line-strong" />
+          FAQ
+        </p>
+        <h2 className="display mt-5 text-[clamp(2.4rem,5vw,4.5rem)]">
+          Questions, <em className="text-signal">answered</em>
+        </h2>
+        <p className="mt-6 max-w-[360px] leading-relaxed text-muted">Still curious? Our inbox is always open.</p>
+        <a href={`mailto:${site.email}`} className="btn-ghost mt-8">
+          {site.email} <ArrowUpRight className="size-3.5" />
         </a>
       </Reveal>
+
+      <div className="border-t border-line">
+        {faqs.map((f, i) => {
+          const isOpen = open === i;
+          return (
+            <div key={f.q} className="border-b border-line">
+              <button
+                type="button"
+                aria-expanded={isOpen}
+                onClick={() => setOpen(isOpen ? null : i)}
+                className="group flex w-full items-center gap-6 py-7 text-left"
+              >
+                <span className="font-mono text-xs text-orange">0{i + 1}</span>
+                <span className="flex-1 font-display text-xl font-bold md:text-2xl">{f.q}</span>
+                <span
+                  className={`grid size-10 shrink-0 place-items-center rounded-full border transition-all duration-300 ${
+                    isOpen ? "rotate-45 border-orange bg-orange text-ink" : "border-line-strong group-hover:border-paper"
+                  }`}
+                >
+                  <Plus className="size-4" />
+                </span>
+              </button>
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <p className="max-w-[600px] pb-7 pl-10 leading-relaxed text-muted">{f.a}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          );
+        })}
+      </div>
     </section>
   );
 }
