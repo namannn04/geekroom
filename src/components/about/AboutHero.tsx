@@ -66,7 +66,7 @@ export default function AboutHero() {
         {cells.map((s, i) => (
           <div key={s.label} className={`overflow-hidden border-b border-line ${i % 2 ? "border-l" : ""} ${i === 2 ? "lg:border-l" : ""}`}>
             <div data-cell className="p-6 md:p-8">
-              <dd className="display text-[clamp(2.4rem,6vw,4.5rem)] tabular-nums">
+              <dd className="display text-[clamp(2.4rem,6vw,4.5rem)] tabular-nums lg:text-[clamp(2.4rem,3.8vw,4.5rem)]">
                 <span data-num>{fmt(s.value)}</span>
                 <span className="text-orange">{s.suffix}</span>
               </dd>
