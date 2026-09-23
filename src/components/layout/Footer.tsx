@@ -68,7 +68,7 @@ export default function Footer() {
 
       {/* Oversized outlined wordmark */}
       <div aria-hidden className="shell select-none">
-        <p className="display translate-y-[18%] text-center text-[19vw] leading-none text-transparent [-webkit-text-stroke:1px_var(--line-strong)] lg:text-[250px]">
+        <p className="display translate-y-[18%] text-center text-[15vw] leading-none whitespace-nowrap text-transparent [-webkit-text-stroke:1px_var(--line-strong)] lg:text-[196px]">
           Geek Room
         </p>
       </div>
