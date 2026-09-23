@@ -11,8 +11,8 @@ export default function MessagePage({ label, title, body }: { label?: string; ti
       <DotField className="absolute inset-0 -z-10 opacity-70" />
       <Reveal className="shell flex flex-col items-center text-center">
         <GeekMark className="w-28" />
-        {label && <p className="label mt-10">{label}</p>}
-        <h1 className="display mt-4 text-[clamp(4rem,16vw,13rem)]">{title}</h1>
+        <h1 className="display mt-10 text-[clamp(4rem,16vw,13rem)]">{title}</h1>
+        {label && <p className="mt-2 font-display text-2xl font-extrabold uppercase [font-stretch:120%]">{label}</p>}
         {body && <p className="mt-6 max-w-[480px] text-lg leading-relaxed text-muted">{body}</p>}
         <Link href="/" className="btn-primary mt-10">
           <ArrowLeft className="size-4" /> Back to home
