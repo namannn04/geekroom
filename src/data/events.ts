@@ -1,6 +1,12 @@
+export type EventKind = "Hackathon" | "Meetup";
+
 export type EventItem = {
   slug: string;
   title: string;
+  kind: EventKind;
+  /** ISO date (yyyy-mm-dd) used for sorting and the date chip */
+  iso: string;
+  city: string;
   date?: string;
   location?: string;
   image: string;
@@ -14,6 +20,9 @@ export type EventItem = {
 export const events: EventItem[] = [
   {
     slug: "hackblr1",
+    kind: "Hackathon",
+    iso: "2026-04-26",
+    city: "Bengaluru",
     title: "HackBLR (MLH HackDays)",
     date: "26 April 2026",
     location: "Zintlr Private Limited, Bengaluru",
@@ -27,6 +36,9 @@ export const events: EventItem[] = [
   },
   {
     slug: "hackgr",
+    kind: "Hackathon",
+    iso: "2026-03-07",
+    city: "Delhi NCR",
     title: "Hack Geek Room",
     date: "7th March 2026",
     location: "OPSTree Global",
@@ -39,6 +51,9 @@ export const events: EventItem[] = [
   },
   {
     slug: "cc5.0",
+    kind: "Hackathon",
+    iso: "2025-09-14",
+    city: "Bengaluru",
     title: "Code Cubicle 5.0",
     date: "14 September 2025",
     location: "Microsoft Office (Bengaluru)",
@@ -54,6 +69,9 @@ export const events: EventItem[] = [
   },
   {
     slug: "grmeetup",
+    kind: "Meetup",
+    iso: "2025-11-08",
+    city: "Gurugram",
     title: "Geek Room Meetup #2",
     date: "8 November 2025",
     location: "Microsoft Office (Gurugram)",
@@ -66,6 +84,9 @@ export const events: EventItem[] = [
   },
   {
     slug: "cc4.0",
+    kind: "Hackathon",
+    iso: "2025-07-05",
+    city: "Hyderabad",
     title: "Code Cubicle 4.0",
     date: "5th July 2025",
     location: "Microsoft Office (Hyderabad)",
@@ -81,6 +102,9 @@ export const events: EventItem[] = [
   },
   {
     slug: "cc3.0",
+    kind: "Hackathon",
+    iso: "2024-09-21",
+    city: "Gurugram",
     title: "Code Cubicle 3.0",
     date: "21 September 2024",
     location: "Mastercard Office, Gurugram",
@@ -93,7 +117,12 @@ export const events: EventItem[] = [
   },
   {
     slug: "ck2.0",
+    kind: "Hackathon",
+    iso: "2025-02-15",
+    city: "Delhi",
     title: "Code Kshetra 2.0",
+    date: "February 2025",
+    location: "JIMS Sector-5, Rohini, Delhi",
     image: "/images/events/code-kshetra-2.jpg",
     tagline: "Meet the largest hack in North India",
     highlights: [
@@ -110,6 +139,18 @@ export const events: EventItem[] = [
     ],
   },
 ];
+
+/** Events sorted newest first */
+export const eventsByDate = [...events].sort((a, b) => b.iso.localeCompare(a.iso));
+
+export function formatChip(iso: string) {
+  const d = new Date(`${iso}T00:00:00`);
+  return {
+    day: d.toLocaleDateString("en-IN", { day: "2-digit" }),
+    month: d.toLocaleDateString("en-IN", { month: "short" }).toUpperCase(),
+    year: d.getFullYear(),
+  };
+}
 
 export function getEvent(slug: string) {
   return events.find((e) => e.slug === slug);
