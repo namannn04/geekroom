@@ -33,7 +33,7 @@ export default function ContactPage() {
 
       <div className="shell grid gap-14 lg:grid-cols-[0.9fr_1.1fr]">
         <Reveal>
-          <p className="eyebrow flex items-center gap-3">
+          <p className="label flex items-center gap-3">
             <span className="text-orange">Contact</span>
             <span className="h-px w-8 bg-line-strong" />
             We reply fast
@@ -58,7 +58,7 @@ export default function ContactPage() {
                   <Icon className="size-5 text-teal" />
                   <ArrowUpRight className="size-4 text-subtle transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-paper" />
                 </div>
-                <p className="eyebrow mt-5">{label}</p>
+                <p className="label mt-5">{label}</p>
                 <p className="mt-1.5 text-sm break-words text-paper">{value}</p>
               </a>
             ))}

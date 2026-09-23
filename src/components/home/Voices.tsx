@@ -30,7 +30,7 @@ export default function Voices({ index = "07" }: { index?: string }) {
               </span>
               <div>
                 <p className="text-sm font-semibold">Hacker</p>
-                <p className="font-mono text-[11px] tracking-[0.1em] text-subtle uppercase">{r.title.split(" at ")[1]}</p>
+                <p className="font-mono text-xs tracking-[0.1em] text-subtle uppercase">{r.title.split(" at ")[1]}</p>
               </div>
             </div>
           </Reveal>

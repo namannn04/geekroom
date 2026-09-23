@@ -22,7 +22,7 @@ export default function Speakers() {
           <p className="display text-7xl text-transparent [-webkit-text-stroke:1.5px_var(--paper)] md:text-8xl">
             <CountUp to={35} suffix="+" />
           </p>
-          <p className="eyebrow mt-2">Speakers &amp; mentors</p>
+          <p className="label mt-2">Speakers &amp; mentors</p>
         </Reveal>
       </div>
 

@@ -46,7 +46,7 @@ export default async function EventPage({ params }: Props) {
             <ArrowLeft className="size-3.5" /> All events
           </Link>
           <Reveal>
-            <p className="eyebrow mt-10 flex items-center gap-3">
+            <p className="label mt-10 flex items-center gap-3">
               <span className="text-orange">{event.kind}</span>
               <span className="h-px w-8 bg-line-strong" />
               {event.city}
@@ -69,7 +69,7 @@ export default async function EventPage({ params }: Props) {
           <dl className="grid gap-3 sm:grid-cols-3">
             {meta.map(({ Icon, label, value }) => (
               <div key={label} className="rounded-2xl border border-line bg-ink-2 p-5">
-                <dt className="flex items-center gap-2 font-mono text-[10px] tracking-[0.14em] text-subtle uppercase">
+                <dt className="flex items-center gap-2 font-mono text-xs tracking-[0.14em] text-subtle uppercase">
                   <Icon className="size-3.5 text-teal" /> {label}
                 </dt>
                 <dd className="mt-3 font-display text-lg leading-snug font-bold">{value}</dd>
@@ -114,7 +114,7 @@ export default async function EventPage({ params }: Props) {
         <aside className="lg:sticky lg:top-28 lg:h-fit">
           <div className="relative overflow-hidden rounded-3xl border border-line-strong bg-ink-2 p-7">
             <span aria-hidden className="absolute -right-16 -top-16 size-48 rounded-full bg-orange/25 blur-3xl" />
-            <p className="eyebrow relative">Take part</p>
+            <p className="label relative">Take part</p>
             <p className="relative mt-4 font-display text-2xl leading-tight font-bold">
               {event.register ? "Registrations are handled on the event page." : "Stay tuned for the next edition."}
             </p>
@@ -133,7 +133,7 @@ export default async function EventPage({ params }: Props) {
               </Link>
             )}
 
-            <p className="eyebrow relative mt-9">More events</p>
+            <p className="label relative mt-9">More events</p>
             <ul className="relative mt-3 divide-y divide-line">
               {eventsByDate
                 .filter((e) => e.slug !== slug)

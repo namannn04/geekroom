@@ -12,7 +12,7 @@ export default function Faq() {
   return (
     <section className="shell grid gap-12 py-24 md:py-32 lg:grid-cols-[0.8fr_1.2fr]">
       <Reveal>
-        <p className="eyebrow flex items-center gap-3">
+        <p className="label flex items-center gap-3">
           <span className="text-orange">08</span>
           <span className="h-px w-8 bg-line-strong" />
           FAQ

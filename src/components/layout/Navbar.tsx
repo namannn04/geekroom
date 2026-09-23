@@ -52,7 +52,7 @@ export default function Navbar() {
               <li key={l.href} className="relative">
                 <Link
                   href={l.href}
-                  className={`relative z-10 block rounded-full px-4 py-2 font-mono text-[11px] tracking-[0.14em] uppercase transition-colors ${
+                  className={`relative z-10 block rounded-full px-4 py-2 font-mono text-xs tracking-[0.14em] uppercase transition-colors ${
                     active ? "text-ink" : "text-muted hover:text-paper"
                   }`}
                 >

@@ -39,7 +39,7 @@ export default function Team() {
               <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5 md:p-6">
                 <div>
                   <span
-                    className={`inline-block rounded-full px-2.5 py-1 font-mono text-[10px] tracking-[0.12em] uppercase ${
+                    className={`inline-block rounded-full px-2.5 py-1 font-mono text-xs tracking-[0.12em] uppercase ${
                       p.role === "Co-Founder" ? "bg-orange text-ink" : "border border-white/25 bg-ink/50 backdrop-blur"
                     }`}
                   >

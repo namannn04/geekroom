@@ -35,7 +35,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease }}
-            className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-ink/60 px-3 py-1.5 font-mono text-[11px] tracking-[0.14em] text-muted uppercase backdrop-blur"
+            className="inline-flex items-center gap-2 rounded-full border border-line-strong bg-ink/60 px-3 py-1.5 font-mono text-xs tracking-[0.14em] text-muted uppercase backdrop-blur"
           >
             <span className="relative flex size-2">
               <span className="absolute inset-0 animate-ping rounded-full bg-orange opacity-70" />
@@ -107,7 +107,7 @@ export default function Hero() {
 
       {/* Partner logo strip */}
       <div className="relative mt-16 border-y border-line bg-ink/60 py-6 backdrop-blur">
-        <p className="eyebrow mb-5 text-center">Trusted by teams at</p>
+        <p className="label mb-5 text-center">Trusted by teams at</p>
         <Marquee>
           {partners.map((p) => (
             <span key={p.name} className="mx-10 flex h-10 w-[120px] items-center justify-center">
@@ -134,7 +134,7 @@ function FloatChip({ className, delay, label, value }: { className: string; dela
       transition={{ opacity: { delay, duration: 0.6 }, y: { delay, duration: 5, repeat: Infinity, ease: "easeInOut" } }}
       className={`absolute rounded-2xl border border-line-strong bg-ink-2/80 px-4 py-3 backdrop-blur-md ${className}`}
     >
-      <p className="font-mono text-[10px] tracking-[0.14em] text-subtle uppercase">{label}</p>
+      <p className="font-mono text-xs tracking-[0.14em] text-subtle uppercase">{label}</p>
       <p className="mt-1 font-display text-lg font-bold">{value}</p>
     </motion.div>
   );

@@ -40,7 +40,7 @@ export default function Footer() {
 
         {footerColumns.map((col) => (
           <div key={col.title}>
-            <p className="eyebrow">{col.title}</p>
+            <p className="label">{col.title}</p>
             <ul className="mt-5 space-y-3">
               {col.links.map((l) => (
                 <li key={l.href}>
@@ -54,7 +54,7 @@ export default function Footer() {
         ))}
 
         <div>
-          <p className="eyebrow">Contact</p>
+          <p className="label">Contact</p>
           <a
             href={`mailto:${site.email}`}
             className="group mt-5 flex items-center gap-1.5 text-sm text-paper transition-colors hover:text-orange"
@@ -74,7 +74,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-line">
-        <div className="shell flex flex-col items-center justify-between gap-2 py-5 font-mono text-[11px] tracking-[0.12em] text-subtle uppercase md:flex-row">
+        <div className="shell flex flex-col items-center justify-between gap-2 py-5 font-mono text-xs tracking-[0.12em] text-subtle uppercase md:flex-row">
           <p>
             &copy; {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>

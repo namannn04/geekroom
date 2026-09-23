@@ -16,7 +16,7 @@ export default function AboutHero() {
 
       <div className="shell">
         <Reveal>
-          <p className="eyebrow flex items-center gap-3">
+          <p className="label flex items-center gap-3">
             <span className="text-orange">About</span>
             <span className="h-px w-8 bg-line-strong" />
             Since 2023
@@ -52,7 +52,7 @@ export default function AboutHero() {
                 <dd className="display text-5xl md:text-6xl">
                   <CountUp to={s.value} suffix={s.suffix} />
                 </dd>
-                <dt className="mt-3 font-mono text-[11px] tracking-[0.12em] text-muted uppercase">{s.label}</dt>
+                <dt className="mt-3 font-mono text-xs tracking-[0.12em] text-muted uppercase">{s.label}</dt>
               </div>
             ))}
           </dl>

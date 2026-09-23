@@ -24,13 +24,13 @@ export default function EventCard({ event, className = "" }: { event: EventItem;
         {/* Date chip */}
         <div className="absolute left-4 top-4 flex overflow-hidden rounded-xl border border-white/15 bg-ink/70 font-mono text-paper backdrop-blur-md">
           <span className="grid place-items-center bg-paper px-2.5 text-lg font-bold text-ink">{chip.day}</span>
-          <span className="flex flex-col justify-center px-2.5 py-1 text-[10px] leading-tight tracking-[0.1em]">
+          <span className="flex flex-col justify-center px-2.5 py-1 text-xs leading-tight tracking-[0.1em]">
             <span>{chip.month}</span>
             <span className="text-subtle">{chip.year}</span>
           </span>
         </div>
 
-        <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-ink/70 px-2.5 py-1 font-mono text-[10px] tracking-[0.14em] uppercase backdrop-blur-md">
+        <span className="absolute right-4 top-4 rounded-full border border-white/15 bg-ink/70 px-2.5 py-1 font-mono text-xs tracking-[0.14em] uppercase backdrop-blur-md">
           {event.kind}
         </span>
       </div>

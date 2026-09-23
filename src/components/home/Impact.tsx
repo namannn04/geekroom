@@ -20,7 +20,7 @@ export default function Impact() {
         </div>
 
         <div className="relative">
-          <p className="eyebrow text-center">
+          <p className="label text-center">
             <span className="text-orange">03</span> — Delivered impact
           </p>
           <h2 className="display mx-auto mt-5 max-w-[800px] text-center text-[clamp(2rem,5vw,4rem)]">
@@ -33,7 +33,7 @@ export default function Impact() {
                 <dd className="display text-[clamp(2.2rem,5vw,4rem)]">
                   <CountUp to={s.value} suffix={s.suffix} />
                 </dd>
-                <dt className="mt-3 font-mono text-[11px] tracking-[0.12em] text-muted uppercase">{s.label}</dt>
+                <dt className="mt-3 font-mono text-xs tracking-[0.12em] text-muted uppercase">{s.label}</dt>
               </div>
             ))}
           </dl>

@@ -37,7 +37,7 @@ export default function ContactForm() {
   return (
     <form onSubmit={onSubmit} className="rounded-3xl border border-line-strong bg-ink-2 p-6 md:p-9">
       <fieldset>
-        <legend className="eyebrow">I&apos;m reaching out about</legend>
+        <legend className="label">I&apos;m reaching out about</legend>
         <div className="mt-4 flex flex-wrap gap-2">
           {topics.map((t) => (
             <label
@@ -55,19 +55,19 @@ export default function ContactForm() {
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
         <label className="block">
-          <span className="eyebrow">Name</span>
+          <span className="label">Name</span>
           <input name="name" required autoComplete="name" placeholder="Your name" className={`${field} mt-2`} />
         </label>
         <label className="block">
-          <span className="eyebrow">Email</span>
+          <span className="label">Email</span>
           <input name="email" type="email" required autoComplete="email" placeholder="you@company.com" className={`${field} mt-2`} />
         </label>
         <label className="block sm:col-span-2">
-          <span className="eyebrow">Organisation (optional)</span>
+          <span className="label">Organisation (optional)</span>
           <input name="org" autoComplete="organization" placeholder="Company, college or community" className={`${field} mt-2`} />
         </label>
         <label className="block sm:col-span-2">
-          <span className="eyebrow">Message</span>
+          <span className="label">Message</span>
           <textarea name="message" required rows={5} placeholder="Tell us what you have in mind…" className={`${field} mt-2 resize-none`} />
         </label>
       </div>

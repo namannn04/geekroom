@@ -10,7 +10,7 @@ export default function Partners() {
       <div className="noise relative grid gap-12 overflow-hidden rounded-[2rem] border border-line bg-ink-2 p-8 md:p-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
         <span aria-hidden className="absolute -left-20 bottom-0 size-80 rounded-full bg-orange/15 blur-[100px]" />
         <Reveal className="relative">
-          <p className="eyebrow flex items-center gap-3">
+          <p className="label flex items-center gap-3">
             <span className="text-orange">06</span>
             <span className="h-px w-8 bg-line-strong" />
             Partners
@@ -45,7 +45,7 @@ export default function Partners() {
               href="/contact-us"
               className="group grid aspect-square place-items-center rounded-2xl border border-dashed border-line-strong p-4 text-center transition-colors hover:border-orange hover:text-orange"
             >
-              <span className="flex flex-col items-center gap-2 font-mono text-[10px] tracking-[0.14em] text-muted uppercase group-hover:text-orange">
+              <span className="flex flex-col items-center gap-2 font-mono text-xs tracking-[0.14em] text-muted uppercase group-hover:text-orange">
                 <Plus className="size-5" />
                 Your logo
               </span>
