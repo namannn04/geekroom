@@ -7,6 +7,8 @@ export type EventItem = {
   /** ISO date (yyyy-mm-dd) used for sorting and the date chip */
   iso: string;
   city: string;
+  /** Three-letter city code printed on the ticket stub */
+  code: string;
   date?: string;
   location?: string;
   image: string;
@@ -23,6 +25,7 @@ export const events: EventItem[] = [
     kind: "Hackathon",
     iso: "2026-04-26",
     city: "Bengaluru",
+    code: "BLR",
     title: "HackBLR (MLH HackDays)",
     date: "26 April 2026",
     location: "Zintlr Private Limited, Bengaluru",
@@ -39,6 +42,7 @@ export const events: EventItem[] = [
     kind: "Hackathon",
     iso: "2026-03-07",
     city: "Delhi NCR",
+    code: "NCR",
     title: "Hack Geek Room",
     date: "7th March 2026",
     location: "OPSTree Global",
@@ -54,6 +58,7 @@ export const events: EventItem[] = [
     kind: "Hackathon",
     iso: "2025-09-14",
     city: "Bengaluru",
+    code: "BLR",
     title: "Code Cubicle 5.0",
     date: "14 September 2025",
     location: "Microsoft Office (Bengaluru)",
@@ -72,6 +77,7 @@ export const events: EventItem[] = [
     kind: "Meetup",
     iso: "2025-11-08",
     city: "Gurugram",
+    code: "GGN",
     title: "Geek Room Meetup #2",
     date: "8 November 2025",
     location: "Microsoft Office (Gurugram)",
@@ -87,6 +93,7 @@ export const events: EventItem[] = [
     kind: "Hackathon",
     iso: "2025-07-05",
     city: "Hyderabad",
+    code: "HYD",
     title: "Code Cubicle 4.0",
     date: "5th July 2025",
     location: "Microsoft Office (Hyderabad)",
@@ -105,6 +112,7 @@ export const events: EventItem[] = [
     kind: "Hackathon",
     iso: "2024-09-21",
     city: "Gurugram",
+    code: "GGN",
     title: "Code Cubicle 3.0",
     date: "21 September 2024",
     location: "Mastercard Office, Gurugram",
@@ -120,6 +128,7 @@ export const events: EventItem[] = [
     kind: "Hackathon",
     iso: "2025-02-15",
     city: "Delhi",
+    code: "DEL",
     title: "Code Kshetra 2.0",
     date: "February 2025",
     location: "JIMS Sector-5, Rohini, Delhi",
@@ -150,6 +159,17 @@ export function formatChip(iso: string) {
     month: d.toLocaleDateString("en-IN", { month: "short" }).toUpperCase(),
     year: d.getFullYear(),
   };
+}
+
+/** Deterministic bar widths for an event's barcode, seeded from its slug. */
+export function barcode(seed: string, bars = 34) {
+  let h = 2166136261;
+  for (const ch of seed) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+  return Array.from({ length: bars }, () => {
+    h = Math.imul(h ^ (h >>> 15), 2246822507);
+    h = Math.imul(h ^ (h >>> 13), 3266489909);
+    return 1 + ((h >>> 0) % 4);
+  });
 }
 
 export function getEvent(slug: string) {
