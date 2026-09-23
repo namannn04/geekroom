@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowUpRight, CalendarDays, MapPin, Tag } from "lucide-react";
-import Reveal from "@/components/ui/Reveal";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import JoinCta from "@/components/ui/JoinCta";
-import EventGrid from "@/components/events/EventGrid";
+import EventHero from "@/components/events/EventHero";
+import EventTicket from "@/components/events/EventTicket";
 import { events, eventsByDate, getEvent } from "@/data/events";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -25,142 +24,104 @@ export default async function EventPage({ params }: Props) {
   const event = getEvent(slug);
   if (!event) notFound();
 
-  const related = eventsByDate.filter((e) => e.slug !== slug).slice(0, 3);
+  const others = eventsByDate.filter((e) => e.slug !== slug);
+  const related = others.slice(0, 2);
   const meta = [
-    { Icon: CalendarDays, label: "Date", value: event.date ?? "TBA" },
-    { Icon: MapPin, label: "Venue", value: event.location ?? event.city },
-    { Icon: Tag, label: "Format", value: event.kind },
+    { label: "Date", value: event.date ?? "To be announced" },
+    { label: "Venue", value: event.location ?? event.city },
+    { label: "Format", value: event.kind },
   ];
 
   return (
     <>
-      <section className="noise relative isolate overflow-hidden pt-32 md:pt-40">
-        <div aria-hidden className="absolute inset-0 -z-10">
-          <div className="grid-paper grid-fade absolute inset-0" />
-          <span className="absolute -left-20 top-20 size-[520px] rounded-full bg-teal/20 blur-[140px]" />
-          <span className="absolute right-0 top-0 size-[460px] rounded-full bg-orange/20 blur-[140px]" />
-        </div>
-
-        <div className="shell">
-          <Link href="/event" className="btn-ghost !py-2">
-            <ArrowLeft className="size-3.5" /> All events
-          </Link>
-          <Reveal>
-            <p className="label mt-10 flex items-center gap-3">
-              <span className="text-orange">{event.kind}</span>
-              <span className="h-px w-8 bg-line-strong" />
-              {event.city}
-            </p>
-            <h1 className="display mt-5 max-w-[1100px] text-[clamp(2.8rem,8vw,7.5rem)]">{event.title}</h1>
-            {event.tagline && <p className="accent mt-4 text-3xl md:text-4xl">{event.tagline}</p>}
-          </Reveal>
-
-          <Reveal delay={0.1} className="mt-12">
-            <div className="relative aspect-[16/9] overflow-hidden rounded-[2rem] border border-line md:aspect-[21/9]">
-              <Image src={event.image} alt={event.title} fill priority sizes="100vw" className="object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/60 to-transparent" />
-            </div>
-          </Reveal>
-        </div>
+      <section className="shell pt-32 md:pt-40">
+        <Link href="/event" className="btn-ghost mb-10 !py-2">
+          <ArrowLeft className="size-3.5" /> All events
+        </Link>
+        <EventHero event={event} />
       </section>
 
-      <section className="shell grid gap-12 py-16 md:py-24 lg:grid-cols-[1.4fr_0.8fr]">
+      <section className="shell grid gap-14 py-16 md:py-24 lg:grid-cols-[1.4fr_0.8fr]">
         <div>
-          <dl className="grid gap-3 sm:grid-cols-3">
-            {meta.map(({ Icon, label, value }) => (
-              <div key={label} className="rounded-2xl border border-line bg-ink-2 p-5">
-                <dt className="flex items-center gap-2 font-mono text-xs tracking-[0.14em] text-subtle uppercase">
-                  <Icon className="size-3.5 text-teal" /> {label}
-                </dt>
-                <dd className="mt-3 font-display text-lg leading-snug font-bold">{value}</dd>
+          <dl className="grid border-t border-line sm:grid-cols-3">
+            {meta.map((m, i) => (
+              <div key={m.label} className={`border-b border-line py-5 sm:pr-6 ${i ? "sm:border-l sm:pl-6" : ""}`}>
+                <dt className="label">{m.label}</dt>
+                <dd className="mt-2 font-display text-lg leading-snug font-extrabold uppercase [font-stretch:85%]">{m.value}</dd>
               </div>
             ))}
           </dl>
 
           {event.register && (
-            <a
-              href={event.register.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary mt-4 w-full justify-center lg:hidden"
-            >
+            <a href={event.register.url} target="_blank" rel="noopener noreferrer" className="btn-primary mt-6 w-full justify-center lg:hidden">
               {event.register.label} <ArrowUpRight className="size-4" />
             </a>
           )}
 
           {event.highlights && (
-            <ul className="mt-10 grid gap-3 sm:grid-cols-2">
+            <ul className="mt-12 border-t border-line">
               {event.highlights.map((h, i) => (
-                <Reveal key={h} delay={i * 0.05}>
-                  <li className="flex items-center gap-4 rounded-2xl border border-line p-5">
-                    <span className="font-mono text-xs text-orange">0{i + 1}</span>
-                    <span className="font-display text-lg font-bold">{h}</span>
-                  </li>
-                </Reveal>
+                <li key={h} className="flex items-baseline gap-5 border-b border-line py-5">
+                  <span className="font-mono text-sm text-orange tabular-nums">0{i + 1}</span>
+                  <span className="font-display text-2xl font-extrabold uppercase [font-stretch:85%]">{h}</span>
+                </li>
               ))}
             </ul>
           )}
 
-          <Reveal className="mt-12 space-y-6 text-lg leading-relaxed text-muted md:text-xl">
+          <div className="mt-12 max-w-[40rem] space-y-6 text-lg leading-relaxed text-muted md:text-xl">
             {event.description.map((p, i) => (
               <p key={p} className={i === 0 ? "text-paper" : ""}>
                 {p}
               </p>
             ))}
-          </Reveal>
+          </div>
         </div>
 
-        {/* Sticky action panel */}
         <aside className="lg:sticky lg:top-28 lg:h-fit">
-          <div className="relative overflow-hidden rounded-3xl border border-line-strong bg-ink-2 p-7">
-            <span aria-hidden className="absolute -right-16 -top-16 size-48 rounded-full bg-orange/25 blur-3xl" />
-            <p className="label relative">Take part</p>
-            <p className="relative mt-4 font-display text-2xl leading-tight font-bold">
-              {event.register ? "Registrations are handled on the event page." : "Stay tuned for the next edition."}
+          <div className="rounded-[1.75rem] bg-orange p-7 text-ink">
+            <p className="display text-3xl">{event.register ? "Take part" : "Next edition"}</p>
+            <p className="mt-3 leading-relaxed">
+              {event.register
+                ? "Registration and schedules live on the official event page."
+                : "This edition has wrapped. Tell us you're interested and we'll ping you for the next one."}
             </p>
             {event.register ? (
-              <a
-                href={event.register.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary relative mt-7 w-full justify-center"
-              >
+              <a href={event.register.url} target="_blank" rel="noopener noreferrer" className="btn mt-6 w-full justify-center bg-ink text-paper hover:bg-ink-3">
                 {event.register.label} <ArrowUpRight className="size-4" />
               </a>
             ) : (
-              <Link href="/contact-us" className="btn-primary relative mt-7 w-full justify-center">
+              <Link href="/contact-us" className="btn mt-6 w-full justify-center bg-ink text-paper hover:bg-ink-3">
                 Get notified <ArrowUpRight className="size-4" />
               </Link>
             )}
-
-            <p className="label relative mt-9">More events</p>
-            <ul className="relative mt-3 divide-y divide-line">
-              {eventsByDate
-                .filter((e) => e.slug !== slug)
-                .map((e) => (
-                  <li key={e.slug}>
-                    <Link
-                      href={`/event/${e.slug}`}
-                      className="group flex items-center justify-between gap-3 py-3 text-sm text-muted transition-colors hover:text-paper"
-                    >
-                      {e.title}
-                      <ArrowUpRight className="size-3.5 shrink-0 opacity-0 transition-opacity group-hover:opacity-100" />
-                    </Link>
-                  </li>
-                ))}
-            </ul>
           </div>
+
+          <p className="label mt-10">More events</p>
+          <ul className="mt-3 border-t border-line">
+            {others.map((e) => (
+              <li key={e.slug} className="border-b border-line">
+                <Link
+                  href={`/event/${e.slug}`}
+                  className="group flex min-h-11 items-center justify-between gap-3 py-3 text-muted transition-colors hover:text-paper"
+                >
+                  <span>{e.title}</span>
+                  <span className="font-mono text-xs text-subtle group-hover:text-orange">{e.code}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </aside>
       </section>
 
       <section className="shell pb-24 md:pb-32">
-        <Reveal>
-          <h2 className="display text-[clamp(2.2rem,5vw,4rem)]">
-            Related <em>events</em>
-          </h2>
-        </Reveal>
-        <div className="mt-10">
-          <EventGrid items={related} />
+        <h2 className="display text-[clamp(2.2rem,5vw,4rem)]">
+          Up <em>next</em>
+        </h2>
+        <div className="mt-10 grid gap-6 xl:grid-cols-2">
+          {related.map((e) => (
+            <EventTicket key={e.slug} event={e} index={eventsByDate.indexOf(e)} />
+          ))}
         </div>
       </section>
 
