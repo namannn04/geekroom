@@ -291,7 +291,7 @@ export default function GeekMark3D({
         <Canvas
           dpr={[1, 1.6]}
           frameloop={inView ? "always" : "never"}
-          camera={{ position: [0, 0.6, compact ? 12.5 : 11.5], fov: 38 }}
+          camera={{ position: [0, 0.6, compact ? 14.5 : 11.5], fov: 38 }}
           gl={{
             antialias: true,
             alpha: true,
@@ -351,11 +351,7 @@ export default function GeekMark3D({
               className="absolute top-0 left-0 rounded-full border border-line-strong bg-ink/85 px-3 py-1.5 whitespace-nowrap opacity-0 will-change-transform"
             >
               <span className="font-mono text-xs text-orange">{ms.date}</span>
-              <span
-                className={`ml-2 text-paper ${compact ? "text-xs" : "text-sm"}`}
-              >
-                {ms.short}
-              </span>
+              {!compact && <span className="ml-2 text-sm text-paper">{ms.short}</span>}
             </div>
           ))}
         </div>
