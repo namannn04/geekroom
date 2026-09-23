@@ -1,17 +1,40 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useRef } from "react";
+import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 import { ArrowUpRight } from "lucide-react";
 import { footerColumns, site } from "@/data/site";
 import { InstagramIcon, LinkedinIcon } from "@/components/ui/Icons";
 
+const wordmark = "Geek Room".split("");
+
 export default function Footer() {
+  const root = useRef<HTMLElement>(null);
+
+  // Wordmark letters rise from below the fold as the footer arrives
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+      gsap.from("[data-letter]", {
+        yPercent: 100,
+        fontStretch: "50%",
+        stagger: 0.04,
+        ease: "none",
+        scrollTrigger: { trigger: "[data-wordmark]", start: "top bottom", end: "bottom bottom", scrub: 0.6 },
+      });
+    },
+    { scope: root },
+  );
+
   const socials = [
     { href: site.socials.linkedin, label: "LinkedIn", Icon: LinkedinIcon },
     { href: site.socials.instagram, label: "Instagram", Icon: InstagramIcon },
   ];
 
   return (
-    <footer className="relative overflow-hidden border-t border-line bg-ink-2">
+    <footer ref={root} className="relative overflow-hidden border-t border-line bg-ink-2">
       <div className="shell grid gap-12 pt-20 pb-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
         <div>
           <Link href="/" className="flex items-center gap-3">
@@ -66,19 +89,23 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Oversized outlined wordmark */}
-      <div aria-hidden className="shell select-none">
-        <p className="display translate-y-[18%] text-center text-[15vw] leading-none whitespace-nowrap text-transparent [-webkit-text-stroke:1px_var(--line-strong)] lg:text-[196px]">
-          Geek Room
+      {/* Oversized wordmark, cropped by the bottom edge */}
+      <div aria-hidden data-wordmark className="shell select-none overflow-hidden">
+        <p className="display flex translate-y-[14%] justify-between text-[17vw] leading-[0.8] whitespace-nowrap text-paper lg:text-[15.5rem]">
+          {wordmark.map((ch, i) => (
+            <span key={i} data-letter className={`inline-block ${ch === " " ? "w-[0.25em]" : ""}`}>
+              {ch}
+            </span>
+          ))}
         </p>
       </div>
 
       <div className="border-t border-line">
-        <div className="shell flex flex-col items-center justify-between gap-2 py-5 font-mono text-xs tracking-[0.12em] text-subtle uppercase md:flex-row">
+        <div className="shell flex flex-col items-center justify-between gap-2 py-5 text-sm text-subtle md:flex-row">
           <p>
             &copy; {new Date().getFullYear()} {site.name}. All rights reserved.
           </p>
-          <p>Learn — Connect — Grow</p>
+          <p>Learn, connect, grow.</p>
         </div>
       </div>
     </footer>
