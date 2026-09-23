@@ -15,10 +15,9 @@ export default function Timeline() {
     <section className="shell py-24 md:py-32">
       <SectionHead
         index="01"
-        label="Milestones"
         title={
           <>
-            The story <em className="text-signal">so far</em>
+            The story <em>so far</em>
           </>
         }
       />
@@ -40,7 +39,7 @@ export default function Timeline() {
             >
               <span className="absolute left-0 top-2 size-[15px] rounded-full border-2 border-ink bg-orange shadow-[0_0_0_4px_rgba(255,90,31,0.15)] md:left-1/2 md:-translate-x-1/2" />
               <div className={`${right ? "md:col-start-2 md:pl-16" : "md:pr-16 md:text-right"}`}>
-                <p className="display text-4xl text-signal md:text-5xl">{m.date}</p>
+                <p className="display text-4xl md:text-5xl">{m.date}</p>
                 <p className="mt-4 max-w-[440px] text-lg leading-relaxed text-muted md:inline-block">{m.text}</p>
               </div>
             </motion.li>

@@ -22,10 +22,9 @@ export default function FeaturedEvents() {
       <div className="shell flex flex-col justify-between gap-8 md:flex-row md:items-end">
         <SectionHead
           index="01"
-          label="Programs"
           title={
             <>
-              Featured <em className="text-signal">events</em>
+              Featured <em>events</em>
             </>
           }
           intro="The best hackathons and tech events in India — hosted at Microsoft, Mastercard and campuses across the country."

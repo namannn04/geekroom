@@ -11,10 +11,9 @@ export default function Speakers() {
       <div className="flex flex-col justify-between gap-10 md:flex-row md:items-end">
         <SectionHead
           index="05"
-          label="Speakers"
           title={
             <>
-              Expert <em className="text-signal">insights</em>
+              Expert <em>insights</em>
             </>
           }
           intro="Engineers, founders and data scientists who've taken the Geek Room stage."

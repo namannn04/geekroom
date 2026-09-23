@@ -22,7 +22,7 @@ export default function AboutHero() {
             Since 2023
           </p>
           <h1 className="display mt-6 max-w-[1100px] text-[clamp(2.8rem,8vw,7.5rem)]">
-            From a WhatsApp group to <em className="text-signal">50,000+</em> builders
+            From a WhatsApp group to <em>50,000+</em> builders
           </h1>
         </Reveal>
 

@@ -39,7 +39,7 @@ export default function ContactPage() {
             We reply fast
           </p>
           <h1 className="display mt-6 text-[clamp(3rem,8vw,7rem)]">
-            Let&apos;s <em className="text-signal">talk</em>
+            Let&apos;s <em>talk</em>
           </h1>
           <p className="mt-6 max-w-[440px] text-lg leading-relaxed text-muted">
             Partnering on a hackathon, bringing a speaker, or hiring from the community — drop us a line.

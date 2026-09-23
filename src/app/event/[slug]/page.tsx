@@ -52,7 +52,7 @@ export default async function EventPage({ params }: Props) {
               {event.city}
             </p>
             <h1 className="display mt-5 max-w-[1100px] text-[clamp(2.8rem,8vw,7.5rem)]">{event.title}</h1>
-            {event.tagline && <p className="accent mt-4 text-3xl text-signal md:text-4xl">{event.tagline}</p>}
+            {event.tagline && <p className="accent mt-4 text-3xl md:text-4xl">{event.tagline}</p>}
           </Reveal>
 
           <Reveal delay={0.1} className="mt-12">
@@ -156,7 +156,7 @@ export default async function EventPage({ params }: Props) {
       <section className="shell pb-24 md:pb-32">
         <Reveal>
           <h2 className="display text-[clamp(2.2rem,5vw,4rem)]">
-            Related <em className="text-signal">events</em>
+            Related <em>events</em>
           </h2>
         </Reveal>
         <div className="mt-10">

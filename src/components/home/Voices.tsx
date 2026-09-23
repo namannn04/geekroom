@@ -7,11 +7,10 @@ export default function Voices({ index = "07" }: { index?: string }) {
     <section className="shell py-24 md:py-32">
       <SectionHead
         index={index}
-        label="Voices"
         align="center"
         title={
           <>
-            Reviews <em className="text-signal">speak</em> for us
+            Reviews <em>speak</em> for us
           </>
         }
         intro="What hackers say after 36 hours, too much coffee and a demo on stage."

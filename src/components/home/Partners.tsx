@@ -16,7 +16,7 @@ export default function Partners() {
             Partners
           </p>
           <h2 className="display mt-5 text-[clamp(2.4rem,5vw,4.5rem)]">
-            Our partners <em className="text-signal">make it possible</em>
+            Our partners <em>make it possible</em>
           </h2>
           <p className="mt-6 max-w-[380px] leading-relaxed text-muted">
             From AI labs to fintech and developer tooling — the companies that power Geek Room hackathons and meetups.

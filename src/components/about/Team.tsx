@@ -9,10 +9,9 @@ export default function Team() {
     <section className="shell py-24 md:py-32">
       <SectionHead
         index="02"
-        label="Team"
         title={
           <>
-            The people <em className="text-signal">behind</em> the room
+            The people <em>behind</em> the room
           </>
         }
         intro="Co-founders and founding members who turned a group chat into a nationwide community."

@@ -18,7 +18,7 @@ export default function Faq() {
           FAQ
         </p>
         <h2 className="display mt-5 text-[clamp(2.4rem,5vw,4.5rem)]">
-          Questions, <em className="text-signal">answered</em>
+          Questions, <em>answered</em>
         </h2>
         <p className="mt-6 max-w-[360px] leading-relaxed text-muted">Still curious? Our inbox is always open.</p>
         <a href={`mailto:${site.email}`} className="btn-ghost mt-8">

@@ -20,7 +20,7 @@ export default function Story() {
           Why Geek Room
         </p>
         <h2 className="display mt-5 text-[clamp(2.4rem,6vw,5.25rem)]">
-          Learn. Connect. <em className="text-signal">Grow.</em>
+          Learn. Connect. <em>Grow.</em>
         </h2>
         <p className="mt-6 max-w-[440px] text-lg leading-relaxed text-muted">
           Started as a WhatsApp group at MSIT, Geek Room is now where students across India come to hack, ship and meet

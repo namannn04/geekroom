@@ -15,7 +15,7 @@ export default function MessagePage({ eyebrow, title, body }: { eyebrow?: string
       <Reveal className="shell flex flex-col items-center text-center">
         <GeekMark className="w-28" />
         {eyebrow && <p className="eyebrow mt-10">{eyebrow}</p>}
-        <h1 className="display mt-4 text-[clamp(4rem,16vw,13rem)] text-signal">{title}</h1>
+        <h1 className="display mt-4 text-[clamp(4rem,16vw,13rem)]">{title}</h1>
         {body && <p className="mt-6 max-w-[480px] text-lg leading-relaxed text-muted">{body}</p>}
         <Link href="/" className="btn-primary mt-10">
           <ArrowLeft className="size-4" /> Back to home

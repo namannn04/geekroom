@@ -30,10 +30,9 @@ export default function Offerings() {
     <section className="shell relative py-24 md:py-32">
       <SectionHead
         index="02"
-        label="For brands"
         title={
           <>
-            Work with us, <em className="text-signal">get seen</em>
+            Work with us, <em>get seen</em>
           </>
         }
         intro="Make your brand visible to India's sharpest student builders and meet your tech and hiring needs along the way."

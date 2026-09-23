@@ -48,7 +48,7 @@ export default function Hero() {
             {["Meet the", "smarter", "community"].map((line, i) => (
               <span key={line} className="block overflow-hidden pb-[0.06em]">
                 <motion.span
-                  className={`block ${i === 1 ? "accent text-signal pr-2" : ""}`}
+                  className={`block ${i === 1 ? "accent pr-2" : ""}`}
                   initial={{ y: "110%" }}
                   animate={{ y: 0 }}
                   transition={{ duration: 1, delay: 0.1 + i * 0.12, ease }}

@@ -25,7 +25,7 @@ export default function EventsPage() {
               Hackathons · Meetups
             </p>
             <h1 className="display mt-6 text-[clamp(3rem,9vw,8.5rem)]">
-              Explore the <em className="text-signal">best</em> hackathons
+              Explore the <em>best</em> hackathons
             </h1>
             <p className="mt-6 max-w-[560px] text-lg leading-relaxed text-muted">
               Every Geek Room event, from flagship Code Cubicle editions to North India&apos;s largest hackathon.

@@ -24,7 +24,7 @@ export default function Impact() {
             <span className="text-orange">03</span> — Delivered impact
           </p>
           <h2 className="display mx-auto mt-5 max-w-[800px] text-center text-[clamp(2rem,5vw,4rem)]">
-            Numbers that <em className="text-signal">compound</em>
+            Numbers that <em>compound</em>
           </h2>
 
           <dl className="mt-14 grid grid-cols-2 gap-y-10 md:grid-cols-4">
