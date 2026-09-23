@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Anybody, JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import "./globals.css";
 
-const grotesk = Space_Grotesk({
+// Anybody exposes a width axis (50–150%) that the display type and scroll animations lean on
+const anybody = Anybody({
   subsets: ["latin"],
-  variable: "--font-grotesk",
+  axes: ["wdth"],
+  variable: "--font-anybody",
 });
 
-const instrument = Instrument_Serif({
+const schibsted = Schibsted_Grotesk({
   subsets: ["latin"],
-  weight: "400",
-  style: ["normal", "italic"],
-  variable: "--font-instrument",
+  variable: "--font-schibsted",
 });
 
 const jetbrains = JetBrains_Mono({
@@ -55,7 +55,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${grotesk.variable} ${instrument.variable} ${jetbrains.variable}`}>
+      <body className={`${anybody.variable} ${schibsted.variable} ${jetbrains.variable}`}>
         <Navbar />
         <main>{children}</main>
         <Footer />
