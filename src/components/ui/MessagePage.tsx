@@ -7,11 +7,8 @@ import Reveal from "./Reveal";
 /** Full-height centred message used by the thank-you and 404 pages. */
 export default function MessagePage({ label, title, body }: { label?: string; title: string; body?: string }) {
   return (
-    <section className="noise relative isolate flex min-h-[100svh] items-center overflow-hidden pt-24">
-      <div aria-hidden className="absolute inset-0 -z-10">
-        <DotField className="absolute inset-0 opacity-60" />
-        <span className="absolute left-1/2 top-1/2 size-[640px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-teal/15 blur-[140px]" />
-      </div>
+    <section className="relative isolate flex min-h-[100svh] items-center overflow-hidden pt-24">
+      <DotField className="absolute inset-0 -z-10 opacity-70" />
       <Reveal className="shell flex flex-col items-center text-center">
         <GeekMark className="w-28" />
         {label && <p className="label mt-10">{label}</p>}
