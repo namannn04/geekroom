@@ -47,40 +47,27 @@ export const features = [
   },
 ];
 
-export type Partner = { name: string; logo: string };
-
-// Laid out on a 6 x 4 grid, mirroring the staggered partner wall.
-export const partnerGrid: (Partner | "label" | "big" | null)[][] = [
-  [null, null, null, null, { name: "Vapi", logo: "/images/partners/vapi.png" }, null],
-  [
-    "big",
-    { name: "Groq", logo: "/images/partners/groq.png" },
-    { name: "Mastercard", logo: "/images/partners/mastercard.png" },
-    { name: "Qdrant", logo: "/images/partners/qdrant.png" },
-    { name: "OmniDimension", logo: "/images/partners/omnidimension.png" },
-    null,
-  ],
-  [
-    "big",
-    { name: "Pathway", logo: "/images/partners/pathway.png" },
-    null,
-    { name: "Battery Smart", logo: "/images/partners/battery-smart.png" },
-    null,
-    { name: "NordVPN", logo: "/images/partners/nordvpn.png" },
-  ],
-  [
-    null,
-    null,
-    { name: "Major League Hacking", logo: "/images/partners/mlh.png" },
-    null,
-    { name: "Bolt", logo: "/images/partners/bolt.png" },
-    null,
-  ],
-];
+export type Partner = {
+  name: string;
+  logo: string;
+  /** 1-based position on the 8-column partner wall */
+  col: number;
+  row: number;
+  big?: boolean;
+};
 
 export const partners: Partner[] = [
-  { name: "GitHub", logo: "/images/partners/github.png" },
-  ...partnerGrid.flat().filter((p): p is Partner => typeof p === "object" && p !== null),
+  { name: "GitHub", logo: "/images/partners/github.png", col: 1, row: 2, big: true },
+  { name: "Vapi", logo: "/images/partners/vapi.png", col: 6, row: 1 },
+  { name: "Groq", logo: "/images/partners/groq.png", col: 3, row: 2 },
+  { name: "Mastercard", logo: "/images/partners/mastercard.png", col: 4, row: 2 },
+  { name: "Qdrant", logo: "/images/partners/qdrant.png", col: 5, row: 2 },
+  { name: "OmniDimension", logo: "/images/partners/omnidimension.png", col: 6, row: 2 },
+  { name: "Pathway", logo: "/images/partners/pathway.png", col: 3, row: 3 },
+  { name: "Battery Smart", logo: "/images/partners/battery-smart.png", col: 5, row: 3 },
+  { name: "NordVPN", logo: "/images/partners/nordvpn.png", col: 7, row: 3 },
+  { name: "Major League Hacking", logo: "/images/partners/mlh.png", col: 4, row: 4 },
+  { name: "Bolt", logo: "/images/partners/bolt.png", col: 6, row: 4 },
 ];
 
 export const services = [
