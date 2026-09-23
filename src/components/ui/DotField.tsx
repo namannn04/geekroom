@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Canvas dot grid that swells and tints teal → orange around the pointer.
+ * Canvas dot grid that swells and heats to orange around the pointer.
  * Idles with a slow travelling wave when there is no pointer (touch, reduced motion).
  */
 export default function DotField({ className = "", gap = 26 }: { className?: string; gap?: number }) {
@@ -55,12 +55,8 @@ export default function DotField({ className = "", gap = 26 }: { className?: str
           const wave = reduced ? 0 : (Math.sin(x * 0.012 + y * 0.008 + t * 0.0009) + 1) / 2;
           const k = Math.max(near, wave * 0.18);
           const size = 1 + k * 2.6;
-          // teal (25,179,191) → orange (255,90,31) across the canvas, brightened near the pointer
-          const mix = x / w;
-          const r = Math.round(25 + (255 - 25) * mix);
-          const g = Math.round(179 + (90 - 179) * mix);
-          const b = Math.round(191 + (31 - 191) * mix);
-          ctx.fillStyle = k > 0.2 ? `rgba(${r},${g},${b},${0.25 + k * 0.75})` : `rgba(244,241,234,${0.1 + k * 0.4})`;
+          // Near the pointer dots heat up to signal orange; elsewhere they stay paper
+          ctx.fillStyle = k > 0.2 ? `rgba(255,90,31,${0.2 + k * 0.8})` : `rgba(238,236,230,${0.08 + k * 0.4})`;
           ctx.beginPath();
           ctx.arc(x, y, size, 0, Math.PI * 2);
           ctx.fill();
