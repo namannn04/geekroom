@@ -4,6 +4,7 @@ import { useRef } from "react";
 import SectionHead from "@/components/ui/SectionHead";
 import { impact } from "@/data/site";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
+import { EASE_EXPO, reveal } from "@/lib/motion";
 
 const max = Math.max(...impact.map((s) => s.value));
 // Log scale so 50 events and 70,000 views can share one axis honestly
@@ -11,8 +12,8 @@ const share = (v: number) => Math.log10(v) / Math.log10(max);
 const fmt = (v: number) => Math.round(v).toLocaleString("en-IN");
 
 /**
- * Impact as a horizontal bar readout. Scroll position drives both the bar
- * length and the number, so scrolling back up winds the counters down.
+ * Impact as a horizontal bar readout. Each bar shoots out and its counter
+ * races up together the moment the row enters the screen.
  */
 export default function Impact() {
   const root = useRef<HTMLElement>(null);
@@ -28,12 +29,10 @@ export default function Impact() {
           return;
         }
         const state = { v: 0 };
-        const tl = gsap.timeline({
-          scrollTrigger: { trigger: row, start: "top 85%", end: "top 40%", scrub: 0.5 },
-        });
-        tl.from(row.querySelector("[data-bar]"), { scaleX: 0, transformOrigin: "0% 50%", ease: "none" }).to(
+        const tl = gsap.timeline({ scrollTrigger: reveal(row, "top 90%") });
+        tl.from(row.querySelector("[data-bar]"), { scaleX: 0, transformOrigin: "0% 50%", duration: 1.4, ease: EASE_EXPO }).to(
           state,
-          { v: value, ease: "none", onUpdate: () => (num.textContent = fmt(state.v)) },
+          { v: value, duration: 1.4, ease: EASE_EXPO, onUpdate: () => (num.textContent = fmt(state.v)) },
           0,
         );
       });
