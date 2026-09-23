@@ -1,39 +1,61 @@
-import Reveal from "@/components/ui/Reveal";
+"use client";
+
+import { useRef } from "react";
+import { SplitText } from "gsap/SplitText";
 import SectionHead from "@/components/ui/SectionHead";
 import { reviews } from "@/data/site";
+import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 
+gsap.registerPlugin(SplitText);
+
+/** Reviews set large; each quote's words light up in reading order as it scrolls past. */
 export default function Voices({ index = "07" }: { index?: string }) {
+  const root = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+      const splits = gsap.utils.toArray<HTMLElement>("[data-quote]").map((q) => {
+        const split = SplitText.create(q, { type: "words" });
+        gsap.fromTo(
+          split.words,
+          { color: "rgba(238,236,230,0.18)" },
+          {
+            color: "rgba(238,236,230,1)",
+            stagger: 0.08,
+            ease: "none",
+            scrollTrigger: { trigger: q, start: "top 80%", end: "bottom 50%", scrub: true },
+          },
+        );
+        return split;
+      });
+      return () => splits.forEach((s) => s.revert());
+    },
+    { scope: root },
+  );
+
   return (
-    <section className="shell py-24 md:py-32">
+    <section ref={root} className="shell py-24 md:py-32">
       <SectionHead
         index={index}
-        align="center"
         title={
           <>
             Reviews <em>speak</em> for us
           </>
         }
-        intro="What hackers say after 36 hours, too much coffee and a demo on stage."
+        intro="What hackers told us after thirty-six hours, a lot of coffee and a demo on stage."
       />
-      <div className="mt-14 grid gap-4 md:grid-cols-3">
+      <div className="mt-16 flex flex-col">
         {reviews.map((r, i) => (
-          <Reveal
-            key={r.title}
-            delay={i * 0.1}
-            className="relative flex flex-col justify-between rounded-3xl border border-line bg-ink-2 p-8 transition-colors hover:border-line-strong"
-          >
-            <span aria-hidden className="font-serif text-8xl leading-[0.6] text-teal">&ldquo;</span>
-            <p className="mt-6 text-lg leading-relaxed">{r.body}</p>
-            <div className="mt-8 flex items-center gap-3 border-t border-line pt-5">
-              <span className="grid size-10 place-items-center rounded-full bg-signal font-display text-sm font-bold text-ink">
-                {r.title.split(" at ")[1]?.slice(0, 2).toUpperCase()}
-              </span>
-              <div>
-                <p className="text-sm font-semibold">Hacker</p>
-                <p className="font-mono text-xs tracking-[0.1em] text-subtle uppercase">{r.title.split(" at ")[1]}</p>
-              </div>
-            </div>
-          </Reveal>
+          <figure key={r.title} className="grid gap-4 border-t border-line py-10 md:grid-cols-[12rem_1fr] md:gap-10 md:py-14">
+            <figcaption className="font-mono text-sm text-subtle">
+              <span className="text-orange tabular-nums">0{i + 1}</span>
+              <span className="mt-2 block">{r.title}</span>
+            </figcaption>
+            <blockquote data-quote className="font-display text-[clamp(1.6rem,3.6vw,3rem)] leading-[1.1] font-bold [font-stretch:85%]">
+              {r.body}
+            </blockquote>
+          </figure>
         ))}
       </div>
     </section>
