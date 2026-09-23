@@ -21,12 +21,12 @@ export const footerLinks = [
 ];
 
 export const heroImages = [
-  { src: "/images/hero/hero-3.jpg", className: "left-[8%] top-[8%] w-[16%] aspect-[227/158]" },
-  { src: "/images/hero/hero-1.jpg", className: "left-[38%] top-[5%] w-[18%] aspect-[263/315]" },
-  { src: "/images/hero/hero-2.jpg", className: "right-[2%] top-[11%] w-[17.5%] aspect-[252/188]" },
-  { src: "/images/hero/hero-5.jpg", className: "left-[2%] top-[52%] w-[19%] aspect-[274/205]" },
-  { src: "/images/hero/hero-4.jpg", className: "right-[2%] top-[47%] w-[19%] aspect-[278/207]" },
-  { src: "/images/hero/hero-6.jpg", className: "left-[40%] top-[69%] w-[21%] aspect-[301/209]" },
+  { src: "/images/hero/hero-3.jpg", className: "left-[8%] top-[16%] w-[16%] aspect-[227/158]" },
+  { src: "/images/hero/hero-1.jpg", className: "left-[38%] top-[12%] w-[18%] aspect-[263/315]" },
+  { src: "/images/hero/hero-2.jpg", className: "right-[2%] top-[14.5%] w-[17.5%] aspect-[252/188]" },
+  { src: "/images/hero/hero-5.jpg", className: "left-[2%] top-[54.5%] w-[19%] aspect-[274/205]" },
+  { src: "/images/hero/hero-4.jpg", className: "right-[2%] top-[51%] w-[19%] aspect-[278/207]" },
+  { src: "/images/hero/hero-6.jpg", className: "left-[40%] top-[73%] w-[21%] aspect-[301/209]" },
 ];
 
 export const features = [
