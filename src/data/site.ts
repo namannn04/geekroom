@@ -10,14 +10,30 @@ export const site = {
 
 export const navLinks = [
   { label: "Home", href: "/" },
-  { label: "About us", href: "/about-us" },
+  { label: "About", href: "/about-us" },
   { label: "Events", href: "/event" },
+  { label: "Contact", href: "/contact-us" },
 ];
 
-export const footerLinks = [
-  { label: "Home", href: "/" },
-  { label: "About us", href: "/about-us" },
-  { label: "Our Events", href: "/event" },
+export const footerColumns = [
+  {
+    title: "Explore",
+    links: [
+      { label: "Home", href: "/" },
+      { label: "About us", href: "/about-us" },
+      { label: "Our Events", href: "/event" },
+      { label: "Contact", href: "/contact-us" },
+    ],
+  },
+  {
+    title: "Events",
+    links: [
+      { label: "HackBLR", href: "/event/hackblr1" },
+      { label: "Hack Geek Room", href: "/event/hackgr" },
+      { label: "Code Cubicle", href: "/event/cc5.0" },
+      { label: "Code Kshetra", href: "/event/ck2.0" },
+    ],
+  },
 ];
 
 export const heroImages = [
@@ -212,3 +228,13 @@ export const reviews = [
     body: "The perfect mix of learning and networking. I'm walking away with fresh ideas and valuable connections.",
   },
 ];
+
+/** Headline numbers used in the impact band (all taken from Geek Room's own figures). */
+export const impact = [
+  { value: 50000, suffix: "+", label: "Members across channels" },
+  { value: 50, suffix: "+", label: "Events organised" },
+  { value: 20000, suffix: "+", label: "Code Cubicle registrations" },
+  { value: 70000, suffix: "+", label: "Views across 10+ media channels" },
+];
+
+export const pillars = ["Learn", "Connect", "Grow", "Build in public", "Ship", "Hack"];
