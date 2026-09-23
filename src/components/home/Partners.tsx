@@ -1,9 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
+import { Plus } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
 import { partners } from "@/data/site";
-
-// Staggered vertical offsets give the logo wall a loose, floating rhythm
-const drift = ["md:translate-y-6", "md:-translate-y-4", "md:translate-y-10", "md:translate-y-0", "md:-translate-y-8", "md:translate-y-4"];
 
 export default function Partners() {
   return (
@@ -26,7 +25,7 @@ export default function Partners() {
 
         <div className="relative grid grid-cols-3 gap-3 sm:grid-cols-4">
           {partners.map((p, i) => (
-            <Reveal key={p.name} delay={(i % 4) * 0.06} className={drift[i % drift.length]}>
+            <Reveal key={p.name} delay={(i % 4) * 0.06}>
               <div
                 title={p.name}
                 className="group grid aspect-square place-items-center rounded-2xl border border-line bg-ink p-4 transition-all duration-500 hover:-translate-y-1 hover:border-teal/50 hover:shadow-[0_0_40px_-10px_rgba(25,179,191,0.5)]"
@@ -41,6 +40,17 @@ export default function Partners() {
               </div>
             </Reveal>
           ))}
+          <Reveal delay={0.2}>
+            <Link
+              href="/contact-us"
+              className="group grid aspect-square place-items-center rounded-2xl border border-dashed border-line-strong p-4 text-center transition-colors hover:border-orange hover:text-orange"
+            >
+              <span className="flex flex-col items-center gap-2 font-mono text-[10px] tracking-[0.14em] text-muted uppercase group-hover:text-orange">
+                <Plus className="size-5" />
+                Your logo
+              </span>
+            </Link>
+          </Reveal>
         </div>
       </div>
     </section>
