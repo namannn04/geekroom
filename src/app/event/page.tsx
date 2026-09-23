@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Reveal from "@/components/ui/Reveal";
+import SectionHead from "@/components/ui/SectionHead";
 import JoinCta from "@/components/ui/JoinCta";
-import EventExplorer from "@/components/events/EventExplorer";
+import EventIndex from "@/components/events/EventIndex";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -11,31 +11,21 @@ export const metadata: Metadata = {
 export default function EventsPage() {
   return (
     <>
-      <section className="noise relative isolate overflow-hidden pt-36 pb-12 md:pt-44">
-        <div aria-hidden className="absolute inset-0 -z-10">
-          <div className="grid-paper grid-fade absolute inset-0" />
-          <span className="absolute left-[20%] top-10 size-[520px] rounded-full bg-orange/15 blur-[140px]" />
-          <span className="absolute right-0 top-40 size-[520px] rounded-full bg-teal/20 blur-[140px]" />
-        </div>
-        <div className="shell">
-          <Reveal>
-            <p className="eyebrow flex items-center gap-3">
-              <span className="text-orange">Events</span>
-              <span className="h-px w-8 bg-line-strong" />
-              Hackathons · Meetups
-            </p>
-            <h1 className="display mt-6 text-[clamp(3rem,9vw,8.5rem)]">
+      <section className="shell pt-36 pb-12 md:pt-44">
+        <SectionHead
+          as="h1"
+          index="07"
+          title={
+            <>
               Explore the <em>best</em> hackathons
-            </h1>
-            <p className="mt-6 max-w-[560px] text-lg leading-relaxed text-muted">
-              Every Geek Room event, from flagship Code Cubicle editions to North India&apos;s largest hackathon.
-            </p>
-          </Reveal>
-        </div>
+            </>
+          }
+          intro="Every Geek Room edition on one axis, from the Mastercard finale in 2024 to HackBLR in 2026. Pick a dot or a row."
+        />
       </section>
 
       <section className="shell pb-24 md:pb-32">
-        <EventExplorer />
+        <EventIndex />
       </section>
 
       <JoinCta />
