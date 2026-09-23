@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import PageHeader from "@/components/ui/PageHeader";
-import Blobs from "@/components/ui/Blobs";
+import { ArrowUpRight, Mail, MapPin } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
+import ContactForm from "@/components/contact/ContactForm";
+import { InstagramIcon, LinkedinIcon } from "@/components/ui/Icons";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -10,46 +11,64 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  const items = [
-    { label: "Email", value: site.email, href: `mailto:${site.email}` },
+  const cards = [
+    { Icon: Mail, label: "Email", value: site.email, href: `mailto:${site.email}` },
     {
+      Icon: MapPin,
       label: "Address",
       value: site.address,
       href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address)}`,
     },
+    { Icon: LinkedinIcon, label: "LinkedIn", value: "Geek Room", href: site.socials.linkedin },
+    { Icon: InstagramIcon, label: "Instagram", value: "@geekroom__", href: site.socials.instagram },
   ];
 
   return (
-    <div className="relative isolate overflow-hidden">
-      <Blobs
-        className="-z-10"
-        blobs={[
-          { color: "#0a57ff", className: "-left-20 top-[80px] size-[520px] opacity-80" },
-          { color: "#00f0ff", className: "left-[5%] top-[380px] size-[560px] opacity-90" },
-          { color: "#ff5a3c", className: "-right-20 top-[160px] size-[520px] opacity-80" },
-          { color: "#ffa066", className: "right-[10%] top-[420px] size-[420px] opacity-80" },
-        ]}
-      />
-      <PageHeader title="Contact Us" />
+    <section className="noise relative isolate overflow-hidden pt-36 pb-24 md:pt-44 md:pb-32">
+      <div aria-hidden className="absolute inset-0 -z-10">
+        <div className="grid-paper grid-fade absolute inset-0" />
+        <span className="absolute -left-20 top-20 size-[520px] rounded-full bg-teal/20 blur-[140px]" />
+        <span className="absolute -right-20 bottom-0 size-[520px] rounded-full bg-orange/20 blur-[140px]" />
+      </div>
 
-      <section className="container-x relative z-10 pt-10 pb-28 md:pt-16">
-        <Reveal className="grid bg-surface py-6 md:grid-cols-2 md:py-7">
-          {items.map((it, i) => (
-            <a
-              key={it.label}
-              href={it.href}
-              target={i === 1 ? "_blank" : undefined}
-              rel={i === 1 ? "noopener noreferrer" : undefined}
-              className={`group mx-6 flex flex-col items-center py-4 text-center md:mx-7 md:border-x md:border-white/20 ${
-                i === 1 ? "border-t border-white/10 md:ml-0 md:border-t-0 md:border-l-0" : ""
-              }`}
-            >
-              <span className="font-display text-2xl font-medium">{it.label}</span>
-              <span className="mt-3 text-[15px] text-fg/85 transition-colors group-hover:text-teal">{it.value}</span>
-            </a>
-          ))}
+      <div className="shell grid gap-14 lg:grid-cols-[0.9fr_1.1fr]">
+        <Reveal>
+          <p className="eyebrow flex items-center gap-3">
+            <span className="text-orange">Contact</span>
+            <span className="h-px w-8 bg-line-strong" />
+            We reply fast
+          </p>
+          <h1 className="display mt-6 text-[clamp(3rem,8vw,7rem)]">
+            Let&apos;s <em className="text-signal">talk</em>
+          </h1>
+          <p className="mt-6 max-w-[440px] text-lg leading-relaxed text-muted">
+            Partnering on a hackathon, bringing a speaker, or hiring from the community — drop us a line.
+          </p>
+
+          <div className="mt-10 grid gap-3 sm:grid-cols-2">
+            {cards.map(({ Icon, label, value, href }) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith("mailto") ? undefined : "_blank"}
+                rel={href.startsWith("mailto") ? undefined : "noopener noreferrer"}
+                className="group rounded-2xl border border-line bg-ink-2 p-5 transition-colors hover:border-line-strong"
+              >
+                <div className="flex items-center justify-between">
+                  <Icon className="size-5 text-teal" />
+                  <ArrowUpRight className="size-4 text-subtle transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-paper" />
+                </div>
+                <p className="eyebrow mt-5">{label}</p>
+                <p className="mt-1.5 text-sm break-words text-paper">{value}</p>
+              </a>
+            ))}
+          </div>
         </Reveal>
-      </section>
-    </div>
+
+        <Reveal delay={0.1}>
+          <ContactForm />
+        </Reveal>
+      </div>
+    </section>
   );
 }
