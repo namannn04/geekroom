@@ -42,7 +42,7 @@ export default function Footer() {
             <span className="font-display text-lg font-bold uppercase">Geek Room</span>
           </Link>
           <p className="mt-5 max-w-[320px] text-sm leading-relaxed text-muted">
-            One of India&apos;s biggest student tech communities — hackathons, meetups and speaker sessions for 50,000+
+            One of India&apos;s biggest student tech communities: hackathons, meetups and speaker sessions for 50,000+
             builders.
           </p>
           <div className="mt-6 flex gap-2">

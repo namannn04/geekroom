@@ -89,7 +89,7 @@ export const partners: Partner[] = [
 export const services = [
   {
     title: "Hiring Challenges",
-    body: "Run hiring challenges with us and move past old-school recruitment — evaluate candidates on the real skills that make them right for your team.",
+    body: "Run hiring challenges with us and move past old-school recruitment, and evaluate candidates on the real skills that make them right for your team.",
   },
   {
     title: "Exclusive Hackathons",
@@ -187,7 +187,7 @@ export const faqs = [
   },
   {
     q: "How do we join Geek Room?",
-    a: "Follow us on LinkedIn and Instagram and register for any of our upcoming events — every event is an open door into the community.",
+    a: "Follow us on LinkedIn and Instagram and register for any of our upcoming events. Every event is an open door into the community.",
   },
   {
     q: "How much do we charge for events?",
@@ -217,11 +217,11 @@ export const milestones = [
 export const reviews = [
   {
     title: "Hacker at Code Cubicle 3.0",
-    body: "Great mentoring, great food and awesome management. The Geek Room team's hard work really shows — one of the few genuinely high-quality hackathons out there.",
+    body: "Great mentoring, great food and awesome management. The Geek Room team's hard work really shows. One of the few genuinely high-quality hackathons out there.",
   },
   {
     title: "Hacker at Code Kshetra 2.0",
-    body: "Everything at Code Kshetra was awesome — the food, the competition, the organisers and the mentors.",
+    body: "Everything at Code Kshetra was awesome: the food, the competition, the organisers and the mentors.",
   },
   {
     title: "Hacker at HackBLR",

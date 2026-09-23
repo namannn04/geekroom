@@ -98,7 +98,7 @@ export default function Navbar() {
             animate={{ clipPath: "circle(150% at 92% 4%)" }}
             exit={{ clipPath: "circle(0% at 92% 4%)" }}
             transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
-            className="grid-paper fixed inset-0 -z-10 flex flex-col justify-between bg-ink px-6 pt-28 pb-10 md:hidden"
+            className="fixed inset-0 -z-10 flex flex-col justify-between bg-ink px-6 pt-28 pb-10 md:hidden"
           >
             <ul className="flex flex-col gap-1">
               {navLinks.map((l, i) => (

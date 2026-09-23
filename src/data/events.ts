@@ -33,7 +33,7 @@ export const events: EventItem[] = [
     register: { label: "Register Here", url: "https://luma.com/ia0ik7c6" },
     description: [
       "HackBLR 2026 is a national-level AI hackathon for developers, AI engineers, founders and builders who want to turn bold ideas into working AI-powered products.",
-      "The themes are AI agents, voice AI, LLM applications and real-world AI systems — participants build impactful solutions with modern AI tooling and fast development workflows.",
+      "The themes are AI agents, voice AI, LLM applications and real-world AI systems. Participants build impactful solutions with modern AI tooling and fast development workflows.",
       "It runs in two stages: a large online round first, after which the top teams qualify for the offline grand finale in Bengaluru to build and demo production-ready AI apps in front of industry experts and founders.",
     ],
   },
@@ -50,7 +50,7 @@ export const events: EventItem[] = [
     register: { label: "Registration Link", url: "https://luma.com/ges4hpol" },
     description: [
       "Hack Geek Room is a high-impact hackathon for builders and innovators who want to push what AI, AI agents and intelligent systems can do.",
-      "The focus is on shipping real, meaningful AI-driven products — from autonomous and multi-agent workflows to applied AI for everyday problems — and turning ideas into working prototypes.",
+      "The focus is on shipping real, meaningful AI-driven products, from autonomous and multi-agent workflows to applied AI for everyday problems, and turning ideas into working prototypes.",
     ],
   },
   {
@@ -144,7 +144,7 @@ export const events: EventItem[] = [
     description: [
       "Code Kshetra is a 36-hour hackathon packed with creativity and cutting-edge ideas, hosted by JIMS Sector-5 Rohini together with Geek Room.",
       "Code Kshetra 2.0 is as much about building memories and having fun as it is about building projects. Bring your laptop, your wildest ideas and a spare charger.",
-      "Come ready to build — your ideas will thrive, even if your sleep schedule doesn't.",
+      "Come ready to build. Your ideas will thrive, even if your sleep schedule doesn't.",
     ],
   },
 ];
