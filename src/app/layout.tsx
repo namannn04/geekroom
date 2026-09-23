@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Anybody, JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import SmoothScroll from "@/components/motion/SmoothScroll";
+import PageTransition from "@/components/motion/PageTransition";
 import "./globals.css";
 
 // Anybody exposes a width axis (50–150%) that the display type and scroll animations lean on
@@ -56,9 +58,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${anybody.variable} ${schibsted.variable} ${jetbrains.variable}`}>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <SmoothScroll>
+          <PageTransition>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+          </PageTransition>
+        </SmoothScroll>
       </body>
     </html>
   );
