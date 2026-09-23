@@ -52,7 +52,7 @@ export default function SectionHead({ index, title, intro, align = "left", class
       <div className={`flex flex-wrap items-start gap-x-4 gap-y-2 ${centered ? "justify-center" : ""}`}>
         <Tag
           data-title
-          className={`display min-w-0 ${size === "sm" ? "text-[clamp(2.3rem,4.4vw,3.9rem)]" : "text-[clamp(2.5rem,6.5vw,5.5rem)]"}`}
+          className={`display min-w-0 ${size === "sm" ? "text-[clamp(1.8rem,8.8vw,3.9rem)] lg:text-[clamp(2.3rem,4.4vw,3.9rem)]" : "text-[clamp(1.9rem,9.4vw,5.5rem)] md:text-[clamp(2.5rem,6.5vw,5.5rem)]"}`}
         >
           {title}
         </Tag>
