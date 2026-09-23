@@ -8,17 +8,28 @@ Website for **Geek Room** — one of India's biggest student tech communities (5
 - TypeScript
 - Tailwind CSS v4
 - [Motion](https://motion.dev/) for animations
-- Fonts: Clash Display (Fontshare), Plus Jakarta Sans and Bebas Neue (Google Fonts)
+- Fonts: Space Grotesk, Instrument Serif and JetBrains Mono (Google Fonts)
+
+## Design — "Signal"
+
+An ink-dark, abstract system built from the Geek Room `</>` mark:
+
+- **Colour:** ink `#08090a` canvas, paper `#f4f1ea` text, teal `#19b3bf` → orange `#ff5a1f` signal gradient
+- **Type:** uppercase Space Grotesk headlines with italic Instrument Serif accents (`<em>` inside `.display`),
+  JetBrains Mono for labels and numbering
+- **Texture:** paper grid, film noise, blurred glow fields and a pointer-reactive canvas dot field
+- **Motifs:** numbered sections (`01 — LABEL`), date-chip event cards, bento offerings, impact band,
+  scroll-filled timeline, outlined footer wordmark
 
 ## Pages
 
 | Route | Description |
 | --- | --- |
-| `/` | Home — hero, highlights, features, partners, services, speakers, FAQ |
-| `/about-us` | Story, stats, milestone timeline, team and reviews |
-| `/event` | All events |
-| `/event/[slug]` | Event details with registration link and related events |
-| `/contact-us` | Email and address |
+| `/` | Home — hero, featured events, offerings, impact, story, speakers, partners, reviews, FAQ |
+| `/about-us` | Manifesto, stats, timeline, team and reviews |
+| `/event` | Filterable events (all / hackathons / meetups) |
+| `/event/[slug]` | Event details, sticky register panel and related events |
+| `/contact-us` | Enquiry form (opens a pre-filled email) and contact channels |
 | `/thank-you` | Post-submission page |
 | 404 | Custom not-found page |
 
@@ -39,10 +50,11 @@ src/
   app/            # routes (App Router)
   components/
     layout/       # Navbar, Footer
-    ui/           # shared building blocks (Reveal, PersonCard, CountUp, ...)
+    ui/           # shared building blocks (Reveal, SectionHead, DotField, GeekMark, Marquee, ...)
     home/         # homepage sections
     about/        # About Us sections
-    events/       # event card, grid and sidebar
+    events/       # event card, grid and filterable explorer
+    contact/      # contact form
   data/
     site.ts       # site config, team, speakers, partners, FAQ, milestones
     events.ts     # events catalogue
