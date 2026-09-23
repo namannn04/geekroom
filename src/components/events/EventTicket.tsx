@@ -68,14 +68,14 @@ export default function EventTicket({
       </div>
 
       {/* Perforated stub */}
-      <div className="relative flex shrink-0 items-center justify-between gap-4 border-t-2 border-dashed border-ink/25 px-6 py-5 md:w-[22%] md:flex-col md:items-stretch md:border-t-0 md:border-l-2 md:py-7 md:pl-5 md:pr-6">
+      <div className="relative flex shrink-0 items-center justify-between gap-4 border-t-2 border-dashed border-ink/25 px-6 py-5 md:w-[26%] md:min-w-[150px] md:flex-col md:items-stretch md:border-t-0 md:border-l-2 md:py-7 md:pl-5 md:pr-6">
         {/* notches */}
         <span aria-hidden className="absolute -top-3 -left-3 size-6 rounded-full bg-ink md:-top-3 md:-left-3" />
         <span aria-hidden className="absolute -top-3 -right-3 size-6 rounded-full bg-ink md:top-auto md:-bottom-3 md:-left-3 md:right-auto" />
 
         <div>
           <p className="font-mono text-xs text-ink/60">No. {String(index + 1).padStart(2, "0")}</p>
-          <p className="mt-1 font-display text-4xl leading-none font-extrabold [font-stretch:120%]">{event.code}</p>
+          <p className="mt-1 font-display text-[clamp(1.9rem,2.6vw,2.4rem)] leading-none font-extrabold [font-stretch:105%]">{event.code}</p>
         </div>
 
         <svg
