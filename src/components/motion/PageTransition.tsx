@@ -115,8 +115,8 @@ export default function PageTransition({ children }: { children: ReactNode }) {
             >
               <motion.p
                 className="display max-w-full px-6 text-center text-[clamp(2.25rem,8vw,8rem)] break-words text-paper"
-                initial={{ fontStretch: "50%", opacity: 0 }}
-                animate={{ fontStretch: phase === "cover" ? "90%" : "115%", opacity: phase === "cover" ? 1 : 0 }}
+                initial={{ scaleX: 0.55, opacity: 0 }}
+                animate={{ scaleX: phase === "cover" ? 1 : 1.25, opacity: phase === "cover" ? 1 : 0 }}
                 transition={{ duration: 0.8, ease }}
               >
                 {label}
