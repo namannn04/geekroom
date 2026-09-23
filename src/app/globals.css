@@ -1,26 +1,103 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #111111;
+  --surface: #000000;
+  --surface-2: #1a1a1a;
+  --fg: #ffffff;
+  --muted: rgba(255, 255, 255, 0.6);
+  --subtle: rgba(255, 255, 255, 0.4);
+  --line: rgba(255, 255, 255, 0.12);
+  --brand-teal: #13a7b4;
+  --brand-orange: #f15a22;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-line: var(--line);
+  --color-teal: var(--brand-teal);
+  --color-orange: var(--brand-orange);
+  --font-display: "Clash Display", var(--font-jakarta), sans-serif;
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+  --font-bebas: var(--font-bebas-neue), sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--brand-orange);
+  color: #fff;
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[1240px] px-5 md:px-[100px] lg:px-[100px];
+  }
+
+  .heading-xl {
+    @apply font-display text-5xl leading-[1.05] font-semibold capitalize md:text-7xl lg:text-[88px];
+  }
+
+  .heading-lg {
+    @apply font-display text-4xl leading-[1.15] font-semibold capitalize md:text-5xl lg:text-[64px];
+  }
+
+  .heading-md {
+    @apply font-display text-3xl leading-[1.2] font-semibold capitalize md:text-[44px];
+  }
+
+  .btn-bebas {
+    @apply font-bebas text-sm tracking-[0.12em] uppercase;
+  }
+
+  /* Soft blurred colour blobs used as page backdrops */
+  .blob {
+    @apply pointer-events-none absolute rounded-full blur-[120px];
+  }
+}
+
+/* Infinite horizontal marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* Gradient border for the Contact CTA */
+.gradient-border {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(#000, #000) padding-box,
+    linear-gradient(90deg, var(--brand-teal), var(--brand-orange)) border-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }
