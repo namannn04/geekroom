@@ -4,9 +4,10 @@ import { useRef } from "react";
 import SectionHead from "@/components/ui/SectionHead";
 import { milestones } from "@/data/site";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
+import { EASE_OUT, reveal } from "@/lib/motion";
 
 /**
- * Vertical timeline. The rail fills with scroll, and each date widens and turns
+ * Vertical timeline. The rail fills with scroll, and each date swells and turns
  * orange while it crosses the middle of the screen, then relaxes again.
  */
 export default function Timeline() {
@@ -22,16 +23,23 @@ export default function Timeline() {
         scrollTrigger: { trigger: "[data-list]", start: "top 60%", end: "bottom 60%", scrub: true },
       });
       gsap.utils.toArray<HTMLElement>("[data-item]").forEach((item) => {
-        const date = item.querySelector("[data-date]");
+        const date = item.querySelector<HTMLElement>("[data-date]");
+        // Continuous: the date swells and ignites while it crosses the middle of the screen
         gsap
-          .timeline({ scrollTrigger: { trigger: item, start: "top 75%", end: "bottom 35%", scrub: true } })
-          .fromTo(date, { fontStretch: "60%", color: "rgba(238,236,230,0.35)" }, { fontStretch: "130%", color: "#ff5a1f", ease: "sine.inOut" })
-          .to(date, { fontStretch: "80%", color: "rgba(238,236,230,1)", ease: "sine.inOut" });
+          .timeline({ scrollTrigger: { trigger: item, start: "top 80%", end: "bottom 30%", scrub: true } })
+          .fromTo(
+            date,
+            { scale: 0.86, color: "rgba(238,236,230,0.4)" },
+            { scale: 1.06, color: "#ff5a1f", ease: "sine.inOut" },
+          )
+          .to(date, { scale: 1, color: "rgba(238,236,230,1)", ease: "sine.inOut" });
+        // Reveal: copy lifts in as soon as the row enters
         gsap.from(item.querySelector("[data-text]"), {
-          y: 40,
+          y: 28,
           opacity: 0,
-          ease: "power2.out",
-          scrollTrigger: { trigger: item, start: "top 85%", end: "top 55%", scrub: true },
+          duration: 0.8,
+          ease: EASE_OUT,
+          scrollTrigger: reveal(item, "top 88%"),
         });
       });
     },
@@ -56,7 +64,7 @@ export default function Timeline() {
         {milestones.map((m) => (
           <li key={m.date} data-item className="relative grid gap-3 pb-16 pl-8 last:pb-0 md:grid-cols-[11rem_1fr] md:gap-16 md:pl-0">
             <span className="absolute top-3 left-0 size-[11px] rounded-full bg-orange md:left-[11.5rem] md:-translate-x-[5px]" />
-            <p data-date className="display text-4xl whitespace-nowrap md:text-right md:text-5xl">
+            <p data-date className="display origin-left text-4xl whitespace-nowrap will-change-transform md:origin-right md:text-right md:text-5xl">
               {m.date}
             </p>
             <p data-text className="max-w-[34rem] text-lg leading-relaxed text-muted md:pl-4 md:text-xl">
