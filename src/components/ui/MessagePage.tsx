@@ -1,41 +1,26 @@
 import Link from "next/link";
-import Blobs from "./Blobs";
+import { ArrowLeft } from "lucide-react";
+import DotField from "./DotField";
+import GeekMark from "./GeekMark";
 import Reveal from "./Reveal";
-import JoinCta from "./JoinCta";
 
-/** Centered message layout shared by the thank-you and 404 pages. */
-export default function MessagePage({
-  eyebrow,
-  title,
-  body,
-}: {
-  eyebrow?: string;
-  title: string;
-  body?: string;
-}) {
+/** Full-height centred message used by the thank-you and 404 pages. */
+export default function MessagePage({ eyebrow, title, body }: { eyebrow?: string; title: string; body?: string }) {
   return (
-    <div className="relative isolate overflow-hidden">
-      <Blobs
-        className="-z-10"
-        blobs={[
-          { color: "#13a7b4", className: "-left-20 top-[200px] size-[480px] opacity-70" },
-          { color: "#f15a22", className: "-right-20 top-[260px] size-[480px] opacity-70" },
-        ]}
-      />
-      <section className="container-x flex min-h-[70vh] flex-col items-center justify-center pt-[140px] text-center">
-        <Reveal>
-          {eyebrow && <p className="font-display text-2xl font-semibold capitalize md:text-4xl">{eyebrow}</p>}
-          <h1 className="heading-xl mt-2">{title}</h1>
-          {body && <p className="mx-auto mt-6 max-w-[520px] text-[15px] leading-relaxed text-muted">{body}</p>}
-          <Link
-            href="/"
-            className="btn-bebas mt-10 inline-block rounded-sm bg-fg px-8 py-3.5 text-base text-bg transition-transform hover:scale-105"
-          >
-            Back to home
-          </Link>
-        </Reveal>
-      </section>
-      <JoinCta />
-    </div>
+    <section className="noise relative isolate flex min-h-[100svh] items-center overflow-hidden pt-24">
+      <div aria-hidden className="absolute inset-0 -z-10">
+        <DotField className="absolute inset-0 opacity-60" />
+        <span className="absolute left-1/2 top-1/2 size-[640px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-teal/15 blur-[140px]" />
+      </div>
+      <Reveal className="shell flex flex-col items-center text-center">
+        <GeekMark className="w-28" />
+        {eyebrow && <p className="eyebrow mt-10">{eyebrow}</p>}
+        <h1 className="display mt-4 text-[clamp(4rem,16vw,13rem)] text-signal">{title}</h1>
+        {body && <p className="mt-6 max-w-[480px] text-lg leading-relaxed text-muted">{body}</p>}
+        <Link href="/" className="btn-primary mt-10">
+          <ArrowLeft className="size-4" /> Back to home
+        </Link>
+      </Reveal>
+    </section>
   );
 }
