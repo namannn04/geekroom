@@ -31,7 +31,7 @@ export default function Partners() {
   );
 
   return (
-    <section ref={root} className="shell grid gap-12 py-24 md:py-32 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+    <section ref={root} className="shell grid grid-cols-[minmax(0,1fr)] gap-12 py-24 md:py-32 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
       <SectionHead
         size="sm"
         index="06"

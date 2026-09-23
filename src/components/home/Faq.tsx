@@ -10,7 +10,7 @@ export default function Faq() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="shell grid gap-12 py-24 md:py-32 lg:grid-cols-[0.8fr_1.2fr]">
+    <section className="shell grid grid-cols-[minmax(0,1fr)] gap-12 py-24 md:py-32 lg:grid-cols-[0.8fr_1.2fr]">
       <div>
         <SectionHead
           size="sm"

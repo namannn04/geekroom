@@ -49,10 +49,10 @@ export default function SectionHead({ index, title, intro, align = "left", class
 
   return (
     <div ref={root} className={`${centered ? "mx-auto text-center" : ""} ${className}`}>
-      <div className={`flex items-start gap-4 ${centered ? "justify-center" : ""}`}>
+      <div className={`flex flex-wrap items-start gap-x-4 gap-y-2 ${centered ? "justify-center" : ""}`}>
         <Tag
           data-title
-          className={`display ${size === "sm" ? "text-[clamp(2.3rem,4.4vw,3.9rem)]" : "text-[clamp(2.5rem,6.5vw,5.5rem)]"}`}
+          className={`display min-w-0 ${size === "sm" ? "text-[clamp(2.3rem,4.4vw,3.9rem)]" : "text-[clamp(2.5rem,6.5vw,5.5rem)]"}`}
         >
           {title}
         </Tag>

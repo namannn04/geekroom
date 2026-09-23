@@ -38,7 +38,7 @@ export default function Story() {
   );
 
   return (
-    <section ref={root} className="shell grid gap-12 py-24 md:py-32 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
+    <section ref={root} className="shell grid grid-cols-[minmax(0,1fr)] gap-12 py-24 md:py-32 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
       <div className="lg:sticky lg:top-32 lg:h-fit">
         <SectionHead
           size="sm"
