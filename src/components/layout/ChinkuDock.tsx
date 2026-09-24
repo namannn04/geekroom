@@ -30,7 +30,7 @@ export default function ChinkuDock() {
   }, []);
 
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-x-0 bottom-0 z-30 hidden h-[200px] md:block">
+    <div aria-hidden className="pointer-events-none fixed inset-x-0 bottom-0 z-30 hidden h-[180px] md:block">
       {ready && <ChinkuBot />}
     </div>
   );
