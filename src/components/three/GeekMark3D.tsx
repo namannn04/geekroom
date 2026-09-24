@@ -11,30 +11,31 @@ import {
 } from "react";
 import * as THREE from "three";
 import { achievements } from "@/data/site";
+import {
+  CENTER,
+  EYES,
+  LEFT,
+  MARK_COLORS,
+  RIGHT,
+  SLASH,
+  STROKE_W,
+  type Pt,
+} from "@/lib/geekmark";
 
-/* ---------- geometry from the 2D </> mark (viewBox 200 × 160, stroke 14) ---------- */
+/* ---------- geometry traced from the logo (see lib/geekmark) ---------- */
 
-const S = 1 / 40; // svg units → world units
+const S = 1 / 85; // logo units → world units
 const toWorld = (x: number, y: number) =>
-  new THREE.Vector3((x - 100) * S, (80 - y) * S, 0);
-const RADIUS = 7 * S;
+  new THREE.Vector3((x - CENTER[0]) * S, (CENTER[1] - y) * S, 0);
+const RADIUS = (STROKE_W / 2) * S;
 
 type Seg = [number, number, number, number];
-const LEFT: Seg[] = [
-  [58, 22, 16, 80],
-  [16, 80, 58, 138],
-];
-const RIGHT: Seg[] = [
-  [142, 22, 184, 80],
-  [184, 80, 142, 138],
-];
-const SLASH: Seg = [116, 18, 84, 142];
-const EYES: [number, number][] = [
-  [66, 80],
-  [134, 80],
-];
+const segments = (pts: Pt[]): Seg[] =>
+  pts.slice(1).map((p, i) => [pts[i][0], pts[i][1], p[0], p[1]]);
+const LEFT_SEGS = segments(LEFT);
+const RIGHT_SEGS = segments(RIGHT);
 
-/** A round-capped stroke between two svg points. */
+/** A round-capped stroke between two logo points; neighbours overlap into round joins. */
 function Stroke({ seg, material }: { seg: Seg; material: THREE.Material }) {
   const { position, quaternion, length } = useMemo(() => {
     const a = toWorld(seg[0], seg[1]);
@@ -62,27 +63,56 @@ function Stroke({ seg, material }: { seg: Seg; material: THREE.Material }) {
   );
 }
 
+/** The brush-stroke slash: its traced outline extruded to the brackets' depth, edges bevelled. */
+function Slash({ material }: { material: THREE.Material }) {
+  const geometry = useMemo(() => {
+    const shape = new THREE.Shape(
+      SLASH.map(([x, y]) => {
+        const v = toWorld(x, y);
+        return new THREE.Vector2(v.x, v.y);
+      }),
+    );
+    const bevel = 4 * S;
+    const depth = STROKE_W * S - bevel * 2;
+    const g = new THREE.ExtrudeGeometry(shape, {
+      depth,
+      bevelEnabled: true,
+      bevelThickness: bevel,
+      bevelSize: 2.5 * S,
+      bevelSegments: 6,
+      curveSegments: 1,
+    });
+    g.translate(0, 0, -depth / 2);
+    return g;
+  }, []);
+  useEffect(() => () => geometry.dispose(), [geometry]);
+  return <mesh geometry={geometry} material={material} castShadow />;
+}
+
 /* ---------- materials ---------- */
 
 function useMaterials() {
   return useMemo(
     () => ({
       teal: new THREE.MeshPhysicalMaterial({
-        color: "#19b3bf",
+        color: MARK_COLORS.teal,
         roughness: 0.22,
         metalness: 0.15,
         clearcoat: 1,
         clearcoatRoughness: 0.08,
       }),
       orange: new THREE.MeshPhysicalMaterial({
-        color: "#ff5a1f",
+        color: MARK_COLORS.orange,
+        // A touch of self-light so the flat slash face keeps the logo's punch
+        emissive: MARK_COLORS.orange,
+        emissiveIntensity: 0.18,
         roughness: 0.2,
         metalness: 0.1,
         clearcoat: 1,
         clearcoatRoughness: 0.06,
       }),
       paper: new THREE.MeshPhysicalMaterial({
-        color: "#eeece6",
+        color: MARK_COLORS.white,
         roughness: 0.35,
         clearcoat: 0.6,
       }),
@@ -166,21 +196,22 @@ function Mark({ progress, reduced }: { progress: Progress; reduced: boolean }) {
   return (
     <group ref={root}>
       <group ref={left}>
-        {LEFT.map((s, i) => (
+        {LEFT_SEGS.map((s, i) => (
           <Stroke key={i} seg={s} material={m.teal} />
         ))}
       </group>
       <group ref={right}>
-        {RIGHT.map((s, i) => (
+        {RIGHT_SEGS.map((s, i) => (
           <Stroke key={i} seg={s} material={m.teal} />
         ))}
       </group>
       <group ref={slash}>
-        <Stroke seg={SLASH} material={m.orange} />
+        <Slash material={m.orange} />
       </group>
-      {EYES.map(([x, y]) => (
-        <mesh key={x} position={toWorld(x, y)} material={m.paper}>
-          <sphereGeometry args={[11 * S, 48, 48]} />
+      {/* Eyes are flat discs in the logo: slightly squashed spheres keep the gloss without bulging */}
+      {EYES.map(({ c, r }) => (
+        <mesh key={c[0]} position={toWorld(c[0], c[1])} scale={[1, 1, 0.7]} material={m.paper}>
+          <sphereGeometry args={[r * S, 48, 48]} />
         </mesh>
       ))}
     </group>
