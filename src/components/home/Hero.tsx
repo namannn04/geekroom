@@ -29,7 +29,7 @@ const rowB = partners.slice(6);
 
 /**
  * Hero. On load the headline's letters rise and unsquash while a glossy 3D
- * </> mark fades up inside its orbit of milestones. On scroll the headline
+ * </> mark fades up inside its orbit of achievements. On scroll the headline
  * lines drift apart, the mark comes apart at the seams, and the partner rows
  * slide against each other.
  */
@@ -100,8 +100,8 @@ export default function Hero() {
           </h1>
 
           <p data-fadeup className="mt-8 max-w-[31rem] text-lg leading-relaxed text-muted">
-            Geek Room runs hackathons, meetups and speaker sessions where 50,000+ students across India learn,
-            connect and build in public.
+            Geek Room runs hackathons, meetups and hiring challenges where 150K+ builders across 400+ colleges
+            learn, connect and build in public.
           </p>
 
           <div data-fadeup className="mt-9 flex flex-wrap gap-3">
@@ -114,7 +114,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* 3D mark with revolving milestones */}
+        {/* 3D mark with revolving achievements */}
         <div data-stage className="relative -mx-4 h-[380px] sm:h-[460px] lg:mx-0 lg:h-[min(640px,78svh)]">
           <GeekMark3D progress={progress} className="absolute inset-0 lg:-inset-x-16" />
         </div>

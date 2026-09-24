@@ -10,7 +10,7 @@ import {
   type MutableRefObject,
 } from "react";
 import * as THREE from "three";
-import { milestones } from "@/data/site";
+import { achievements } from "@/data/site";
 
 /* ---------- geometry from the 2D </> mark (viewBox 200 × 160, stroke 14) ---------- */
 
@@ -187,7 +187,7 @@ function Mark({ progress, reduced }: { progress: Progress; reduced: boolean }) {
   );
 }
 
-/* ---------- milestone orbit ---------- */
+/* ---------- achievement orbit ---------- */
 
 const ORBIT_R = 2.85;
 
@@ -233,11 +233,11 @@ function Orbit({ reduced, labels }: { reduced: boolean; labels: Labels }) {
       </mesh>
 
       <group ref={spin}>
-        {milestones.map((ms, i) => {
-          const a = (i / milestones.length) * Math.PI * 2;
+        {achievements.map((ms, i) => {
+          const a = (i / achievements.length) * Math.PI * 2;
           return (
             <group
-              key={ms.date}
+              key={ms.label}
               ref={(g) => {
                 nodes.current[i] = g;
               }}
@@ -340,18 +340,20 @@ export default function GeekMark3D({
           <Orbit reduced={reduced} labels={labels} />
         </Canvas>
 
-        {/* Milestone labels live in plain DOM above the canvas, positioned every frame */}
+        {/* Achievement labels live in plain DOM above the canvas, positioned every frame */}
         <div className="pointer-events-none absolute inset-0">
-          {milestones.map((ms, i) => (
+          {achievements.map((ms, i) => (
             <div
-              key={ms.date}
+              key={ms.label}
               ref={(el) => {
                 labels.current[i] = el;
               }}
               className="absolute top-0 left-0 rounded-full border border-line-strong bg-ink/85 px-3 py-1.5 whitespace-nowrap opacity-0 will-change-transform"
             >
-              <span className="font-mono text-xs text-orange">{ms.date}</span>
-              {!compact && <span className="ml-2 text-sm text-paper">{ms.short}</span>}
+              <span className="font-mono text-xs text-orange">{ms.value}</span>
+              <span className={`ml-2 text-paper ${compact ? "text-xs" : "text-sm"}`}>
+                {compact ? ms.short : ms.label}
+              </span>
             </div>
           ))}
         </div>

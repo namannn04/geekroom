@@ -6,8 +6,12 @@ import SectionHead from "@/components/ui/SectionHead";
 import { stats } from "@/data/site";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 
-const cells = [{ value: 50000, suffix: "+", label: "Members" }, ...stats];
-const fmt = (v: number) => Math.round(v).toLocaleString("en-IN");
+const cells: { value: number; suffix: string; label: string; decimals?: number }[] = [
+  { value: 150000, suffix: "+", label: "Builders" },
+  ...stats,
+];
+const fmt = (v: number, decimals = 0) =>
+  v.toLocaleString("en-IN", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
 
 export default function AboutHero() {
   const root = useRef<HTMLElement>(null);
@@ -22,7 +26,7 @@ export default function AboutHero() {
         gsap
           .timeline({ scrollTrigger: { trigger: "[data-stats]", start: "top 85%" }, delay: i * 0.12 })
           .from(el.closest("[data-cell]"), { yPercent: 100, duration: 0.9, ease: "power4.out" })
-          .to(state, { v: cells[i].value, duration: 1.4, ease: "power2.out", onUpdate: () => (el.textContent = fmt(state.v)) }, 0);
+          .to(state, { v: cells[i].value, duration: 1.4, ease: "power2.out", onUpdate: () => (el.textContent = fmt(state.v, cells[i].decimals)) }, 0);
       });
       gsap.to("[data-mark] [data-part='slash']", {
         rotate: 180,
@@ -41,7 +45,7 @@ export default function AboutHero() {
         index="2023"
         title={
           <>
-            From a group chat to <em>50,000+</em> builders
+            From a group chat to <em>150K+</em> builders
           </>
         }
       />
@@ -50,7 +54,8 @@ export default function AboutHero() {
         <div className="max-w-[36rem] space-y-5 text-lg leading-relaxed text-muted">
           <p>
             Geek Room started in 2023 with one goal: bring together everyone in tech who thinks alike. What began as a
-            WhatsApp group for MSIT students is now one of India&apos;s biggest student communities.
+            WhatsApp group for MSIT students is now a nationwide builder ecosystem spanning 400+ colleges, 20+ campus
+            chapters and 80+ companies.
           </p>
           <p>
             Along the way we&apos;ve hit plenty of milestones and built lasting relationships with partners and, above
@@ -67,7 +72,7 @@ export default function AboutHero() {
           <div key={s.label} className={`overflow-hidden border-b border-line ${i % 2 ? "border-l" : ""} ${i === 2 ? "lg:border-l" : ""}`}>
             <div data-cell className="p-4 sm:p-6 md:p-8">
               <dd className="display text-[clamp(1.9rem,8.5vw,4.5rem)] tabular-nums lg:text-[clamp(2.4rem,3.8vw,4.5rem)]">
-                <span data-num>{fmt(s.value)}</span>
+                <span data-num>{fmt(s.value, s.decimals)}</span>
                 <span className="text-orange">{s.suffix}</span>
               </dd>
               <dt className="mt-2 text-muted">{s.label}</dt>

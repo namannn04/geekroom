@@ -48,8 +48,8 @@ export const heroImages = [
 
 export const features = [
   {
-    title: "Join over 50,000+ Developers",
-    body: "Be part of a lively network of 50,000+ developers who hack, build and grow together across the globe.",
+    title: "Join 150K+ builders",
+    body: "Be part of a network of 150K+ developers, students, founders and professionals across 400+ colleges and 20+ campus chapters who hack, build and grow together.",
     image: "/images/home/developers.jpg",
   },
   {
@@ -59,7 +59,7 @@ export const features = [
   },
   {
     title: "Network with the best people in industry",
-    body: "Every Geek Room event is a chance to meet, talk to and learn from people across the industry. We've hosted folks from Google, Meta, Mastercard, Groq, Microsoft, Oracle, Reactive Network and many more.",
+    body: "Every Geek Room event is a chance to meet, talk to and learn from people across the industry. We've hosted finales at Microsoft, Mastercard and Paytm, and worked with 80+ companies including Google, Meta, Groq, Qdrant, Pathway, Vapi and Oracle.",
     image: "/images/home/network.jpg",
   },
 ];
@@ -90,7 +90,7 @@ export const partners: Partner[] = [
 export const services = [
   {
     title: "Hiring Challenges",
-    body: "Run hiring challenges with us and move past old-school recruitment, and evaluate candidates on the real skills that make them right for your team.",
+    body: "Run hiring challenges with us and move past old-school recruitment, and evaluate candidates on the real skills that make them right for your team, like our Hire-A-Thon with InvoLead.",
   },
   {
     title: "Exclusive Hackathons",
@@ -184,7 +184,7 @@ export const team: Person[] = [
 export const faqs = [
   {
     q: "What does Geek Room do?",
-    a: "Geek Room is a community of hackers from around the world who come together on one platform to build, network and learn.",
+    a: "Geek Room is a nationwide builder ecosystem connecting 150K+ developers, students, founders and professionals across 400+ colleges, 20+ campus chapters and 80+ companies through hackathons, technical communities, industry programs and skills-first hiring challenges.",
   },
   {
     q: "How do we join Geek Room?",
@@ -201,9 +201,9 @@ export const faqs = [
 ];
 
 export const stats = [
-  { value: 4, suffix: "", label: "Average hackathon rating" },
-  { value: 50, suffix: "+", label: "Events Organised" },
-  { value: 3, suffix: "", label: "Years of experience" },
+  { value: 4.5, suffix: "★", label: "Average event rating", decimals: 1 },
+  { value: 400, suffix: "+", label: "Colleges" },
+  { value: 80, suffix: "+", label: "Companies" },
 ];
 
 export const milestones = [
@@ -212,7 +212,24 @@ export const milestones = [
   { date: "May 2024", short: "30,000 members", text: "Organised Code Cubicle 1, our first solo hackathon, while crossing 30,000 members across channels." },
   { date: "Aug 2024", short: "CC 2.0 at Microsoft", text: "Hosted Code Cubicle 2.0 at the Microsoft office." },
   { date: "Sept 2024", short: "Mastercard hackathon", text: "Landed our first exclusive hackathon with Mastercard." },
-  { date: "Feb 2025", short: "Code Kshetra 2.0", text: "Organised Code Kshetra 2.0, North India's biggest hackathon, with Groq." },
+  { date: "Nov 2024", short: "Hire-A-Thon", text: "Ran our first hiring hackathon with InvoLead and launched Geek Suite, our community for professionals." },
+  { date: "Feb 2025", short: "Code Kshetra 2.0", text: "Organised Code Kshetra 2.0 with Groq: 14,500+ applications for 150 spots, making it one of North India's biggest hackathons." },
+  { date: "Sept 2025", short: "CC 5.0 in Bengaluru", text: "Code Cubicle 5.0 drew 3,741 registrations to a finale at Microsoft Bengaluru, taking the series past 25,000 registrations over five editions." },
+  { date: "Apr 2026", short: "HackBLR", text: "HackBLR put 1,500+ people in one room in Bengaluru, from 100+ companies and 50+ colleges." },
+  { date: "Aug 2026", short: "AI Race Month", text: "AI Race Month brought 500+ teams from 175+ colleges to a GrandPrix finale at Paytm Noida." },
+  { date: "Oct 2026", short: "CC 6.0: 3,700+ builders", text: "Code Cubicle 6.0 closed registrations at 3,700+ builders and 1,631 teams, the biggest edition yet, with the finale at Paytm Noida." },
+];
+
+/** Headline achievements that circle the 3D mark in the hero. `short` is used on small screens. */
+export const achievements = [
+  { value: "150K+", label: "builders in the community", short: "builders" },
+  { value: "400+", label: "colleges", short: "colleges" },
+  { value: "80+", label: "partner companies", short: "companies" },
+  { value: "20+", label: "campus chapters", short: "chapters" },
+  { value: "25K+", label: "Code Cubicle registrations", short: "CC regs" },
+  { value: "14.5K+", label: "Code Kshetra 2.0 applications", short: "CK apps" },
+  { value: "3.7K+", label: "builders at Code Cubicle 6.0", short: "CC 6.0" },
+  { value: "4.5★", label: "average event rating", short: "rating" },
 ];
 
 export const reviews = [
@@ -232,10 +249,11 @@ export const reviews = [
 
 /** Headline numbers used in the impact band (all taken from Geek Room's own figures). */
 export const impact = [
-  { value: 50000, suffix: "+", label: "Members across channels" },
-  { value: 50, suffix: "+", label: "Events organised" },
-  { value: 20000, suffix: "+", label: "Code Cubicle registrations" },
-  { value: 70000, suffix: "+", label: "Views across 10+ media channels" },
+  { value: 150000, suffix: "+", label: "Builders in the community" },
+  { value: 25000, suffix: "+", label: "Code Cubicle registrations across the first five editions" },
+  { value: 14500, suffix: "+", label: "Applications for Code Kshetra 2.0" },
+  { value: 3700, suffix: "+", label: "Builders registered for Code Cubicle 6.0" },
+  { value: 400, suffix: "+", label: "Colleges" },
 ];
 
 export const pillars = ["Learn", "Connect", "Grow", "Build in public", "Ship", "Hack"];
