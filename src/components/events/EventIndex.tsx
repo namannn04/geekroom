@@ -194,12 +194,12 @@ export default function EventIndex() {
                     {String(n).padStart(2, "0")}
                   </span>
                 </span>
-                <span className="relative overflow-hidden pb-1">
-                  <span
-                    data-lift
-                    className="block font-display text-[clamp(1.6rem,5vw,3.75rem)] leading-[0.95] font-extrabold uppercase transition-[font-stretch,color] duration-500 [font-stretch:72%] group-hover:text-ink md:group-hover:[font-stretch:100%]"
-                  >
-                    {e.title}
+                <span className="relative -mt-1 overflow-hidden pt-1 pb-1">
+                  <span data-lift className="block">
+                    {/* Hover grows the title with a transform, so it never re-wraps onto a second line */}
+                    <span className="block origin-[0%_60%] font-display text-[clamp(1.6rem,5vw,3.75rem)] leading-[0.95] font-extrabold uppercase transition-[transform,color] duration-500 ease-[var(--ease-out)] [font-stretch:72%] group-hover:text-ink md:group-hover:scale-[1.06]">
+                      {e.title}
+                    </span>
                   </span>
                   <span className="mt-1 block text-sm text-muted group-hover:text-ink/70 md:hidden">
                     {e.code} · {e.kind} · {chip.label}

@@ -67,7 +67,7 @@ export default function EventTicket({
             </span>
           </div>
           <div>
-            <h3 className="font-display text-[clamp(1.4rem,2.4vw,1.9rem)] leading-[1.02] font-extrabold uppercase [font-stretch:80%] transition-[font-stretch] duration-500 group-hover:[font-stretch:100%]">
+            <h3 className="origin-left font-display text-[clamp(1.4rem,2.4vw,1.9rem)] leading-[1.02] font-extrabold uppercase [font-stretch:80%] transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.04]">
               {event.title}
             </h3>
             <p className="mt-2 text-sm text-ink/70">
