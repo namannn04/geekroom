@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import GeekMark from "@/components/ui/GeekMark";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -41,7 +41,7 @@ export default function Navbar() {
         }`}
       >
         <Link href="/" aria-label="Geek Room home" className="flex items-center gap-2.5">
-          <Image src="/images/brand/logo.png" alt="" width={36} height={31} priority className="h-7 w-auto" />
+          <GeekMark className="h-6 w-auto" />
           <span className="font-display text-[15px] font-bold tracking-tight uppercase">Geek Room</span>
         </Link>
 

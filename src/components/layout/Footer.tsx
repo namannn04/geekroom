@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import GeekMark from "@/components/ui/GeekMark";
 import Link from "next/link";
 import { useRef } from "react";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
@@ -39,12 +39,12 @@ export default function Footer() {
       <div className="shell grid gap-12 pt-20 pb-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
         <div>
           <Link href="/" className="flex items-center gap-3">
-            <Image src="/images/brand/logo.png" alt="" width={44} height={38} className="h-9 w-auto" />
+            <GeekMark className="h-8 w-auto" />
             <span className="font-display text-lg font-bold uppercase">Geek Room</span>
           </Link>
           <p className="mt-5 max-w-[320px] text-sm leading-relaxed text-muted">
-            One of India&apos;s biggest student tech communities: hackathons, meetups and speaker sessions for 50,000+
-            builders.
+            A nationwide builder community: hackathons, meetups and hiring challenges for 150K+ builders across 400+
+            colleges.
           </p>
           <div className="mt-6 flex gap-2">
             {socials.map(({ href, label, Icon }) => (

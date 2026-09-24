@@ -31,19 +31,12 @@ export const metadata: Metadata = {
     template: "%s | Geek Room",
   },
   description:
-    "Geek Room is one of India's biggest student tech communities with over 50k members.",
-  icons: {
-    icon: [
-      { url: "/images/brand/logo-light.png", media: "(prefers-color-scheme: light)" },
-      { url: "/images/brand/logo.png", media: "(prefers-color-scheme: dark)" },
-    ],
-    apple: "/images/brand/logo.png",
-  },
+    "Geek Room is a nationwide builder community of 150K+ developers across 400+ colleges, running hackathons, meetups and hiring challenges.",
   openGraph: {
     type: "website",
     title: "Geek Room",
     description:
-      "Geek Room is one of India's biggest student tech communities with over 50k members.",
+      "Geek Room is a nationwide builder community of 150K+ developers across 400+ colleges, running hackathons, meetups and hiring challenges.",
   },
   twitter: {
     card: "summary_large_image",
