@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { eventsByDate, formatChip, type EventKind } from "@/data/events";
 import { gsap, prefersReducedMotion, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { EASE_EXPO, reveal } from "@/lib/motion";
@@ -55,6 +55,32 @@ export default function EventIndex() {
     },
     { scope: root, dependencies: [filter], revertOnUpdate: true },
   );
+
+  // Long titles can't widen all the way on hover without wrapping, so measure how far each one can go
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    const fit = () => {
+      el.querySelectorAll<HTMLElement>("[data-title]").forEach((t) => {
+        const range = document.createRange();
+        range.selectNodeContents(t);
+        t.style.transition = "none";
+        t.style.fontStretch = "72%";
+        const narrow = range.getBoundingClientRect().width;
+        t.style.fontStretch = "100%";
+        const wide = range.getBoundingClientRect().width;
+        t.style.fontStretch = "";
+        t.style.transition = "";
+        const room = t.clientWidth;
+        const f = wide > narrow ? Math.min(1, Math.max(0, (room - narrow) / (wide - narrow))) : 1;
+        t.style.setProperty("--hover-stretch", `${Math.floor(72 + 28 * f)}%`);
+      });
+    };
+    document.fonts.ready.then(fit);
+    const ro = new ResizeObserver(fit);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [filter]);
 
   // Cursor-following preview (pointer devices only)
   useGSAP(
@@ -194,12 +220,14 @@ export default function EventIndex() {
                     {String(n).padStart(2, "0")}
                   </span>
                 </span>
-                <span className="relative -mt-1 overflow-hidden pt-1 pb-1">
-                  <span data-lift className="block">
-                    {/* Hover grows the title with a transform, so it never re-wraps onto a second line */}
-                    <span className="block origin-[0%_60%] font-display text-[clamp(1.6rem,5vw,3.75rem)] leading-[0.95] font-extrabold uppercase transition-[transform,color] duration-500 ease-[var(--ease-out)] [font-stretch:72%] group-hover:text-ink md:group-hover:scale-[1.06]">
-                      {e.title}
-                    </span>
+                <span className="relative overflow-hidden pb-1">
+                  {/* Hover widens the title up to --hover-stretch: as far as the column allows on one line */}
+                  <span
+                    data-lift
+                    data-title
+                    className="block font-display text-[clamp(1.6rem,5vw,3.75rem)] leading-[0.95] font-extrabold uppercase transition-[font-stretch,color] duration-500 [font-stretch:72%] group-hover:text-ink md:whitespace-nowrap md:group-hover:[font-stretch:var(--hover-stretch,100%)]"
+                  >
+                    {e.title}
                   </span>
                   <span className="mt-1 block text-sm text-muted group-hover:text-ink/70 md:hidden">
                     {e.code} · {e.kind} · {chip.label}
