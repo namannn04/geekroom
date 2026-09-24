@@ -111,7 +111,9 @@ export type Person = {
   name: string;
   role: string;
   image: string;
-  linkedin: string;
+  linkedin?: string;
+  /** X (formerly Twitter) profile */
+  x?: string;
 };
 
 export const speakers: Person[] = [
@@ -147,43 +149,19 @@ export const speakers: Person[] = [
   },
 ];
 
+/**
+ * The team. Names, designations and links are still to be filled in:
+ * `name` is a placeholder taken from the photo file until then.
+ */
 export const team: Person[] = [
-  {
-    name: "Sanidhya Goel",
-    role: "Founding Member",
-    image: "/images/team/sanidhya-goel.jpg",
-    linkedin: "https://www.linkedin.com/in/sanidhyagoel18/",
-  },
-  {
-    name: "Manas Chopra",
-    role: "Co-Founder",
-    image: "/images/team/manas-chopra.png",
-    linkedin: "https://www.linkedin.com/in/themanasai/",
-  },
-  {
-    name: "Arnav Gupta",
-    role: "Co-Founder",
-    image: "/images/team/arnav-gupta.png",
-    linkedin: "https://www.linkedin.com/in/arnav-gupta-437a66256/",
-  },
-  {
-    name: "Akshay Sharma",
-    role: "Founding Member",
-    image: "/images/team/akshay-sharma.png",
-    linkedin: "https://linkedin.com/",
-  },
-  {
-    name: "Pratham Batra",
-    role: "Co-Founder",
-    image: "/images/team/pratham-batra.png",
-    linkedin: "https://www.linkedin.com/in/pratham1908/",
-  },
-  {
-    name: "Vibhor Aggarwal",
-    role: "Founding Member",
-    image: "/images/team/vibhor-aggarwal.jpeg",
-    linkedin: "https://www.linkedin.com/in/vibhor-aggarwal16/",
-  },
+  { name: "Manas", role: "", image: "/images/team/manas.jpg" },
+  { name: "Akshay", role: "", image: "/images/team/akshay.jpg" },
+  { name: "Naman", role: "", image: "/images/team/naman.jpg" },
+  { name: "Sandy", role: "", image: "/images/team/sandy.jpg" },
+  { name: "Tushar", role: "", image: "/images/team/tushar.jpg" },
+  { name: "Arpit", role: "", image: "/images/team/arpit.jpg" },
+  { name: "Bali", role: "", image: "/images/team/bali.jpg" },
+  { name: "Ishaan", role: "", image: "/images/team/ishaan.jpg" },
 ];
 
 export const faqs = [

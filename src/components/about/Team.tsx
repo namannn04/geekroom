@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import { useRef } from "react";
-import { ArrowUpRight } from "lucide-react";
 import SectionHead from "@/components/ui/SectionHead";
+import { LinkedinIcon, XIcon } from "@/components/ui/Icons";
 import { team } from "@/data/site";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 import { EASE_OUT, reveal } from "@/lib/motion";
@@ -21,7 +21,7 @@ export default function Team() {
           .fromTo(
             card.querySelector("[data-media]"),
             { clipPath: i % 2 ? "inset(0% 0% 100% 0%)" : "inset(100% 0% 0% 0%)" },
-            { clipPath: "inset(0% 0% 0% 0%)", duration: 1.1, ease: "expo.inOut", delay: (i % 3) * 0.08 },
+            { clipPath: "inset(0% 0% 0% 0%)", duration: 1.1, ease: "expo.inOut", delay: (i % 4) * 0.08 },
           )
           .from(card.querySelectorAll("[data-copy]"), { y: 20, opacity: 0, duration: 0.6, stagger: 0.07, ease: EASE_OUT }, 0.6);
       });
@@ -38,34 +38,57 @@ export default function Team() {
             The people <em>behind</em> the room
           </>
         }
-        intro="Co-founders and founding members who turned a group chat into a nationwide community."
+        intro="The team that turned a group chat into a nationwide community."
       />
 
-      <div className="mt-14 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3">
-        {team.map((p) => (
-          <a key={p.name} data-member href={p.linkedin} target="_blank" rel="noopener noreferrer" className="group block">
-            <div data-media className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem]">
-              <Image
-                src={p.image}
-                alt={p.name}
-                fill
-                sizes="(min-width: 768px) 33vw, 50vw"
-                className="object-cover grayscale transition-[filter] duration-500 group-hover:grayscale-0"
-              />
-            </div>
-            <div className="mt-4 flex items-start justify-between gap-3">
-              <div>
-                <h3 data-copy className="font-display text-xl leading-tight font-extrabold uppercase [font-stretch:80%] md:text-2xl">
-                  {p.name}
-                </h3>
-                <p data-copy className={`mt-1 text-sm ${p.role === "Co-Founder" ? "text-orange" : "text-muted"}`}>
-                  {p.role}
-                </p>
+      <div className="mt-14 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4">
+        {team.map((p) => {
+          const links = [
+            { href: p.linkedin, label: "LinkedIn", Icon: LinkedinIcon },
+            { href: p.x, label: "X", Icon: XIcon },
+          ].filter((l): l is typeof l & { href: string } => Boolean(l.href));
+          return (
+            <article key={p.image} data-member className="group">
+              <div data-media className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem]">
+                <Image
+                  src={p.image}
+                  alt={p.name}
+                  fill
+                  sizes="(min-width: 768px) 25vw, 50vw"
+                  className="object-cover grayscale transition-[filter] duration-500 group-hover:grayscale-0"
+                />
               </div>
-              <ArrowUpRight className="mt-1 size-4 shrink-0 text-subtle transition-colors group-hover:text-orange" />
-            </div>
-          </a>
-        ))}
+              <div className="mt-4 flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <h3 data-copy className="font-display text-xl leading-tight font-extrabold uppercase [font-stretch:80%] md:text-2xl">
+                    {p.name}
+                  </h3>
+                  {p.role && (
+                    <p data-copy className="mt-1 text-sm text-muted">
+                      {p.role}
+                    </p>
+                  )}
+                </div>
+                {links.length > 0 && (
+                  <div data-copy className="flex shrink-0 gap-1.5">
+                    {links.map(({ href, label, Icon }) => (
+                      <a
+                        key={label}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${p.name} on ${label}`}
+                        className="grid size-9 place-items-center rounded-full border border-line-strong text-muted transition-colors hover:border-paper hover:text-paper"
+                      >
+                        <Icon className="size-3.5" />
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );
