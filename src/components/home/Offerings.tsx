@@ -6,6 +6,7 @@ import { ArrowUpRight } from "lucide-react";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import SectionHead from "@/components/ui/SectionHead";
 import { services, site } from "@/data/site";
+import { EYES, LEFT, RIGHT, SLASH, toPath, VIEWBOX } from "@/lib/geekmark";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 import { EASE_IN_OUT, EASE_OUT, reveal } from "@/lib/motion";
 
@@ -19,11 +20,24 @@ const glyphs = [
     <circle data-draw cx="32" cy="32" r="14" />
     <path data-draw d="M32 2v14M32 48v14M2 32h14M48 32h14" />
   </svg>,
-  // Hackathons: brackets and slash
-  <svg key="1" viewBox="0 0 64 64" className="size-16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-    <path data-draw d="M22 12 6 32l16 20" />
-    <path data-draw d="M42 12l16 20-16 20" />
-    <path data-draw d="M37 8 27 56" className="text-orange" stroke="currentColor" />
+  // Hackathons: the Geek Room mark itself, traced from the logo and drawn as a line glyph
+  <svg
+    key="1"
+    viewBox={`${VIEWBOX.x} ${VIEWBOX.y} ${VIEWBOX.w} ${VIEWBOX.h}`}
+    className="h-16 w-auto"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="14"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden
+  >
+    <path data-draw d={toPath(LEFT)} />
+    <path data-draw d={toPath(RIGHT)} />
+    <path data-draw d={toPath(SLASH, true)} className="text-orange" strokeWidth="9" />
+    {EYES.map(({ c, r }) => (
+      <circle key={c[0]} data-draw cx={c[0]} cy={c[1]} r={r - 6} strokeWidth="10" />
+    ))}
   </svg>,
   // Speakers: rising signal
   <svg key="2" viewBox="0 0 64 64" className="size-16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
@@ -85,6 +99,16 @@ export default function Offerings() {
               {glyphs[i]}
               <span className="label tabular-nums">0{i + 1}</span>
             </div>
+            {s.proof && (
+              <dl className="mt-12 border-t border-line md:my-10">
+                {s.proof.map((p) => (
+                  <div key={p.label} data-copy className="flex items-baseline justify-between gap-6 border-b border-line py-4">
+                    <dt className="text-sm text-muted">{p.label}</dt>
+                    <dd className="font-display text-xl font-bold text-right [font-stretch:90%] md:text-2xl">{p.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
             <div className="mt-16">
               <h3 data-copy className="display text-[clamp(1.9rem,3.2vw,2.75rem)]">
                 {s.title}
