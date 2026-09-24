@@ -32,7 +32,7 @@ export default function Team() {
   return (
     <section ref={root} className="shell py-24 md:py-32">
       <SectionHead
-        index="02"
+        index="03"
         title={
           <>
             The people <em>behind</em> the room

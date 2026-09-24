@@ -232,6 +232,21 @@ export const achievements = [
   { value: "4.5★", label: "average event rating", short: "rating" },
 ];
 
+/** Campus chapters with public activity. The network spans 20+ campuses. */
+export const chapters = [
+  { name: "MSIT", place: "Delhi", note: "Where Geek Room started, in 2023" },
+  { name: "JIMS Rohini", place: "Delhi", note: "Home of Code Kshetra and Vortex 2.0" },
+  { name: "GTBIT", place: "Delhi", note: "The Datathon at Ignite 2026" },
+  { name: "ADGIPS", place: "Delhi", note: "The official coding society of ADGIPS" },
+  { name: "BVIMR", place: "Delhi", note: "Recurring Developer Spotlight sessions" },
+  { name: "Plaksha University", place: "Mohali", note: "Hack Summit: 73 teams, 6 winners" },
+  { name: "KR Mangalam University", place: "Gurugram", note: "Built the Aarambh induction platform" },
+  { name: "KIET", place: "Ghaziabad", note: "HeLa Crossroads Web3 workshop" },
+  { name: "SRMIST Delhi-NCR", place: "Ghaziabad", note: "Geek n Jam 2026 and TECHSTASY" },
+  { name: "JIMS-EMTC", place: "Greater Noida", note: "Geek Veek 2.0, Engi Prix and BlockGen" },
+  { name: "Geek Room Odisha", place: "Odisha", note: "AI/ML tech talk series" },
+];
+
 export const reviews = [
   {
     title: "Hacker at Code Cubicle 3.0",
