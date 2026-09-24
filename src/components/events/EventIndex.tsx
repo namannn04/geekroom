@@ -9,13 +9,18 @@ import { EASE_EXPO, reveal } from "@/lib/motion";
 import { useLenis } from "@/components/motion/SmoothScroll";
 
 type Filter = "All" | EventKind;
-const filters: Filter[] = ["All", "Hackathon", "Meetup"];
+const filters: Filter[] = ["All", "Hackathon", "Meetup", "Hiring"];
 
 const asc = [...eventsByDate].reverse();
 const t0 = new Date(`${asc[0].iso}T00:00:00`).getTime();
 const t1 = new Date(`${asc[asc.length - 1].iso}T00:00:00`).getTime();
 const pos = (iso: string) => (new Date(`${iso}T00:00:00`).getTime() - t0) / (t1 - t0);
-const years = ["2025", "2026"];
+// Year ticks after the first event, so the first label never sits on the axis edge
+const years = Array.from(new Set(asc.map((e) => e.iso.slice(0, 4)))).filter((y) => pos(`${y}-01-01`) > 0);
+const span = [asc[0], asc[asc.length - 1]].map((e) => {
+  const c = formatChip(e.iso, true);
+  return `${c.day.charAt(0)}${c.day.slice(1).toLowerCase()} ${c.year}`;
+});
 
 /**
  * Events as a typographic index: a real date axis on top, then one row per event.
@@ -99,7 +104,7 @@ export default function EventIndex() {
             {axisHover ? (
               <span className="text-paper">{eventsByDate.find((e) => e.slug === axisHover)?.title}</span>
             ) : (
-              "Timeline · Sep 2024 → Apr 2026"
+              `Timeline · ${span[0]} → ${span[1]}`
             )}
           </p>
           <p className="label tabular-nums">{items.length} shown</p>
@@ -167,7 +172,7 @@ export default function EventIndex() {
       {/* Rows */}
       <ol className="mt-8 border-b border-line" onPointerLeave={() => setHovered(null)}>
         {items.map((e) => {
-          const chip = formatChip(e.iso);
+          const chip = formatChip(e.iso, e.approx);
           const n = eventsByDate.indexOf(e) + 1;
           return (
             <li key={e.slug} id={`row-${e.slug}`} data-row className="relative">
@@ -197,7 +202,7 @@ export default function EventIndex() {
                     {e.title}
                   </span>
                   <span className="mt-1 block text-sm text-muted group-hover:text-ink/70 md:hidden">
-                    {e.code} · {e.kind} · {chip.day} {chip.month} {chip.year}
+                    {e.code} · {e.kind} · {chip.label}
                   </span>
                 </span>
                 {/* Mobile thumbnail */}
@@ -216,7 +221,7 @@ export default function EventIndex() {
                 </span>
                 <span className="relative hidden overflow-hidden text-right md:block">
                   <span data-lift className="block font-mono text-sm tabular-nums text-muted group-hover:text-ink">
-                    {chip.day} {chip.month} {chip.year}
+                    {chip.label}
                   </span>
                 </span>
               </Link>

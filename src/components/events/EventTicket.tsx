@@ -23,7 +23,7 @@ export default function EventTicket({
   className?: string;
   priority?: boolean;
 }) {
-  const chip = formatChip(event.iso);
+  const chip = formatChip(event.iso, event.approx);
   const bars = barcode(event.slug);
 
   return (

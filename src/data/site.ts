@@ -30,7 +30,8 @@ export const footerColumns = [
     links: [
       { label: "HackBLR", href: "/event/hackblr1" },
       { label: "Hack Geek Room", href: "/event/hackgr" },
-      { label: "Code Cubicle", href: "/event/cc5.0" },
+      { label: "Code Cubicle", href: "/event/cc6.0" },
+      { label: "AI Race Month", href: "/event/grandprix" },
       { label: "Code Kshetra", href: "/event/ck2.0" },
     ],
   },

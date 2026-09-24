@@ -20,7 +20,7 @@ export default function EventsPage() {
               Explore the <em>best</em> hackathons
             </>
           }
-          intro="Every Geek Room edition on one axis, from the Mastercard finale in 2024 to HackBLR in 2026. Pick a dot or a row."
+          intro="Every Geek Room edition on one axis, from the first Code Kshetra in 2024 to Code Cubicle 6.0 in 2026. Pick a dot or a row."
         />
       </section>
 

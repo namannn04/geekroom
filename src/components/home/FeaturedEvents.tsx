@@ -9,8 +9,9 @@ import { eventsByDate, formatChip } from "@/data/events";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 import { EASE_EXPO, reveal } from "@/lib/motion";
 
-// Oldest → newest so the track reads left to right like a timeline
-const track = [...eventsByDate].reverse();
+// The latest editions, oldest → newest so the track reads left to right like a timeline
+const track = eventsByDate.slice(0, 8).reverse();
+const cities = new Set(track.map((e) => e.city)).size;
 const t0 = new Date(`${track[0].iso}T00:00:00`).getTime();
 const t1 = new Date(`${track[track.length - 1].iso}T00:00:00`).getTime();
 const pos = (iso: string) => (new Date(`${iso}T00:00:00`).getTime() - t0) / (t1 - t0);
@@ -99,7 +100,7 @@ export default function FeaturedEvents() {
   );
 
   const current = track[active];
-  const chip = formatChip(current.iso);
+  const chip = formatChip(current.iso, current.approx);
 
   return (
     <section ref={root} className="relative overflow-x-clip pt-24 md:pt-32">
@@ -111,7 +112,7 @@ export default function FeaturedEvents() {
               Events on the <em>track</em>
             </>
           }
-          intro="Seven editions across four cities. Scroll to run the timeline, or open any ticket for the full story."
+          intro={`The latest ${track.length} editions across ${cities} cities. Scroll to run the timeline, or open any ticket for the full story.`}
         />
         <Link href="/event" className="btn-ghost shrink-0 self-start md:self-auto">
           Every event <ArrowUpRight className="size-3.5" />
@@ -123,9 +124,7 @@ export default function FeaturedEvents() {
         <div className="shell hidden md:block">
           <div className="flex items-end justify-between gap-6">
             <p className="label tabular-nums" aria-live="polite">
-              <span className="text-paper">
-                {chip.day} {chip.month} {chip.year}
-              </span>{" "}
+              <span className="text-paper">{chip.label}</span>{" "}
               · {current.title} · {String(active + 1).padStart(2, "0")}/{String(track.length).padStart(2, "0")}
             </p>
             <p className="label">Scroll ↓ to travel</p>
