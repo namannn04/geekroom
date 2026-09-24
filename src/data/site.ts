@@ -158,9 +158,9 @@ export const team: Person[] = [
   { name: "Akshay", role: "", image: "/images/team/akshay.jpg" },
   { name: "Naman", role: "", image: "/images/team/naman.jpg" },
   { name: "Sandy", role: "", image: "/images/team/sandy.jpg" },
+  { name: "Bali", role: "", image: "/images/team/bali.jpg" },
   { name: "Tushar", role: "", image: "/images/team/tushar.jpg" },
   { name: "Arpit", role: "", image: "/images/team/arpit.jpg" },
-  { name: "Bali", role: "", image: "/images/team/bali.jpg" },
   { name: "Ishaan", role: "", image: "/images/team/ishaan.jpg" },
 ];
 
