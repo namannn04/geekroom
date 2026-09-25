@@ -21,7 +21,7 @@ export default function Home() {
       <Partners />
       <Voices />
       <Faq />
-      <JoinCta />
+      {/* <JoinCta /> */}
     </>
   );
 }
