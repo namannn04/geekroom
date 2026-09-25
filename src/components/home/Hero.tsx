@@ -105,10 +105,10 @@ export default function Hero() {
           </p>
 
           <div data-fadeup className="mt-9 flex flex-wrap gap-3">
-            <Link href="/event" className="btn-primary">
+            <Link href="/event" className="btn-primary cursor-pointer">
               See the events <ArrowDownRight className="size-4" />
             </Link>
-            <Link href="/contact-us" className="btn-ghost">
+            <Link href="/contact-us" className="btn-ghost cursor-pointer">
               Partner with us <ArrowUpRight className="size-4" />
             </Link>
           </div>
