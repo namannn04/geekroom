@@ -47,7 +47,7 @@ Checked against the [Impeccable](https://impeccable.style/) detector (`npx impec
 | `/about-us` | Manifesto, stats, timeline, team and reviews |
 | `/event` | Date axis and filterable typographic event index |
 | `/event/[slug]` | Event details, sticky register panel and ticket recommendations |
-| `/contact-us` | Enquiry form (opens a pre-filled email) and contact channels |
+| `/contact-us` | Secure Resend-backed enquiry form and contact channels |
 | `/thank-you` | Post-submission page |
 | 404 | Custom not-found page |
 
@@ -60,6 +60,25 @@ npm run build    # production build
 npm run start    # serve the production build
 npm run lint
 ```
+
+## Contact form setup
+
+The contact form posts to a same-origin server route; the Resend API key and
+Turnstile secret never enter the browser bundle. Copy `.env.example` to
+`.env.local` and configure:
+
+- `RESEND_API_KEY`: a server-side Resend API key.
+- `CONTACT_TO_EMAIL`: the private inbox that receives enquiries.
+- `CONTACT_FROM_EMAIL`: a sender on a domain verified in Resend, formatted as
+  `Geek Room Website <website@example.com>`.
+- `NEXT_PUBLIC_TURNSTILE_SITE_KEY`: the public Cloudflare Turnstile widget key.
+- `TURNSTILE_SECRET_KEY`: the server-only Turnstile verification secret.
+- `CONTACT_ALLOWED_ORIGINS`: optional comma-separated production origins.
+
+Also add the same values to the deployment provider's environment settings.
+The API rejects cross-origin and oversized requests, validates every field and
+Turnstile token server-side, uses a honeypot, and applies a small per-instance
+IP rate limit before calling Resend.
 
 ## Project structure
 
