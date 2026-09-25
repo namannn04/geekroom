@@ -771,6 +771,9 @@ export default function ChinkuBot() {
     <Canvas
       frameloop="demand"
       dpr={[1, 1.75]}
+      // R3F defaults its wrapper to pointer-events: auto, which would turn this
+      // full-width transparent travel strip into an invisible click blocker.
+      style={{ pointerEvents: "none" }}
       // A long lens: perspective still shifts as Chinku crosses the screen, without edge distortion
       camera={{ position: [0, 3.1, 40], fov: 2 * THREE.MathUtils.radToDeg(Math.atan(STRIP_UNITS / 2 / 40)) }}
       gl={{ antialias: true, alpha: true, powerPreference: "low-power" }}
