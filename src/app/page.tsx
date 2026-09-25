@@ -7,7 +7,7 @@ import Speakers from "@/components/home/Speakers";
 import Partners from "@/components/home/Partners";
 import Voices from "@/components/home/Voices";
 import Faq from "@/components/home/Faq";
-import JoinCta from "@/components/ui/JoinCta";
+// import JoinCta from "@/components/ui/JoinCta";
 
 export default function Home() {
   return (

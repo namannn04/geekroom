@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import JoinCta from "@/components/ui/JoinCta";
+// import JoinCta from "@/components/ui/JoinCta";
 import EventHero from "@/components/events/EventHero";
 import EventTicket from "@/components/events/EventTicket";
 import { events, eventsByDate, getEvent } from "@/data/events";
@@ -125,7 +125,7 @@ export default async function EventPage({ params }: Props) {
         </div>
       </section>
 
-      <JoinCta />
+      {/* <JoinCta /> */}
     </>
   );
 }

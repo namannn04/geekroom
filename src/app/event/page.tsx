@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import SectionHead from "@/components/ui/SectionHead";
-import JoinCta from "@/components/ui/JoinCta";
+// import JoinCta from "@/components/ui/JoinCta";
 import EventIndex from "@/components/events/EventIndex";
 
 export const metadata: Metadata = {
@@ -28,7 +28,7 @@ export default function EventsPage() {
         <EventIndex />
       </section>
 
-      <JoinCta />
+      {/* <JoinCta /> */}
     </>
   );
 }
