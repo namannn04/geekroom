@@ -41,6 +41,11 @@
 
 html {
   color-scheme: dark;
+  /* Page still scrolls; the scrollbar just isn't drawn */
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
 }
 
 /* Lenis owns smooth scrolling; keep native behaviour predictable */
