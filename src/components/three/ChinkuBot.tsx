@@ -4,11 +4,12 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, Lightformer, RoundedBox } from "@react-three/drei";
 import { useEffect, useMemo, useRef, type RefObject } from "react";
 import * as THREE from "three";
+import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import { EYES, LEFT, MARK_COLORS, RIGHT, SLASH, STROKE_W, toPath } from "@/lib/geekmark";
 
 /*
  * Chinku, the Geek Room robot (T-37), rebuilt from photos of the cardboard original.
- * Everything is procedural (boxes + canvas-painted textures), so there is nothing to download.
+ * Everything is procedural (rounded shells + canvas-painted colour and bump maps), so there is nothing to download.
  * He drives on WALL-E style tracks across a full-width strip at the bottom of the screen, so the
  * perspective really changes as he crosses it. The canvas renders on demand: it only draws while
  * something is moving, and sits idle otherwise.
@@ -16,64 +17,153 @@ import { EYES, LEFT, MARK_COLORS, RIGHT, SLASH, STROKE_W, toPath } from "@/lib/g
 
 /* ---------- painted textures ---------- */
 
-function canvasTexture(w: number, h: number, paint: (g: CanvasRenderingContext2D) => void) {
+function canvasTexture(w: number, h: number, paint: (g: CanvasRenderingContext2D) => void, color = true) {
   const c = document.createElement("canvas");
   c.width = w;
   c.height = h;
   paint(c.getContext("2d")!);
   const t = new THREE.CanvasTexture(c);
-  t.colorSpace = THREE.SRGBColorSpace;
+  t.colorSpace = color ? THREE.SRGBColorSpace : THREE.NoColorSpace;
   t.anisotropy = 4;
   return t;
 }
 
-/** Deterministic speckle so paint and cardboard never look perfectly flat. */
+/**
+ * Paints a colour map and a matching bump map from one routine, so panel seams, vents and screws
+ * are both drawn and physically recessed or raised. In bump mode mid grey is the flat surface.
+ */
+type Painter = (g: CanvasRenderingContext2D, bump: boolean) => void;
+function paintedTexture(w: number, h: number, paint: Painter) {
+  return {
+    map: canvasTexture(w, h, (g) => paint(g, false)),
+    bump: canvasTexture(w, h, (g) => {
+      g.fillStyle = "#808080";
+      g.fillRect(0, 0, w, h);
+      paint(g, true);
+    }, false),
+  };
+}
+
+/** Fine orange-peel noise, the texture of sprayed paint rather than paper fibre. */
 function grain(g: CanvasRenderingContext2D, w: number, h: number, amount: number, seed = 7) {
   let s = seed;
   const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
-  for (let i = 0; i < (w * h) / 18; i++) {
+  for (let i = 0; i < (w * h) / 10; i++) {
     const a = (rnd() - 0.5) * amount;
     g.fillStyle = a > 0 ? `rgba(255,255,255,${a})` : `rgba(0,0,0,${-a})`;
-    g.fillRect(rnd() * w, rnd() * h, 1 + rnd() * 2, 1 + rnd() * 2);
+    g.fillRect(rnd() * w, rnd() * h, 1, 1);
   }
 }
 
-/** Worn edge: a slightly lighter, uneven stroke around a face, like handled card. */
-function wornEdge(g: CanvasRenderingContext2D, w: number, h: number, color: string, width: number) {
-  g.strokeStyle = color;
-  g.lineWidth = width;
-  g.strokeRect(width / 2, width / 2, w - width, h - width);
+/** Solid paint with a soft top-to-bottom falloff, like light across a real panel. */
+function fill(g: CanvasRenderingContext2D, w: number, h: number, top: string, bottom: string) {
+  const bg = g.createLinearGradient(0, 0, 0, h);
+  bg.addColorStop(0, top);
+  bg.addColorStop(1, bottom);
+  g.fillStyle = bg;
+  g.fillRect(0, 0, w, h);
 }
 
-/** Face plate: screen outline and smile. The eyes are real geometry so they can look around. */
+/** A recessed panel line: a dark groove with a thin catch-light on its lower lip. */
+function seamRect(g: CanvasRenderingContext2D, bump: boolean, x: number, y: number, w: number, h: number, r: number, width = 3) {
+  g.lineWidth = width;
+  if (!bump) {
+    g.strokeStyle = "rgba(255,255,255,0.12)";
+    g.beginPath();
+    g.roundRect(x + 1, y + 1.5, w, h, r);
+    g.stroke();
+  }
+  g.strokeStyle = bump ? "#000" : "rgba(0,0,0,0.55)";
+  g.beginPath();
+  g.roundRect(x, y, w, h, r);
+  g.stroke();
+}
+
+function seamLine(g: CanvasRenderingContext2D, bump: boolean, x0: number, y0: number, x1: number, y1: number, width = 3) {
+  g.lineWidth = width;
+  g.lineCap = "butt";
+  if (!bump) {
+    g.strokeStyle = "rgba(255,255,255,0.12)";
+    g.beginPath();
+    g.moveTo(x0, y0 + 1.5);
+    g.lineTo(x1, y1 + 1.5);
+    g.stroke();
+  }
+  g.strokeStyle = bump ? "#000" : "rgba(0,0,0,0.55)";
+  g.beginPath();
+  g.moveTo(x0, y0);
+  g.lineTo(x1, y1);
+  g.stroke();
+}
+
+/** Domed hex-socket screw head. */
+function screw(g: CanvasRenderingContext2D, bump: boolean, x: number, y: number, r: number) {
+  const d = g.createRadialGradient(x - r * 0.35, y - r * 0.35, r * 0.1, x, y, r);
+  if (bump) {
+    d.addColorStop(0, "#ffffff");
+    d.addColorStop(1, "#909090");
+  } else {
+    d.addColorStop(0, "#e4e6e8");
+    d.addColorStop(0.6, "#9da1a6");
+    d.addColorStop(1, "#4b4e52");
+  }
+  g.fillStyle = d;
+  g.beginPath();
+  g.arc(x, y, r, 0, Math.PI * 2);
+  g.fill();
+  g.fillStyle = bump ? "#404040" : "#1c1d1f";
+  g.beginPath();
+  for (let i = 0; i < 6; i++) {
+    const a = (i / 6) * Math.PI * 2;
+    g.lineTo(x + Math.cos(a) * r * 0.42, y + Math.sin(a) * r * 0.42);
+  }
+  g.fill();
+}
+
+function cornerScrews(g: CanvasRenderingContext2D, bump: boolean, w: number, h: number, inset: number, r: number) {
+  for (const [x, y] of [[inset, inset], [w - inset, inset], [inset, h - inset], [w - inset, h - inset]]) screw(g, bump, x, y, r);
+}
+
+/** A row of cooling slots punched through the panel. */
+function vents(g: CanvasRenderingContext2D, bump: boolean, x: number, y: number, w: number, slotH: number, n: number, gap: number) {
+  for (let i = 0; i < n; i++) {
+    const yy = y + i * (slotH + gap);
+    g.fillStyle = bump ? "#000" : "#140305";
+    g.beginPath();
+    g.roundRect(x, yy, w, slotH, slotH / 2);
+    g.fill();
+    if (!bump) {
+      g.fillStyle = "rgba(255,255,255,0.14)";
+      g.fillRect(x + slotH / 2, yy + slotH, w - slotH, 1.5);
+    }
+  }
+}
+
+/** Face plate: screen bezel and smile. The eyes are real geometry so they can look around. */
 function faceTexture() {
-  return canvasTexture(256, 256, (g) => {
-    const bg = g.createLinearGradient(0, 0, 0, 256);
-    bg.addColorStop(0, "#d42a34");
-    bg.addColorStop(1, "#b81d28");
-    g.fillStyle = bg;
-    g.fillRect(0, 0, 256, 256);
-    g.strokeStyle = "#3a0a0e";
+  return paintedTexture(256, 256, (g, bump) => {
+    if (!bump) {
+      fill(g, 256, 256, "#d42a34", "#b01b26");
+      grain(g, 256, 256, 0.03);
+    }
+    g.strokeStyle = bump ? "#000" : "#3a0a0e";
     g.lineWidth = 7;
     g.beginPath();
     g.roundRect(22, 22, 212, 212, 26);
     g.stroke();
-    g.strokeStyle = "#2a0709";
-    g.lineWidth = 7;
+    g.strokeStyle = bump ? "#000" : "#2a0709";
     g.lineCap = "round";
     g.beginPath();
     g.arc(128, 160, 24, 0.2 * Math.PI, 0.8 * Math.PI);
     g.stroke();
-    grain(g, 256, 256, 0.08);
   });
 }
 
-function redPaint(edge = "#5c0d13") {
-  return canvasTexture(128, 128, (g) => {
-    g.fillStyle = "#c9212c";
-    g.fillRect(0, 0, 128, 128);
-    grain(g, 128, 128, 0.1, 3);
-    wornEdge(g, 128, 128, edge, 5);
+function redPaint() {
+  return paintedTexture(128, 128, (g, bump) => {
+    if (bump) return;
+    fill(g, 128, 128, "#cf2430", "#b81d28");
+    grain(g, 128, 128, 0.03, 3);
   });
 }
 
@@ -100,98 +190,111 @@ function drawMark(g: CanvasRenderingContext2D, x: number, y: number, size: numbe
 }
 
 function torsoFront() {
-  return canvasTexture(512, 512, (g) => {
-    const bg = g.createLinearGradient(0, 0, 0, 512);
-    bg.addColorStop(0, "#5e111a");
-    bg.addColorStop(1, "#4a0c14");
-    g.fillStyle = bg;
-    g.fillRect(0, 0, 512, 512);
-    // Red tape stripes: two straight on the left, two slanted on the right
-    g.fillStyle = "#9c1b2a";
-    g.fillRect(58, 0, 22, 512);
-    g.fillRect(118, 0, 16, 512);
-    g.beginPath();
-    g.moveTo(398, 0); g.lineTo(424, 0); g.lineTo(346, 512); g.lineTo(320, 512);
-    g.moveTo(452, 0); g.lineTo(470, 0); g.lineTo(404, 512); g.lineTo(386, 512);
-    g.fill();
-    // Thin seam across the middle
-    g.fillStyle = "rgba(230,170,175,0.45)";
-    g.fillRect(0, 262, 512, 3);
-    drawMark(g, 256, 118, 120);
-    grain(g, 512, 512, 0.07, 11);
-    wornEdge(g, 512, 512, "#efece6", 14);
+  return paintedTexture(512, 512, (g, bump) => {
+    if (!bump) {
+      fill(g, 512, 512, "#64131c", "#480b13");
+      // Racing stripes: two straight on the left, two slanted on the right
+      g.fillStyle = "#a31d2c";
+      g.fillRect(58, 0, 22, 512);
+      g.fillRect(118, 0, 16, 512);
+      g.beginPath();
+      g.moveTo(398, 0); g.lineTo(424, 0); g.lineTo(346, 512); g.lineTo(320, 512);
+      g.moveTo(452, 0); g.lineTo(470, 0); g.lineTo(404, 512); g.lineTo(386, 512);
+      g.fill();
+      drawMark(g, 256, 118, 120);
+      grain(g, 512, 512, 0.03, 11);
+    }
+    // Two access panels split across the middle
+    seamLine(g, bump, 0, 263, 512, 263, 4);
+    seamRect(g, bump, 14, 14, 484, 484, 18, 3);
+    cornerScrews(g, bump, 512, 512, 34, 9);
+    screw(g, bump, 34, 263, 7);
+    screw(g, bump, 478, 263, 7);
   });
 }
 
-function cardboard() {
-  return canvasTexture(256, 256, (g) => {
-    g.fillStyle = "#c29a68";
-    g.fillRect(0, 0, 256, 256);
-    // Corrugation shadows and fibres
-    for (let x = 0; x < 256; x += 9) {
-      g.fillStyle = "rgba(90,60,30,0.07)";
-      g.fillRect(x, 0, 4, 256);
+function torsoSide() {
+  return paintedTexture(256, 256, (g, bump) => {
+    if (!bump) {
+      fill(g, 256, 256, "#5a1119", "#420a11");
+      grain(g, 256, 256, 0.03, 5);
     }
-    grain(g, 256, 256, 0.14, 5);
-    wornEdge(g, 256, 256, "#efece6", 9);
+    seamRect(g, bump, 12, 12, 232, 232, 12, 3);
+    vents(g, bump, 62, 92, 132, 10, 5, 8);
+    cornerScrews(g, bump, 256, 256, 28, 7);
   });
 }
 
 function torsoTop() {
-  return canvasTexture(128, 128, (g) => {
-    g.fillStyle = "#d9262f";
-    g.fillRect(0, 0, 128, 128);
-    grain(g, 128, 128, 0.08, 9);
-    wornEdge(g, 128, 128, "#f2d5d5", 4);
+  return paintedTexture(128, 128, (g, bump) => {
+    if (!bump) {
+      fill(g, 128, 128, "#d9262f", "#c3202a");
+      grain(g, 128, 128, 0.03, 9);
+    }
+    seamRect(g, bump, 8, 8, 112, 112, 8, 2);
   });
 }
 
 function baseFront() {
-  return canvasTexture(384, 512, (g) => {
-    g.fillStyle = "#eeebe4";
-    g.fillRect(0, 0, 384, 512);
-    // Red panel with a dark outline, deep at the top and brighter towards the floor
-    const p = g.createLinearGradient(0, 70, 0, 512);
-    p.addColorStop(0, "#6a0f19");
-    p.addColorStop(1, "#b21f2b");
-    g.fillStyle = p;
-    g.beginPath();
-    g.roundRect(28, 70, 328, 430, 14);
-    g.fill();
-    g.strokeStyle = "#1c0406";
-    g.lineWidth = 6;
-    g.stroke();
-    g.fillStyle = "#f7f5f1";
-    g.font = "900 92px Arial, Helvetica, sans-serif";
-    g.textAlign = "center";
-    g.textBaseline = "middle";
-    g.fillText("T-37", 192, 352);
-    g.fillStyle = "rgba(20,4,6,0.6)";
-    g.fillRect(28, 452, 328, 4);
-    grain(g, 384, 512, 0.07, 13);
+  return paintedTexture(384, 512, (g, bump) => {
+    if (!bump) {
+      fill(g, 384, 512, "#f1eee8", "#dcd8d0");
+      // Red panel, deep at the top and brighter towards the floor
+      const p = g.createLinearGradient(0, 70, 0, 512);
+      p.addColorStop(0, "#6a0f19");
+      p.addColorStop(1, "#b21f2b");
+      g.fillStyle = p;
+      g.beginPath();
+      g.roundRect(28, 70, 328, 430, 14);
+      g.fill();
+      g.fillStyle = "#f7f5f1";
+      g.font = "900 92px Arial, Helvetica, sans-serif";
+      g.textAlign = "center";
+      g.textBaseline = "middle";
+      g.fillText("T-37", 192, 352);
+      grain(g, 384, 512, 0.025, 13);
+    }
+    seamRect(g, bump, 28, 70, 328, 430, 14, 5);
+    seamLine(g, bump, 28, 454, 356, 454, 4);
+    cornerScrews(g, bump, 384, 70, 22, 8);
   });
 }
 
-function whiteCard() {
-  return canvasTexture(128, 128, (g) => {
-    g.fillStyle = "#e9e5dd";
-    g.fillRect(0, 0, 128, 128);
-    grain(g, 128, 128, 0.09, 17);
+function baseSide() {
+  return paintedTexture(256, 256, (g, bump) => {
+    if (!bump) {
+      fill(g, 256, 256, "#eeebe4", "#d6d2ca");
+      grain(g, 256, 256, 0.025, 17);
+    }
+    seamRect(g, bump, 18, 30, 220, 196, 10, 3);
+    cornerScrews(g, bump, 256, 256, 30, 6);
   });
 }
 
-/** Box whose top and bottom have different footprints (the torso and base both taper). */
-function taperedBox(wTop: number, wBottom: number, dTop: number, dBottom: number, h: number) {
-  // Subdivided so painted stripes stay straight on the tapered faces instead of kinking across two triangles
-  const g = new THREE.BoxGeometry(1, 1, 1, 8, 8, 8);
+/**
+ * Box whose top and bottom have different footprints (the torso and base both taper), with
+ * rounded edges so it reads as a moulded shell instead of folded card.
+ */
+function taperedBox(wTop: number, wBottom: number, dTop: number, dBottom: number, h: number, radius = 0.05) {
+  const g = new RoundedBoxGeometry(1, 1, 1, 4, radius);
   const p = g.attributes.position as THREE.BufferAttribute;
+  const n = g.attributes.normal as THREE.BufferAttribute;
+  const dw = wTop - wBottom;
+  const dd = dTop - dBottom;
+  const v = new THREE.Vector3();
   for (let i = 0; i < p.count; i++) {
+    const x = p.getX(i);
+    const z = p.getZ(i);
     const t = p.getY(i) + 0.5;
-    p.setX(i, p.getX(i) * THREE.MathUtils.lerp(wBottom, wTop, t));
-    p.setZ(i, p.getZ(i) * THREE.MathUtils.lerp(dBottom, dTop, t));
-    p.setY(i, t * h);
+    const sw = THREE.MathUtils.lerp(wBottom, wTop, t);
+    const sd = THREE.MathUtils.lerp(dBottom, dTop, t);
+    p.setXYZ(i, x * sw, t * h, z * sd);
+    // Carry the smooth normals through the taper with the map's inverse transpose
+    const nx = n.getX(i) / sw;
+    const nz = n.getZ(i) / sd;
+    v.set(nx, (n.getY(i) - x * dw * nx - z * dd * nz) / h, nz).normalize();
+    n.setXYZ(i, v.x, v.y, v.z);
   }
-  g.computeVertexNormals();
   return g;
 }
 
@@ -275,25 +378,25 @@ type Parts = {
 
 function useMaterials() {
   const mats = useMemo(() => {
-    const paint = (map: THREE.Texture, roughness = 0.62) =>
-      new THREE.MeshStandardMaterial({ map, roughness, metalness: 0 });
-    const card = paint(cardboard(), 0.85);
-    const white = paint(whiteCard(), 0.7);
+    // Sprayed, clear-coated paint over a moulded shell; the bump map sinks the seams and raises the screws
+    const paint = ({ map, bump }: { map: THREE.Texture; bump: THREE.Texture }, roughness = 0.42, clearcoat = 0.7) =>
+      new THREE.MeshPhysicalMaterial({ map, bumpMap: bump, bumpScale: 2, roughness, metalness: 0.15, clearcoat, clearcoatRoughness: 0.22 });
+    const side = paint(torsoSide());
+    const white = paint(baseSide(), 0.38, 0.45);
     return {
-      red: paint(redPaint(), 0.55),
-      headRed: paint(redPaint("#3a0a0e"), 0.5),
-      face: paint(faceTexture(), 0.5),
+      red: paint(redPaint()),
+      headRed: paint(redPaint(), 0.38, 0.8),
+      face: paint(faceTexture(), 0.34, 0.9),
       // [+x, -x, +y, -y, +z, -z]
-      torso: [card, card, paint(torsoTop(), 0.5), card, paint(torsoFront(), 0.58), card],
-      base: [white, white, white, white, paint(baseFront(), 0.6), white],
-      plate: paint(cardboard(), 0.9),
-      tube: new THREE.MeshPhysicalMaterial({ color: "#c81f2b", roughness: 0.36, clearcoat: 0.6, clearcoatRoughness: 0.35 }),
-      steel: new THREE.MeshStandardMaterial({ color: "#9a9ea3", metalness: 0.85, roughness: 0.32 }),
-      gunmetal: new THREE.MeshStandardMaterial({ color: "#3d4044", metalness: 0.7, roughness: 0.45 }),
-      rubber: new THREE.MeshStandardMaterial({ color: "#1f1f20", roughness: 0.92 }),
-      eyeWhite: new THREE.MeshStandardMaterial({ color: "#f6f4ef", roughness: 0.3 }),
-      eyeFrame: new THREE.MeshStandardMaterial({ color: "#1d0507", roughness: 0.5 }),
-      pupil: new THREE.MeshPhysicalMaterial({ color: "#7d111b", roughness: 0.15, clearcoat: 1 }),
+      torso: [side, side, paint(torsoTop()), side, paint(torsoFront()), side],
+      base: [white, white, white, white, paint(baseFront(), 0.4, 0.5), white],
+      tube: new THREE.MeshPhysicalMaterial({ color: "#c81f2b", roughness: 0.3, metalness: 0.15, clearcoat: 0.8, clearcoatRoughness: 0.2 }),
+      steel: new THREE.MeshStandardMaterial({ color: "#a4a8ad", metalness: 0.95, roughness: 0.26 }),
+      gunmetal: new THREE.MeshStandardMaterial({ color: "#3a3d41", metalness: 0.85, roughness: 0.38 }),
+      rubber: new THREE.MeshStandardMaterial({ color: "#1c1c1d", roughness: 0.8 }),
+      eyeWhite: new THREE.MeshPhysicalMaterial({ color: "#f6f4ef", roughness: 0.2, clearcoat: 1, clearcoatRoughness: 0.05 }),
+      eyeFrame: new THREE.MeshStandardMaterial({ color: "#1d0507", roughness: 0.4, metalness: 0.3 }),
+      pupil: new THREE.MeshPhysicalMaterial({ color: "#7d111b", roughness: 0.1, clearcoat: 1, clearcoatRoughness: 0.03 }),
       shadow: new THREE.MeshBasicMaterial({ map: blobShadow(), transparent: true, depthWrite: false }),
     };
   }, []);
@@ -303,6 +406,7 @@ function useMaterials() {
         .flat()
         .forEach((m) => {
           (m as THREE.MeshStandardMaterial).map?.dispose();
+          (m as THREE.MeshStandardMaterial).bumpMap?.dispose();
           m.dispose();
         }),
     [mats],
@@ -336,7 +440,7 @@ function Track({ x, mats, set, wheel }: { x: number; mats: ReturnType<typeof use
           rotation={[0, 0, Math.PI / 2]}
           material={i < 2 ? mats.steel : mats.gunmetal}
         >
-          <cylinderGeometry args={[r, r, 0.3, 24]} />
+          <cylinderGeometry args={[r, r, 0.3, 40]} />
         </mesh>
       ))}
       {/* Hub caps with bolts read the rotation clearly */}
@@ -415,18 +519,14 @@ function Chinku({ parts }: { parts: RefObject<Parts> }) {
         <group ref={(g) => void (p.upper = g)} position={[0, HIP, 0]}>
           <group position={[0, -HIP, 0]}>
             <mesh position={[0, HIP, 0]} geometry={geo.base} material={mats.base} />
-            <mesh position={[0, HIP + BASE_H + PLATE_H / 2, 0]} material={mats.plate}>
-              <boxGeometry args={[1.22, PLATE_H, 0.94]} />
-            </mesh>
+            <RoundedBox args={[1.22, PLATE_H, 0.94]} radius={0.02} smoothness={2} position={[0, HIP + BASE_H + PLATE_H / 2, 0]} material={mats.gunmetal} />
             <mesh position={[0, TORSO_Y, 0]} geometry={geo.torso} material={mats.torso} />
 
             <Arm side={-1} mats={mats} shoulder={(g) => void (p.armL = g)} elbow={(g) => void (p.elbowL = g)} />
             <Arm side={1} mats={mats} shoulder={(g) => void (p.armR = g)} elbow={(g) => void (p.elbowR = g)} />
 
             {/* Neck: collar, post and a pivot the head swivels on */}
-            <mesh position={[0, TORSO_TOP + 0.05, 0.05]} material={mats.red}>
-              <boxGeometry args={[0.4, 0.1, 0.32]} />
-            </mesh>
+            <RoundedBox args={[0.4, 0.1, 0.32]} radius={0.03} smoothness={2} position={[0, TORSO_TOP + 0.05, 0.05]} material={mats.red} />
             <group ref={(g) => void (p.neck = g)} position={[0, TORSO_TOP + 0.1, 0.05]}>
               <mesh position={[0, NECK_H / 2, 0]} material={mats.steel}>
                 <cylinderGeometry args={[0.055, 0.07, NECK_H, 16]} />
@@ -437,9 +537,9 @@ function Chinku({ parts }: { parts: RefObject<Parts> }) {
 
               <group ref={(g) => void (p.head = g)} position={[0, NECK_H, 0]}>
                 <group position={[0, 0.42, 0]} rotation={[0, 0, -0.1]}>
-                  <RoundedBox args={[0.98, 0.84, 0.8]} radius={0.035} smoothness={3} material={mats.headRed} />
-                  <mesh position={[0, 0, 0.402]} material={mats.face}>
-                    <planeGeometry args={[0.9, 0.78]} />
+                  <RoundedBox args={[0.98, 0.84, 0.8]} radius={0.07} smoothness={4} material={mats.headRed} />
+                  <mesh position={[0, 0, 0.401]} material={mats.face}>
+                    <planeGeometry args={[0.84, 0.7]} />
                   </mesh>
                   {/* 3D eyes: framed white blocks with pupils that track what Chinku looks at */}
                   {[-0.2, 0.2].map((x, i) => (
@@ -447,9 +547,7 @@ function Chinku({ parts }: { parts: RefObject<Parts> }) {
                       <mesh material={mats.eyeFrame}>
                         <boxGeometry args={[0.22, 0.22, 0.03]} />
                       </mesh>
-                      <mesh position={[0, 0, 0.018]} material={mats.eyeWhite}>
-                        <boxGeometry args={[0.18, 0.18, 0.03]} />
-                      </mesh>
+                      <RoundedBox args={[0.18, 0.18, 0.03]} radius={0.012} smoothness={2} position={[0, 0, 0.018]} material={mats.eyeWhite} />
                       <mesh ref={(m) => void (p.pupils[i] = m)} position={[0, 0, 0.038]} material={mats.pupil}>
                         <boxGeometry args={[0.08, 0.08, 0.015]} />
                       </mesh>
@@ -678,12 +776,15 @@ export default function ChinkuBot() {
       gl={{ antialias: true, alpha: true, powerPreference: "low-power" }}
       onCreated={({ camera }) => camera.lookAt(0, STRIP_UNITS / 2 - 0.18, 0)}
     >
-      <ambientLight intensity={0.28} />
+      {/* Warm sky, dark floor bounce: gives the shell a top-to-bottom falloff instead of flat fill */}
+      <hemisphereLight args={["#fff4ea", "#1a1210", 0.55]} />
       <directionalLight position={[-6, 9, 8]} intensity={2.2} />
-      <directionalLight position={[7, 4, -5]} intensity={1} color="#ffb48a" />
-      {/* Soft studio reflections for the metal parts, baked once */}
-      <Environment resolution={64} frames={1}>
+      <directionalLight position={[7, 4, -5]} intensity={0.9} color="#ffe2d0" />
+      {/* Studio reflections for the clear coat and metal parts, baked once */}
+      <Environment resolution={256} frames={1}>
         <Lightformer form="rect" intensity={2.4} position={[0, 6, 6]} scale={[10, 3, 1]} />
+        <Lightformer form="rect" intensity={1.6} position={[-5, 3, 6]} rotation-y={Math.PI / 5} scale={[1.2, 6, 1]} />
+        <Lightformer form="rect" intensity={1.2} position={[5, 3, 6]} rotation-y={-Math.PI / 5} scale={[1.2, 6, 1]} />
         <Lightformer form="rect" intensity={0.9} color="#19b3bf" position={[8, 1, 2]} rotation-y={-Math.PI / 2} scale={[5, 4, 1]} />
         <Lightformer form="rect" intensity={1.1} color="#ff5a1f" position={[-8, 0, 2]} rotation-y={Math.PI / 2} scale={[5, 4, 1]} />
       </Environment>
