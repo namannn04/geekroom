@@ -149,19 +149,64 @@ export const speakers: Person[] = [
   },
 ];
 
-/**
- * The team. Names, designations and links are still to be filled in:
- * `name` is a placeholder taken from the photo file until then.
- */
+/** The team. Designations are still to be filled in. */
 export const team: Person[] = [
-  { name: "Manas", role: "", image: "/images/team/manas.jpg" },
-  { name: "Akshay", role: "", image: "/images/team/akshay.jpg" },
-  { name: "Naman", role: "", image: "/images/team/naman.jpg" },
-  { name: "Sandy", role: "", image: "/images/team/sandy.jpg" },
-  { name: "Bali", role: "", image: "/images/team/bali.jpg" },
-  { name: "Tushar", role: "", image: "/images/team/tushar.jpg" },
-  { name: "Arpit", role: "", image: "/images/team/arpit.jpg" },
-  { name: "Ishaan", role: "", image: "/images/team/ishaan.jpg" },
+  {
+    name: "Manas Chopra",
+    role: "",
+    image: "/images/team/manas.jpg",
+    linkedin: "https://www.linkedin.com/in/themanasai/",
+    x: "https://x.com/themanasai",
+  },
+  {
+    name: "Akshay Kumar Sharma",
+    role: "",
+    image: "/images/team/akshay.jpg",
+    linkedin: "https://www.linkedin.com/in/akshay-kumar-sharma-devvoyager/",
+    x: "https://x.com/cappybaradeploy",
+  },
+  {
+    name: "Naman Dadhich",
+    role: "",
+    image: "/images/team/naman.jpg",
+    linkedin: "https://www.linkedin.com/in/namannn04/",
+    x: "https://x.com/namannn04",
+  },
+  {
+    name: "Sanidhya Vats",
+    role: "",
+    image: "/images/team/sandy.jpg",
+    linkedin: "https://www.linkedin.com/in/sanidhya-vats",
+    x: "https://x.com/vats_sanidhya",
+  },
+  {
+    name: "Nevin Bali",
+    role: "",
+    image: "/images/team/bali.jpg",
+    linkedin: "https://www.linkedin.com/in/nevinbali1012",
+    x: "https://x.com/nevvv_devvv",
+  },
+  {
+    name: "Tushar Teotia",
+    role: "",
+    image: "/images/team/tushar.jpg",
+    linkedin: "https://www.linkedin.com/in/tusharteotia/",
+    x: "https://x.com/DegenerateUSER_",
+  },
+  {
+    name: "Arpit Singh",
+    role: "",
+    image: "/images/team/arpit.jpg",
+    linkedin: "https://www.linkedin.com/in/arpit-singh08/",
+    x: "https://x.com/Arpit_singh08",
+  },
+  {
+    name: "Ishaan Vats",
+    role: "",
+    image: "/images/team/ishaan.jpg",
+    linkedin: "https://www.linkedin.com/in/ishaanvats74/",
+    x: "https://x.com/IshaanVats74",
+  },
 ];
 
 export const faqs = [
