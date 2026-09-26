@@ -32,7 +32,7 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
+    <header className="site-navbar fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
       <nav
         className={`mx-auto flex h-14 max-w-[1320px] items-center justify-between rounded-full border pr-2 pl-4 transition-all duration-500 ${
           scrolled || open

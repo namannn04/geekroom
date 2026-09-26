@@ -35,7 +35,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer ref={root} className="relative overflow-hidden border-t border-line bg-ink-2">
+    <footer ref={root} className="site-footer relative overflow-hidden border-t border-line bg-ink-2">
       <div className="shell grid gap-12 pt-20 pb-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
         <div>
           <Link href="/" className="flex items-center gap-3">
