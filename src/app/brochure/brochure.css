@@ -86,14 +86,14 @@ body:has(.brochure-page) .chinku-dock { display: none !important; }
   margin: 22px 0 28px;
   color: var(--b-paper);
   font-family: var(--font-anybody), system-ui, sans-serif;
-  font-size: clamp(4.4rem, 8vw, 8.4rem);
+  font-size: clamp(4rem, 5vw, 6rem);
   font-weight: 800;
-  font-stretch: 70%;
-  line-height: .83;
-  letter-spacing: -.045em;
+  font-stretch: 100%;
+  line-height: .9;
+  letter-spacing: -.035em;
   text-transform: uppercase;
 }
-.cover-copy h1 em { display: inline-block; color: var(--b-orange); font-style: normal; font-weight: 300; font-stretch: 125%; }
+.cover-copy h1 em { display: inline-block; color: var(--b-orange); font-style: normal; font-weight: 400; font-stretch: 100%; }
 .cover-copy > p:last-of-type { max-width: 610px; color: var(--b-muted); font-size: clamp(1rem, 1.35vw, 1.22rem); }
 .cover-photo { position: absolute; z-index: -2; inset: 0 0 0 38%; }
 .cover-photo > img:first-child { object-fit: cover; filter: saturate(.82) contrast(1.05) brightness(.78); }
@@ -205,7 +205,7 @@ body:has(.brochure-page) .chinku-dock { display: none !important; }
   .brochure-cover { min-height: 920px; padding-top: 150px; align-items: flex-start; }
   .brochure-cover::before { background: linear-gradient(0deg, var(--b-ink) 5%, rgba(13,14,12,.45) 68%, var(--b-ink) 100%); }
   .cover-copy { width: 100%; }
-  .cover-copy h1 { font-size: clamp(3.7rem, 14vw, 7rem); }
+  .cover-copy h1 { font-size: clamp(3.7rem, 9vw, 5.5rem); }
   .cover-copy > p:last-of-type { max-width: 520px; }
   .cover-photo { inset: 42% 0 0; }
   .cover-badge { bottom: 28px !important; right: 24px !important; }
@@ -227,8 +227,8 @@ body:has(.brochure-page) .chinku-dock { display: none !important; }
   .brochure-frame h2 { margin-bottom: 38px; font-size: clamp(3rem, 17vw, 5.2rem); }
   .brochure-cover { min-height: 860px; padding-top: 138px; }
   .cover-head { top: 104px; left: 20px; }
-  .cover-copy h1 { font-size: clamp(3.25rem, 15.8vw, 5.3rem); }
-  .cover-copy h1 em { display: block; width: 100%; font-size: .63em; font-stretch: 112%; line-height: .96; }
+  .cover-copy h1 { font-size: clamp(2.75rem, 11.5vw, 4rem); }
+  .cover-copy h1 em { display: block; width: 100%; font-size: .82em; font-stretch: 100%; line-height: 1; }
   .cover-photo { inset: 48% 0 0; }
   .reason-grid, .audience-grid, .benefits, .case-grid, .gallery-wrap, .packages { grid-template-columns: 1fr; }
   .reason-grid article, .audience-grid article { min-height: 210px; }
