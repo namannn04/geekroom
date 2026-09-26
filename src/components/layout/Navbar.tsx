@@ -71,7 +71,7 @@ export default function Navbar() {
         </ul>
 
         <a
-          href={site.socials.linkedin}
+          href={site.socials.linktree}
           target="_blank"
           rel="noopener noreferrer"
           className="btn-primary hidden !py-2.5 md:inline-flex"
@@ -119,7 +119,7 @@ export default function Navbar() {
               <a href={`mailto:${site.email}`} className="font-mono text-sm text-muted">
                 {site.email}
               </a>
-              <a href={site.socials.linkedin} target="_blank" rel="noopener noreferrer" className="btn-primary justify-center">
+              <a href={site.socials.linktree} target="_blank" rel="noopener noreferrer" className="btn-primary justify-center">
                 Join community <ArrowUpRight className="size-3.5" />
               </a>
             </div>

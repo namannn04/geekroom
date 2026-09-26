@@ -149,8 +149,8 @@ body:has(.brochure-page) .chinku-dock { display: none !important; }
 .work-cover { display: grid; min-height: 86svh; grid-template-columns: .78fr 1.22fr; padding: 0; border: 0; background: var(--b-orange); color: var(--b-ink); }
 .work-title { display: flex; flex-direction: column; justify-content: space-between; padding: 84px max(44px, calc((100vw - 1200px) / 2)); padding-right: 50px; }
 .work-title > img { display: none; }
-.work-title p { font: 600 11px/1 var(--font-jetbrains), monospace; letter-spacing: .17em; text-transform: uppercase; }
-.work-title h2 { margin: 0; color: var(--b-ink); font-size: clamp(5rem, 9vw, 10rem); text-transform: uppercase; }
+.work-title p { color: var(--b-paper); font: 600 11px/1 var(--font-jetbrains), monospace; letter-spacing: .17em; text-transform: uppercase; }
+.work-title h2 { margin: 0; color: var(--b-paper); font-size: clamp(5rem, 9vw, 10rem); text-transform: uppercase; }
 .work-title h2::before { display: none; }
 .work-image { position: relative; min-height: 620px; }
 .work-image img { object-fit: cover; filter: saturate(.8) contrast(1.08); }

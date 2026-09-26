@@ -2,6 +2,7 @@ export const site = {
   name: "Geek Room",
   email: "team@geekroom.co.in",
   socials: {
+    linktree: "https://linktr.ee/geekroom",
     linkedin: "https://www.linkedin.com/company/geekr00m/",
     instagram: "https://www.instagram.com/geekroom__/",
   },
