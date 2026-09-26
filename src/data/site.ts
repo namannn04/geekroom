@@ -1,7 +1,6 @@
 export const site = {
   name: "Geek Room",
-  email: "community@geekroom.in",
-  address: "E-807, DSIDC, Narela - 110040",
+  email: "team@geekroom.co.in",
   socials: {
     linkedin: "https://www.linkedin.com/company/geekr00m/",
     instagram: "https://www.instagram.com/geekroom__/",
@@ -224,7 +223,7 @@ export const faqs = [
   },
   {
     q: "If I am an organizer / brand, how do I partner with Geek Room?",
-    a: "Drop us a mail at community@geekroom.in and we'll get talking about hosting something amazing together.",
+    a: "Drop us a mail at team@geekroom.co.in and we'll get talking about hosting something amazing together.",
   },
 ];
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowUpRight, Mail, MapPin } from "lucide-react";
+import { ArrowUpRight, Mail } from "lucide-react";
 import SectionHead from "@/components/ui/SectionHead";
 import ContactForm from "@/components/contact/ContactForm";
 import { InstagramIcon, LinkedinIcon } from "@/components/ui/Icons";
@@ -13,12 +13,6 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   const cards = [
     { Icon: Mail, label: "Email", value: site.email, href: `mailto:${site.email}` },
-    {
-      Icon: MapPin,
-      label: "Address",
-      value: site.address,
-      href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address)}`,
-    },
     { Icon: LinkedinIcon, label: "LinkedIn", value: "Geek Room", href: site.socials.linkedin },
     { Icon: InstagramIcon, label: "Instagram", value: "@geekroom__", href: site.socials.instagram },
   ];

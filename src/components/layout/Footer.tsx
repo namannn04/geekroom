@@ -86,7 +86,6 @@ export default function Footer() {
             {site.email}
             <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </a>
-          <p className="mt-3 text-sm leading-relaxed text-muted">{site.address}</p>
         </div>
       </div>
 

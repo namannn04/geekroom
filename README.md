@@ -70,7 +70,7 @@ Turnstile secret never enter the browser bundle. Copy `.env.example` to
 - `RESEND_API_KEY`: a server-side Resend API key.
 - `CONTACT_TO_EMAIL`: the private inbox that receives enquiries.
 - `CONTACT_FROM_EMAIL`: a sender on a domain verified in Resend, formatted as
-  `Geek Room Website <website@example.com>`.
+  `Geek Room Website <team@geekroom.co.in>`.
 - `NEXT_PUBLIC_TURNSTILE_SITE_KEY`: the public Cloudflare Turnstile widget key.
 - `TURNSTILE_SECRET_KEY`: the server-only Turnstile verification secret.
 - `CONTACT_ALLOWED_ORIGINS`: optional comma-separated production origins.
