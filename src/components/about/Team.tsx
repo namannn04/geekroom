@@ -41,14 +41,14 @@ export default function Team() {
         intro="The team that turned a group chat into a nationwide community."
       />
 
-      <div className="mt-14 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4">
+      <div className="mt-14 flex flex-wrap justify-center gap-x-4 gap-y-10">
         {team.map((p) => {
           const links = [
             { href: p.linkedin, label: "LinkedIn", Icon: LinkedinIcon },
             { href: p.x, label: "X", Icon: XIcon },
           ].filter((l): l is typeof l & { href: string } => Boolean(l.href));
           return (
-            <article key={p.image} data-member className="group">
+            <article key={p.image} data-member className="group w-[calc((100%-1rem)/2)] md:w-[calc((100%-3rem)/4)]">
               <div data-media className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem]">
                 <Image
                   src={p.image}
