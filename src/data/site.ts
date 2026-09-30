@@ -96,9 +96,9 @@ export const services = [
     title: "Exclusive Hackathons",
     body: "Host an exclusive hackathon with Geek Room, like our finales at Microsoft, Mastercard and Paytm, and get strong branding and engagement across 10+ media channels.",
     proof: [
-      { value: "70,000+", label: "Views across 10+ media channels" },
-      { value: "25K+", label: "Code Cubicle registrations, first five editions" },
-      { value: "1,631", label: "Teams at Code Cubicle 6.0" },
+      { value: "150K", label: "Community members" },
+      { value: "70+", label: "Events conducted" },
+      { value: "50+", label: "Companies partnered" },
     ],
   },
   {
