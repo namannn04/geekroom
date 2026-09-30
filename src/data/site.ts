@@ -225,7 +225,7 @@ export const team: Person[] = [
 export const faqs: { q: string; a: string; link?: { href: string; label: string } }[] = [
   {
     q: "What does Geek Room do?",
-    a: "Geek Room is a nationwide builder ecosystem connecting 150K+ developers, students, founders and professionals across 400+ colleges, 20+ campus chapters and 80+ companies through hackathons, technical communities, industry programs and skills-first hiring challenges.",
+    a: "Geek Room helps companies reach and engage a community of 1,50,000+ developers through hackathons, meetups, roadshows, campaigns, speaker sessions and dedicated promotions. We also run skills-based hiring challenges so teams can evaluate talent by what they can build.",
   },
   {
     q: "How do we join Geek Room?",
