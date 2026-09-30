@@ -230,7 +230,7 @@ export const faqs: { q: string; a: string; link?: { href: string; label: string 
   {
     q: "How do we join Geek Room?",
     a: "Follow us on LinkedIn and Instagram and register for any of our upcoming events. Every event is an open door into the community.",
-    link: { href: site.socials.linktree, label: "Join via Linktree" },
+    link: { href: site.socials.linktree, label: "Join Geek Room" },
   },
   {
     q: "How much do we charge for events?",
