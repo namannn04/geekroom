@@ -96,7 +96,7 @@ export const services = [
     title: "Exclusive Hackathons",
     body: "Host an exclusive hackathon with Geek Room, like our finales at Microsoft, Mastercard and Paytm, and get strong branding and engagement across 10+ media channels.",
     proof: [
-      { value: "150K", label: "Community members" },
+      { value: "1,50,000+", label: "Community members" },
       { value: "70+", label: "Events conducted" },
       { value: "50+", label: "Companies partnered" },
     ],
