@@ -89,7 +89,7 @@ export default function Offerings() {
             Work with us, <em>get seen</em>
           </>
         }
-        intro="Put your brand in front of India's sharpest student builders, and meet your tech and hiring needs while you're at it."
+        intro="Put your brand in front of World's sharpest student builders, and meet your tech and hiring needs while you're at it."
       />
 
       <div className="mt-14 grid gap-4 md:grid-cols-12 md:grid-rows-2">
