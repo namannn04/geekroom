@@ -10,7 +10,7 @@ import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 import { EASE_EXPO, reveal } from "@/lib/motion";
 
 // The latest editions, oldest → newest so the track reads left to right like a timeline
-const track = eventsByDate.slice(0, 8).reverse();
+const track = eventsByDate.slice(0, 6).reverse();
 const cities = new Set(track.map((e) => e.city)).size;
 const t0 = new Date(`${track[0].iso}T00:00:00`).getTime();
 const t1 = new Date(`${track[track.length - 1].iso}T00:00:00`).getTime();
