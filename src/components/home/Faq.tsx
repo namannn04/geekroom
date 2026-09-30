@@ -57,7 +57,19 @@ export default function Faq() {
                     transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                     className="overflow-hidden"
                   >
-                    <p className="max-w-[600px] pb-7 pl-10 leading-relaxed text-muted">{f.a}</p>
+                    <div className="max-w-[600px] pb-7 pl-10 leading-relaxed text-muted">
+                      <p>{f.a}</p>
+                      {f.link && (
+                        <a
+                          href={f.link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-3 inline-flex items-center gap-1.5 text-paper underline underline-offset-4 hover:text-orange"
+                        >
+                          {f.link.label} <ArrowUpRight className="size-4" />
+                        </a>
+                      )}
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>

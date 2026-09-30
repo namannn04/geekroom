@@ -222,7 +222,7 @@ export const team: Person[] = [
   },
 ];
 
-export const faqs = [
+export const faqs: { q: string; a: string; link?: { href: string; label: string } }[] = [
   {
     q: "What does Geek Room do?",
     a: "Geek Room is a nationwide builder ecosystem connecting 150K+ developers, students, founders and professionals across 400+ colleges, 20+ campus chapters and 80+ companies through hackathons, technical communities, industry programs and skills-first hiring challenges.",
@@ -230,6 +230,7 @@ export const faqs = [
   {
     q: "How do we join Geek Room?",
     a: "Follow us on LinkedIn and Instagram and register for any of our upcoming events. Every event is an open door into the community.",
+    link: { href: site.socials.linktree, label: "Join via Linktree" },
   },
   {
     q: "How much do we charge for events?",
