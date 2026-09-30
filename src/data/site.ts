@@ -207,6 +207,19 @@ export const team: Person[] = [
     linkedin: "https://www.linkedin.com/in/ishaanvats74/",
     x: "https://x.com/IshaanVats74",
   },
+  {
+    name: "Jagriti Rai",
+    role: "",
+    image: "/images/team/jagriti.jpg",
+    linkedin: "https://www.linkedin.com/in/jagriti-rai-379452335/",
+    x: "https://x.com/jagritiwth",
+  },
+  {
+    name: "Deepti Rawat",
+    role: "",
+    image: "/images/team/deepti.jpg",
+    linkedin: "https://www.linkedin.com/in/the-deepti/",
+  },
 ];
 
 export const faqs = [
