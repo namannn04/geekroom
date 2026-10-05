@@ -3,7 +3,9 @@ import { EYES, LEFT, MARK_COLORS, RIGHT, SLASH, STROKE_W, toPath, VIEWBOX } from
 
 // Link-preview card shown when the site is shared on X, LinkedIn, Discord, WhatsApp, etc.
 export const alt = "Geek Room — India's builder community";
-export const size = { width: 1200, height: 630 };
+// Rendered at 2× the standard 1200×630 so text stays crisp after platforms downscale and recompress it
+const S = 2;
+export const size = { width: 1200 * S, height: 630 * S };
 export const contentType = "image/png";
 
 /** Pull a bold Anybody cut for the wordmark; falls back to the bundled font if offline. */
@@ -31,15 +33,15 @@ export default async function OpengraphImage() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          gap: 56,
+          gap: 56 * S,
           background: "#0d0e0c",
           color: "#eeece6",
           fontFamily: font ? "Anybody" : undefined,
         }}
       >
         <svg
-          width={360}
-          height={(360 * VIEWBOX.h) / VIEWBOX.w}
+          width={360 * S}
+          height={(360 * S * VIEWBOX.h) / VIEWBOX.w}
           viewBox={`${VIEWBOX.x} ${VIEWBOX.y} ${VIEWBOX.w} ${VIEWBOX.h}`}
           fill="none"
         >
@@ -53,8 +55,8 @@ export default async function OpengraphImage() {
           ))}
         </svg>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ fontSize: 120, fontWeight: 800, lineHeight: 1, letterSpacing: -2 }}>GEEK ROOM</div>
-          <div style={{ marginTop: 24, fontSize: 34, color: "#ff5a1f" }}>
+          <div style={{ fontSize: 120 * S, fontWeight: 800, lineHeight: 1, letterSpacing: -2 * S }}>GEEK ROOM</div>
+          <div style={{ marginTop: 24 * S, fontSize: 40 * S, color: "#ff5a1f" }}>
             150K+ builders · 400+ colleges
           </div>
         </div>
