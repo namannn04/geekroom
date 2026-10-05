@@ -25,7 +25,7 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://geekroom.co.in"),
+  metadataBase: new URL("https://www.geekroom.co.in"),
   title: {
     default: "Geek Room",
     template: "%s | Geek Room",
