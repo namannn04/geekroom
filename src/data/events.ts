@@ -11,8 +11,10 @@ export type EventItem = {
   kind: EventKind;
   /** Further categories the event also belongs to, e.g. a hackathon that doubled as a hiring drive */
   alsoIn?: EventKind[];
-  /** ISO date (yyyy-mm-dd) used for sorting and the date chip */
+  /** ISO date (yyyy-mm-dd) used for sorting and the date chip. Empty while dates are still to be announced. */
   iso: string;
+  /** Running now, or announced but not yet dated. Shown as a pill on the ticket. */
+  status?: "live" | "upcoming";
   city: string;
   /** Three-letter city code printed on the ticket stub */
   code: string;
@@ -29,6 +31,71 @@ export type EventItem = {
 };
 
 export const events: EventItem[] = [
+  {
+    slug: "global-ai-hackathon",
+    kind: "Global Hackathon",
+    status: "live",
+    iso: "2026-10-09",
+    city: "Global",
+    code: "GLB",
+    title: "Global AI Hackathon",
+    date: "9 Oct – 29 Nov 2026",
+    location: "Online, worldwide",
+    image: "/images/events/global-ai-hackathon.webp",
+    register: { label: "Register now", url: "https://hackculture.io/hackathons/ai-global-hackathon" },
+    tagline: "Build Globally. Ship Boldly.",
+    highlights: [
+      "Open to builders from any country",
+      "Fully virtual, teams of 1–4",
+      "$11.5K prize pool, including $1,000 cash",
+      "Problem statements go live 1 Nov, prototypes due 15 Nov",
+      "Judging round on 29 Nov",
+    ],
+    description: [
+      "Geek Room's Global AI Hackathon is a fully virtual, AI-focused hackathon open to developers, students, researchers and builders from any country, background and skill level.",
+      "Registration and team formation are open until 15 November. Problem statements go live on 1 November, teams build and submit a working prototype within the two-week window, and judging runs on 29 November.",
+      "Bifrost (by Maxim AI) is the title partner and Tavily (by Nebius) the track partner, with Omnidimension and Pathway as community partners.",
+    ],
+  },
+  {
+    slug: "hacksmart-2",
+    kind: "Hackathon",
+    status: "upcoming",
+    iso: "",
+    city: "To be announced",
+    code: "TBA",
+    title: "HackSmart 2.0",
+    image: "/images/events/hacksmart.png",
+    tagline: "HackSmart is back for a second edition",
+    description: [
+      "HackSmart returns for its second edition, after the first HackSmart brought 200+ shortlisted builders to Battery Smart HQ in Gurugram in January 2026.",
+      "Dates, venue and registrations will be announced soon.",
+    ],
+  },
+  {
+    slug: "trackshift-2026",
+    kind: "Hackathon",
+    iso: "2026-09-12",
+    city: "Mohali",
+    code: "MOH",
+    title: "TrackShift 2026",
+    date: "12–13 September 2026",
+    location: "Plaksha University, Mohali",
+    image: "/images/events/trackshift.webp",
+    register: { label: "Event page", url: "https://hackculture.io/hackathons/trackshift-2026" },
+    tagline: "Where ideas pit stop & innovation refuels",
+    highlights: [
+      "3,600+ students registered",
+      "36K+ event page views",
+      "24-hour finale at Plaksha University",
+      "₹1.75L prize pool, plus a TGR Haas F1 facility visit and Mphasis internships for the top three",
+    ],
+    description: [
+      "TrackShift is an applied innovation challenge by the Mphasis CSR Foundation with the DS Brar Center for Girls and Women in STEM and the TGR Haas F1 Team, hosted at Plaksha University. Geek Room ran it as an implementation partner alongside HackCulture.",
+      "The 2026 edition treats motorsport as the proof of concept: every challenge starts from a motorsport engineering principle, from energy and overtake intelligence to track-limits detection and tyre degradation.",
+      "Student teams submitted ideas online, and the shortlist built and presented through a 24-hour finale at Plaksha University in Mohali on 12–13 September.",
+    ],
+  },
   {
     slug: "meetup3",
     kind: "Meetup",
@@ -462,10 +529,11 @@ export const inKind = (e: EventItem, kind: EventKind) => e.kind === kind || !!e.
 /** All of an event's categories for display, main kind first: "Hackathon · Hiring". */
 export const kindLabel = (e: EventItem) => [e.kind, ...(e.alsoIn ?? [])].join(" · ");
 
-/** Events sorted newest first */
-export const eventsByDate = [...events].sort((a, b) => b.iso.localeCompare(a.iso));
+/** Events sorted newest first, with undated upcoming events ahead of everything */
+export const eventsByDate = [...events].sort((a, b) => Number(!b.iso) - Number(!a.iso) || b.iso.localeCompare(a.iso));
 
 export function formatChip(iso: string, approx = false) {
+  if (!iso) return { day: "TBA", month: "", year: "", label: "Dates TBA" };
   const d = new Date(`${iso}T00:00:00`);
   const month = d.toLocaleDateString("en-IN", { month: "short" }).toUpperCase();
   const year = d.getFullYear();

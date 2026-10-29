@@ -15,7 +15,8 @@ const filters: Filter[] = ["All", ...eventKinds];
 /** Footer links open the index pre-filtered with `?category=<kind slug>`. */
 const fromParam = (param: string | null): Filter => eventKinds.find((k) => kindSlug(k) === param) ?? "All";
 
-const asc = [...eventsByDate].reverse();
+// Undated (upcoming) events have no place on the date axis, but still get a row
+const asc = eventsByDate.filter((e) => e.iso).reverse();
 const t0 = new Date(`${asc[0].iso}T00:00:00`).getTime();
 const t1 = new Date(`${asc[asc.length - 1].iso}T00:00:00`).getTime();
 const pos = (iso: string) => (new Date(`${iso}T00:00:00`).getTime() - t0) / (t1 - t0);

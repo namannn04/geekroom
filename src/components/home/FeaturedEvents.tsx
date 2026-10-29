@@ -5,17 +5,16 @@ import { useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import SectionHead from "@/components/ui/SectionHead";
 import EventTicket from "@/components/events/EventTicket";
-import { eventsByDate, formatChip } from "@/data/events";
+import { formatChip, getEvent } from "@/data/events";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 import { EASE_EXPO, reveal } from "@/lib/motion";
 
-// The latest editions, oldest → newest so the track reads left to right like a timeline
-const track = eventsByDate.slice(0, 6).reverse();
-const cities = new Set(track.map((e) => e.city)).size;
-const t0 = new Date(`${track[0].iso}T00:00:00`).getTime();
-const t1 = new Date(`${track[track.length - 1].iso}T00:00:00`).getTime();
-const pos = (iso: string) => (new Date(`${iso}T00:00:00`).getTime() - t0) / (t1 - t0);
-const years = Array.from(new Set(track.map((e) => e.iso.slice(0, 4))));
+// Hand-picked run: what's live, what's next, then recent editions
+const track = ["global-ai-hackathon", "hacksmart-2", "trackshift-2026", "pears", "hacksmart", "hackblr1"].map(
+  (slug) => getEvent(slug)!,
+);
+// The run isn't chronological, so stops sit at even steps along the axis
+const pos = (i: number) => i / (track.length - 1);
 
 /**
  * "Signal track": on desktop the section pins and scroll drives a horizontal run of
@@ -49,14 +48,9 @@ export default function FeaturedEvents() {
             scrub: true,
             invalidateOnRefresh: true,
             onUpdate: (self) => {
-              // Playhead follows real dates: interpolate between neighbouring events
-              const f = self.progress * (track.length - 1);
-              const i = Math.floor(f);
-              const a = pos(track[i].iso);
-              const b = pos(track[Math.min(i + 1, track.length - 1)].iso);
-              setPlayhead(`${(a + (b - a) * (f - i)) * 100}%`);
+              setPlayhead(`${self.progress * 100}%`);
               // Only touch React when the active event actually changes
-              const next = Math.round(f);
+              const next = Math.round(self.progress * (track.length - 1));
               if (next !== activeRef.current) {
                 activeRef.current = next;
                 setActive(next);
@@ -101,6 +95,7 @@ export default function FeaturedEvents() {
 
   const current = track[active];
   const chip = formatChip(current.iso, current.approx);
+  const when = current.status === "live" ? "Live now" : current.status === "upcoming" ? "Coming soon" : chip.label;
 
   return (
     <section ref={root} className="relative overflow-x-clip pt-24 md:pt-32">
@@ -112,7 +107,7 @@ export default function FeaturedEvents() {
               Events on the <em>track</em>
             </>
           }
-          intro={`From global online hackathons and vibe-a-thons to in-person finales, meetups, campaigns and dedicated promotions, we handle it all. Explore our latest ${track.length} editions across ${cities} cities.`}
+          intro={`From global online hackathons and vibe-a-thons to in-person finales, meetups, campaigns and dedicated promotions, we handle it all. See what's live, what's next and where we've been.`}
         />
         <Link href="/event" className="btn-ghost shrink-0 self-start md:self-auto">
           Check Out our Events <ArrowUpRight className="size-3.5" />
@@ -124,28 +119,20 @@ export default function FeaturedEvents() {
         <div className="shell hidden md:block">
           <div className="flex items-end justify-between gap-6">
             <p className="label tabular-nums" aria-live="polite">
-              <span className="text-paper">{chip.label}</span>{" "}
+              <span className={current.status ? "text-orange" : "text-paper"}>{when}</span>{" "}
               · {current.title} · {String(active + 1).padStart(2, "0")}/{String(track.length).padStart(2, "0")}
             </p>
             <p className="label">Scroll ↓ to travel</p>
           </div>
           <div className="relative mt-5 h-8">
             <span className="absolute inset-x-0 top-1/2 h-px bg-line-strong" />
-            {years.map((y) => {
-              const x = pos(`${y}-01-01`);
-              return x >= 0 && x <= 1 ? (
-                <span key={y} className="absolute top-0 -translate-x-1/2 font-mono text-xs text-subtle" style={{ left: `${x * 100}%` }}>
-                  {y}
-                </span>
-              ) : null;
-            })}
             {track.map((e, i) => (
               <span
                 key={e.slug}
                 className={`absolute top-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full transition-colors duration-300 ${
                   i <= active ? "bg-orange" : "bg-line-strong"
                 }`}
-                style={{ left: `${pos(e.iso) * 100}%` }}
+                style={{ left: `${pos(i) * 100}%` }}
               />
             ))}
             <span data-playhead className="absolute top-1/2 left-0 h-6 w-px -translate-y-1/2 bg-paper" />

@@ -64,8 +64,20 @@ export default function EventTicket({
               </div>
             </div>
           </div>
-          <span className="absolute left-4 top-4 rounded-full bg-ink px-3 py-1.5 font-mono text-xs text-paper">
-            {kindLabel(event)}
+          <span className="absolute left-4 top-4 flex gap-1.5">
+            <span className="rounded-full bg-ink px-3 py-1.5 font-mono text-xs text-paper">{kindLabel(event)}</span>
+            {event.status === "live" && (
+              <span className="flex items-center gap-1.5 rounded-full bg-orange px-3 py-1.5 font-mono text-xs text-ink">
+                <span className="relative flex size-2">
+                  <span className="absolute inset-0 animate-ping rounded-full bg-ink/60" />
+                  <span className="relative size-2 rounded-full bg-ink" />
+                </span>
+                Live
+              </span>
+            )}
+            {event.status === "upcoming" && (
+              <span className="rounded-full bg-paper px-3 py-1.5 font-mono text-xs text-ink">Upcoming</span>
+            )}
           </span>
         </div>
 
@@ -139,7 +151,7 @@ export default function EventTicket({
           </svg>
 
           <span className="hidden font-mono text-xs text-ink/60 @2xl:block">
-            View event →
+            {event.status === "live" ? "Register →" : "View event →"}
           </span>
         </div>
       </Link>
