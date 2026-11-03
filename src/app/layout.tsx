@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Anybody, JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -52,10 +53,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${anybody.variable} ${schibsted.variable} ${jetbrains.variable}`}>
+        <Link href="#main-content" className="skip-link">Skip to content</Link>
         <SmoothScroll>
           <PageTransition>
             <Navbar />
-            <main>{children}</main>
+            <main id="main-content" tabIndex={-1}>{children}</main>
             <Footer />
           </PageTransition>
           {/* Outside the page transition so its fixed position isn't trapped by transforms */}

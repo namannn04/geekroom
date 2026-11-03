@@ -1,10 +1,11 @@
 "use client";
 
+import { useLenis } from "@/components/motion/SmoothScroll";
 import GeekMark from "@/components/ui/GeekMark";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { navLinks, site } from "@/data/site";
 
@@ -15,6 +16,10 @@ function isActive(pathname: string, href: string) {
 
 export default function Navbar() {
   const pathname = usePathname();
+  const header = useRef<HTMLElement>(null);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const reduced = useReducedMotion();
+  const lenis = useLenis();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -28,11 +33,44 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-  }, [open]);
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    lenis?.stop();
+    const focusable = () => Array.from(header.current?.querySelectorAll<HTMLElement>("a[href], button") ?? [])
+      .filter((element) => element.getClientRects().length > 0);
+    const firstLink = header.current?.querySelector<HTMLElement>("#mobile-navigation a");
+    firstLink?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        toggle.current?.focus();
+      }
+      if (event.key === "Tab") {
+        const items = focusable();
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault(); last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault(); first?.focus();
+        }
+      }
+    };
+    const desktop = window.matchMedia("(min-width: 768px)");
+    const onResize = () => { if (desktop.matches) setOpen(false); };
+    document.addEventListener("keydown", onKey);
+    desktop.addEventListener("change", onResize);
+    return () => {
+      document.body.style.overflow = previous;
+      lenis?.start();
+      document.removeEventListener("keydown", onKey);
+      desktop.removeEventListener("change", onResize);
+    };
+  }, [open, lenis]);
 
   return (
-    <header className="site-navbar fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
+    <header ref={header} role={open ? "dialog" : undefined} aria-modal={open || undefined} aria-label={open ? "Navigation menu" : undefined} className="site-navbar fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
       <nav
         className={`mx-auto flex h-14 max-w-[1320px] items-center justify-between rounded-full border pr-2 pl-4 transition-all duration-500 ${
           scrolled || open
@@ -52,6 +90,7 @@ export default function Navbar() {
               <li key={l.href} className="relative">
                 <Link
                   href={l.href}
+                  aria-current={active ? "page" : undefined}
                   className={`relative z-10 block rounded-full px-4 py-2 font-mono text-xs tracking-[0.14em] uppercase transition-colors ${
                     active ? "text-ink" : "text-muted hover:text-paper"
                   }`}
@@ -80,7 +119,9 @@ export default function Navbar() {
         </a>
 
         <button
+          ref={toggle}
           type="button"
+          aria-controls="mobile-navigation"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
@@ -94,21 +135,22 @@ export default function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ clipPath: "circle(0% at 92% 4%)" }}
+            id="mobile-navigation"
+            initial={reduced ? false : { clipPath: "circle(0% at 92% 4%)" }}
             animate={{ clipPath: "circle(150% at 92% 4%)" }}
             exit={{ clipPath: "circle(0% at 92% 4%)" }}
-            transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+            transition={{ duration: reduced ? 0 : 0.25, ease: [0.76, 0, 0.24, 1] }}
             className="fixed inset-0 -z-10 flex flex-col justify-between bg-ink px-6 pt-28 pb-10 md:hidden"
           >
             <ul className="flex flex-col gap-1">
               {navLinks.map((l, i) => (
                 <motion.li
                   key={l.href}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={reduced ? false : { opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 + i * 0.06 }}
+                  transition={{ delay: reduced ? 0 : i * 0.03, duration: reduced ? 0 : 0.2 }}
                 >
-                  <Link href={l.href} className="flex items-baseline gap-4 py-2">
+                  <Link href={l.href} aria-current={isActive(pathname, l.href) ? "page" : undefined} className="flex items-baseline gap-4 py-2">
                     <span className="font-mono text-xs text-orange">0{i + 1}</span>
                     <span className={`display text-6xl ${isActive(pathname, l.href) ? "text-signal" : ""}`}>{l.label}</span>
                   </Link>

@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { useRef } from "react";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { SplitText } from "gsap/SplitText";
+import DeferredDecoration from "@/components/motion/DeferredDecoration";
 import DotField from "@/components/ui/DotField";
 import GeekMark from "@/components/ui/GeekMark";
 import { EASE_EXPO } from "@/lib/motion";
@@ -116,7 +117,12 @@ export default function Hero() {
 
         {/* 3D mark with revolving achievements */}
         <div data-stage className="relative -mx-4 h-[380px] sm:h-[460px] lg:mx-0 lg:h-[min(640px,78svh)]">
-          <GeekMark3D progress={progress} className="absolute inset-0 lg:-inset-x-16" />
+          <DeferredDecoration
+            className="absolute inset-0 lg:-inset-x-16"
+            fallback={<div className="grid h-full w-full place-items-center"><GeekMark className="w-[46%]" /></div>}
+          >
+            <GeekMark3D progress={progress} className="h-full w-full" />
+          </DeferredDecoration>
         </div>
       </div>
 

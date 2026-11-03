@@ -63,27 +63,39 @@ export default function DotField({ className = "", gap = 26 }: { className?: str
           ctx.fill();
         }
       }
-      if (!reduced && visible) raf = requestAnimationFrame(draw);
+      if (!reduced && visible && !document.hidden) raf = requestAnimationFrame(draw);
+    };
+
+    const onVisibility = () => {
+      cancelAnimationFrame(raf);
+      if (!document.hidden && visible) draw(performance.now());
+    };
+    const onResize = () => {
+      resize();
+      cancelAnimationFrame(raf);
+      if (visible && !document.hidden) draw(performance.now());
     };
 
     // Stop drawing entirely while the canvas is off screen
     const io = new IntersectionObserver(([entry]) => {
       const was = visible;
       visible = entry.isIntersecting;
-      if (visible && !was && !reduced) raf = requestAnimationFrame(draw);
+      if (visible && !was && !reduced && !document.hidden) raf = requestAnimationFrame(draw);
       if (!visible) cancelAnimationFrame(raf);
     });
     io.observe(canvas);
 
     resize();
     draw(0);
-    window.addEventListener("resize", resize);
-    window.addEventListener("pointermove", onMove, { passive: true });
+    window.addEventListener("resize", onResize);
+    document.addEventListener("visibilitychange", onVisibility);
+    if (!reduced) window.addEventListener("pointermove", onMove, { passive: true });
     document.addEventListener("pointerleave", onLeave);
     return () => {
       io.disconnect();
       cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("pointermove", onMove);
       document.removeEventListener("pointerleave", onLeave);
     };
