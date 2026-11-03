@@ -145,7 +145,7 @@ export default function FeaturedEvents() {
         >
           {track.map((e, i) => (
             <div key={e.slug} data-ticket-wrap className="md:w-[min(720px,70vw)] md:shrink-0">
-              <EventTicket event={e} index={i} className="h-full md:min-h-[340px]" priority={i < 2} />
+              <EventTicket event={e} index={i} className="h-full md:min-h-[340px]" />
             </div>
           ))}
         </div>

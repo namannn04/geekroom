@@ -1,6 +1,6 @@
 # Geek Room
 
-Website for **Geek Room** — one of India's biggest student tech communities (50k+ members), built with Next.js.
+Website for **Geek Room** — one of India's biggest student tech communities (150K+ builders), built with Next.js.
 
 ## Tech stack
 
@@ -8,7 +8,7 @@ Website for **Geek Room** — one of India's biggest student tech communities (5
 - TypeScript, Tailwind CSS v4
 - [GSAP](https://gsap.com/) + ScrollTrigger, SplitText and DrawSVG for scroll-driven motion
 - [Lenis](https://lenis.darkroom.engineering/) smooth scrolling, synced to the GSAP ticker
-- [Motion](https://motion.dev/) (Framer Motion) for the page transition and UI state animation
+- [Motion](https://motion.dev/) (Framer Motion) for UI state animation
 - Fonts: Anybody (variable width axis), Schibsted Grotesk, JetBrains Mono
 
 ## Design: "Signal" v2
@@ -26,7 +26,7 @@ Checked against the [Impeccable](https://impeccable.style/) detector (`npx impec
 
 | Where | Effect |
 | --- | --- |
-| Page change | Orange slash + ink panel sweep across with the destination name (`PageTransition`) |
+| Page change | Immediate Next.js navigation; scroll triggers refresh after route changes |
 | Section headings | Characters rise out of a mask while the width axis tightens from expanded (`SectionHead`) |
 | Hero | Stretch-in headline; on scroll lines diverge, the `</>` mark comes apart, partner rows counter-slide |
 | Featured events | Section pins; tickets run horizontally on a live date axis with a playhead |
@@ -105,3 +105,20 @@ public/images/    # brand, event, team, speaker and partner images
 All copy lives in `src/data/`. To add a new event, append an entry to `events` in
 `src/data/events.ts` and drop its image into `public/images/events/` — the listing, detail
 page and sidebars pick it up automatically.
+
+## Performance and accessibility
+
+Internal links use native Next.js navigation without an animation delay. Optional
+WebGL decoration mounts only after idle time while visible, on screens at least
+1024px wide with no reduced-motion preference. The hero keeps a static SVG while
+loading and on smaller screens; hidden tabs release decorative WebGL scenes.
+Below-the-fold featured event images use lazy loading rather than preload.
+
+The mobile menu supports Escape, keyboard focus containment and scroll locking,
+and the site includes a keyboard-visible skip link, robots.txt and a generated
+sitemap covering static pages and all event detail routes.
+
+Validation: run `npm run lint` and `npm run build`, then check the production
+server at mobile and desktop widths, with reduced motion, keyboard navigation,
+browser back/forward, and an unknown event URL (404). Build-reported First Load
+JS excludes deferred WebGL downloads; it is not a measurement of real-user latency.

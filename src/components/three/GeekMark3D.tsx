@@ -320,7 +320,8 @@ export default function GeekMark3D({
     <div ref={wrap} className={className} aria-hidden>
       <div className="relative h-full w-full">
         <Canvas
-          dpr={[1, 1.6]}
+          fallback={<div className="grid h-full place-items-center"><span className="display text-6xl text-orange">&lt;/&gt;</span></div>}
+          dpr={[1, 1.5]}
           frameloop={inView ? "always" : "never"}
           camera={{ position: [0, 0.6, compact ? 14.5 : 11.5], fov: 38 }}
           gl={{
