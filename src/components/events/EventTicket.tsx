@@ -83,6 +83,10 @@ export default function EventTicket({
 
         {/* Body */}
         <div className="flex flex-1 flex-col justify-between gap-6 p-6 @2xl:py-7 @2xl:pr-4 @2xl:pl-2">
+          <div>
+          {event.chipLabel && (
+            <p className="mb-2 font-mono text-xs font-medium uppercase tracking-wide text-orange-600">{event.chipLabel}</p>
+          )}
           <div className="flex items-baseline gap-2 font-display leading-none font-extrabold tabular-nums">
             <span className="text-[clamp(3.5rem,8vw,5.5rem)] [font-stretch:62%]">
               {chip.day}
@@ -91,6 +95,7 @@ export default function EventTicket({
               <span>{chip.month}</span>
               <span className="text-ink/55">{chip.year}</span>
             </span>
+          </div>
           </div>
           <div>
             <h3 className="font-display text-[clamp(1.4rem,2.4vw,1.9rem)] leading-[1.02] font-extrabold uppercase [font-stretch:80%] transition-[font-stretch] duration-500 group-hover:[font-stretch:100%]">
