@@ -10,7 +10,7 @@ import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 import { EASE_EXPO, reveal } from "@/lib/motion";
 
 // Hand-picked run: what's live, what's next, then recent editions
-const track = ["global-ai-hackathon", "hacksmart-2", "trackshift-2026", "pears", "hacksmart", "hackblr1"].map(
+const track = ["infer-a-thon", "global-ai-hackathon", "hacksmart-2", "trackshift-2026", "pears", "hacksmart", "hackblr1"].map(
   (slug) => getEvent(slug)!,
 );
 // The run isn't chronological, so stops sit at even steps along the axis

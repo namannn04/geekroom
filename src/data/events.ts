@@ -19,6 +19,8 @@ export type EventItem = {
   /** Three-letter city code printed on the ticket stub */
   code: string;
   date?: string;
+  /** Small caption printed above the date chip on the ticket, e.g. "Registration closes" */
+  chipLabel?: string;
   /** Only the month is known: the chip shows the month instead of a day */
   approx?: boolean;
   location?: string;
@@ -31,6 +33,35 @@ export type EventItem = {
 };
 
 export const events: EventItem[] = [
+  {
+    slug: "infer-a-thon",
+    kind: "Global Hackathon",
+    status: "live",
+    iso: "2026-12-05",
+    city: "Online",
+    code: "WEB",
+    title: "Infer-a-thon with Superlinked",
+    date: "Registration closes 5 Dec 2026",
+    chipLabel: "Registration closes",
+    location: "Online, worldwide",
+    image: "/images/events/infer-a-thon.webp",
+    register: { label: "Register now", url: "https://luma.com/f7ef30j2" },
+    tagline: "Build agents. Solve real-world problems.",
+    highlights: [
+      "Registration is open until 5 December 2026",
+      "7-day online agentic AI hackathon, open to builders worldwide",
+      "Two tracks: Agentic Businesses in India and Agentic Engineering",
+      "₹1.5 lakh+ prize pool, one winning team per track",
+      "Teams of 1–4, register individually on Luma",
+      "Problem statements go live 5 Dec, finals on 20 Dec",
+    ],
+    description: [
+      "Infer-a-thon is a global AI hackathon by Geek Room in collaboration with Superlinked, built around agents that can retrieve, reason and take action, using small open models and Superlinked's Inference Engine (SIE).",
+      "Track 1 asks for agents that solve real business workflows in the Indian context, from WhatsApp follow-ups to multilingual documents. Track 2 is for agents that do real engineering work: coding, testing, SRE and migrations.",
+      "Problem statements are released on 5 December and the building phase runs 5–11 December. Mentoring and evaluation follow on 12 December, finalists (top 5 per track) are announced on 14–15 December, and final presentations and winners land on 20 December.",
+      "Everyone is welcome: developers, AI engineers, working professionals, interns, founders and enthusiasts. Join the community on WhatsApp and explore the Superlinked Cookbook to start experimenting early.",
+    ],
+  },
   {
     slug: "global-ai-hackathon",
     kind: "Global Hackathon",
