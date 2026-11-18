@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- solid orange circle background -->
+  <circle cx="256" cy="256" r="256" fill="#ff6b00"/>
+  <!-- white house roof and W letter -->
+  <path d="M 64,220 L 256,76 L 448,220 L 416,245 L 256,124 L 96,245 Z" fill="#ffffff" />
+  <rect x="360" y="108" width="36" height="55" fill="#ffffff" />
+  <!-- white W letter with thick rounded lines -->
+  <path d="M 148,225 C 138,225 130,233 130,243 L 180,410 C 183,420 193,428 205,428 C 217,428 226,420 230,410 L 256,310 L 282,410 C 286,420 295,428 307,428 C 319,428 329,420 332,410 L 382,243 C 385,233 377,225 367,225 C 357,225 349,232 346,242 L 307,370 L 281,270 C 278,260 268,252 256,252 C 244,252 234,260 231,270 L 205,370 L 166,242 C 163,232 155,225 148,225 Z" fill="#ffffff" />
+</svg>
