@@ -359,3 +359,10 @@ export const impact = [
 ];
 
 export const pillars = ["Learn", "Connect", "Grow", "Build in public", "Ship", "Hack"];
+
+/** Community partners: shown on the home page and on events that opt in via `communityPartners` */
+export const communityPartners = [
+  { name: "W3V", url: "https://web3voyager.com", logo: "/images/partners/w3v.png" },
+  // Internal: opens our own page about Wayzyy
+  { name: "Wayzyy", url: "/partners/wayzyy", logo: "/images/partners/wayzyy.svg", wordmark: true },
+];
