@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 // import JoinCta from "@/components/ui/JoinCta";
 import EventHero from "@/components/events/EventHero";
 import EventTicket from "@/components/events/EventTicket";
+import CommunityPartners from "@/components/ui/CommunityPartners";
 import { events, eventsByDate, getEvent, kindLabel } from "@/data/events";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -113,6 +114,8 @@ export default async function EventPage({ params }: Props) {
           </ul>
         </aside>
       </section>
+
+      {event.communityPartners && <CommunityPartners className="pb-16 md:pb-24" />}
 
       <section className="shell pb-24 md:pb-32">
         <h2 className="display text-[clamp(2.2rem,5vw,4rem)]">

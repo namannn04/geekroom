@@ -21,6 +21,8 @@ export type EventItem = {
   date?: string;
   /** Small caption printed above the date chip on the ticket, e.g. "Registration closes" */
   chipLabel?: string;
+  /** Show the community partners strip on the event page */
+  communityPartners?: boolean;
   /** Only the month is known: the chip shows the month instead of a day */
   approx?: boolean;
   location?: string;
@@ -43,6 +45,7 @@ export const events: EventItem[] = [
     title: "Infer-a-thon with Superlinked",
     date: "Registration closes 5 Dec 2026",
     chipLabel: "Registration closes",
+    communityPartners: true,
     location: "Online, worldwide",
     image: "/images/events/infer-a-thon.webp",
     register: { label: "Register now", url: "https://luma.com/f7ef30j2" },
