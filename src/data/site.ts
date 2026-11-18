@@ -363,6 +363,7 @@ export const pillars = ["Learn", "Connect", "Grow", "Build in public", "Ship", "
 /** Community partners: shown on the home page and on events that opt in via `communityPartners` */
 export const communityPartners = [
   { name: "W3V", url: "https://web3voyager.com", logo: "/images/partners/w3v.png" },
+  { name: "BangPypers", url: "https://bangpypers.org", logo: "/images/partners/bangpypers.svg", square: true },
   // Internal: opens our own page about Wayzyy
   { name: "Wayzyy", url: "/partners/wayzyy", logo: "/images/partners/wayzyy.svg", wordmark: true },
 ];
