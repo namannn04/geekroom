@@ -72,7 +72,7 @@ export const features = [
   },
   {
     title: "Network with the best people in industry",
-    body: "Every Geek Room event is a chance to meet, talk to and learn from people across the industry. We've hosted finales at Microsoft, Mastercard and Paytm, and worked with 80+ companies including Google, Meta, GitHub, Groq, Qdrant, Pathway, Vapi and Oracle.",
+    body: "Every Geek Room event is a chance to meet, talk to and learn from people across the industry. We've hosted finales at Microsoft, Mastercard and Paytm, and worked with 500+ companies including Google, Meta, GitHub, Groq, Qdrant, Pathway, Vapi and Oracle.",
     image: "/images/home/network.jpg",
   },
 ];
@@ -110,8 +110,8 @@ export const services = [
     body: "Host an exclusive hackathon with Geek Room, like our finales at Microsoft, Mastercard and Paytm, and get strong branding and engagement across 10+ media channels.",
     proof: [
       { value: "150,000+", label: "Community members" },
-      { value: "70+", label: "Events conducted" },
-      { value: "50+", label: "Companies partnered" },
+      { value: "80+", label: "Events conducted" },
+      { value: "500+", label: "Companies partnered" },
     ],
   },
   {
@@ -353,10 +353,10 @@ export const corporateTestimonials: Testimonial[] = [
 /** Headline numbers used in the impact band (all taken from Geek Room's own figures). */
 export const impact = [
   { value: 150000, suffix: "+", label: "Builders in the community" },
-  { value: 25000, suffix: "+", label: "Code Cubicle registrations across the first five editions" },
-  { value: 14500, suffix: "+", label: "Applications for Code Kshetra 2.0" },
-  { value: 3700, suffix: "+", label: "Builders registered for Code Cubicle 6.0" },
-  { value: 80, suffix: "+", label: "Partner companies, from AI labs to global brands" },
+  { value: 25000, suffix: "+", label: "Hackathon registrations" },
+  { value: 500, suffix: "+", label: "Partner companies, from AI labs to global brands" },
+  { value: 300, suffix: "+", label: "Hackathon project submissions" },
+  { value: 80, suffix: "+", label: "Events run" },
 ];
 
 export const pillars = ["Learn", "Connect", "Grow", "Build in public", "Ship", "Hack"];

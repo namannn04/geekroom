@@ -8,7 +8,7 @@ import Voices from "@/components/home/Voices";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "How Geek Room grew from a WhatsApp group into a global builder community of 150K+ developers, founders and 80+ partner companies.",
+  description: "How Geek Room grew from a WhatsApp group into a global builder community of 150K+ developers, founders and 500+ partner companies.",
 };
 
 export default function AboutPage() {
