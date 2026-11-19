@@ -21,7 +21,7 @@ const reasons = [
 
 const reach = [
   { value: "150K+", label: "Developers" },
-  { value: "70+", label: "Events conducted" },
+  { value: "80+", label: "Events conducted" },
   { value: "20+", label: "Chapters" },
 ];
 
@@ -140,7 +140,7 @@ export default function BrochurePage() {
             <Image src={`${images}/cover-builders.webp`} alt="Developers collaborating at a Geek Room event" fill priority sizes="(max-width: 800px) 100vw, 45vw" />
             <span className="brochure-photo-tag tag-one">150K+ builders</span>
             <span className="brochure-photo-tag tag-two">20+ campus chapters</span>
-            <span className="brochure-photo-tag tag-three">70+ events conducted</span>
+            <span className="brochure-photo-tag tag-three">80+ events conducted</span>
           </div>
         </div>
       </section>

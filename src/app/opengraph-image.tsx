@@ -57,7 +57,7 @@ export default async function OpengraphImage() {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 120 * S, fontWeight: 800, lineHeight: 1, letterSpacing: -2 * S }}>GEEK ROOM</div>
           <div style={{ marginTop: 24 * S, fontSize: 40 * S, color: "#ff5a1f" }}>
-            150K+ builders · 80+ partner companies
+            150K+ builders · 500+ partner companies
           </div>
         </div>
       </div>
