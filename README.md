@@ -1,124 +1,136 @@
 # Geek Room
 
-Website for **Geek Room** — one of India's biggest student tech communities (150K+ builders), built with Next.js.
+The website for **Geek Room**, a community of developers, students, founders, and technology enthusiasts. Explore upcoming events, discover community initiatives, meet the team, and connect with Geek Room.
 
-## Tech stack
+[Website](https://geekroom.co.in) · [LinkedIn](https://www.linkedin.com/company/geekr00m/) · [Instagram](https://www.instagram.com/geekroom__/)
 
-- [Next.js 15](https://nextjs.org/) (App Router, static generation)
-- TypeScript, Tailwind CSS v4
-- [GSAP](https://gsap.com/) + ScrollTrigger, SplitText and DrawSVG for scroll-driven motion
-- [Lenis](https://lenis.darkroom.engineering/) smooth scrolling, synced to the GSAP ticker
-- [Motion](https://motion.dev/) (Framer Motion) for UI state animation
-- Fonts: Anybody (variable width axis), Schibsted Grotesk, JetBrains Mono
+## Overview
 
-## Design: "Signal" v2
+- Event catalogue with category filters, individual event pages, and registration links.
+- Community highlights, team profiles, speakers, and partner showcases.
+- Contact form powered by Resend and protected with Cloudflare Turnstile.
+- Responsive layouts, scroll-driven animation, and optional 3D decoration.
+- Generated sitemap, social preview images, and a custom 404 page.
 
-Checked against the [Impeccable](https://impeccable.style/) detector (`npx impeccable detect <url>`).
+## Technology
 
-- **Colour:** tinted ink `#0d0e0c`, paper `#eeece6`, one accent: signal orange `#ff5a1f`.
-  Teal `#19b3bf` only appears in the `</>` brand mark.
-- **Type:** Anybody at a condensed 72% width for headlines; `<em>` inside `.display` switches to the
-  expanded light cut in orange. No gradient text, no italic serif.
-- **Motion vocabulary:** `power3/power4.out` and `power2.inOut` only, no bounce or elastic.
-  Every animation respects `prefers-reduced-motion`.
+- **Application:** Next.js 15 App Router, React 19, and TypeScript.
+- **Styling:** Tailwind CSS v4.
+- **Animation:** GSAP, Motion, and Lenis.
+- **3D:** Three.js, React Three Fiber, and Drei.
+- **Email:** Resend, with server-side validation and Cloudflare Turnstile.
 
-## Motion map
+## Local development
 
-| Where | Effect |
-| --- | --- |
-| Page change | Immediate Next.js navigation; scroll triggers refresh after route changes |
-| Section headings | Characters rise out of a mask while the width axis tightens from expanded (`SectionHead`) |
-| Hero | Stretch-in headline; on scroll lines diverge, the `</>` mark comes apart, partner rows counter-slide |
-| Featured events | Section pins; tickets run horizontally on a live date axis with a playhead |
-| Offerings | Cards open along the slash, glyph strokes draw in |
-| Impact | Log-scale bars and counters tied to scroll position (they wind back when scrolling up) |
-| Story | Photos wipe up from an over-scaled crop; sticky index tracks the active panel |
-| Speakers | Cards deal out from a fanned deck |
-| Partners | Hairline logo grid flips up in a wave |
-| Reviews | Words light up in reading order |
-| Events page | Date axis + typographic index; rows draw their rule, hover sweeps a fill with a cursor preview |
-| Footer | Wordmark letters rise from below the fold |
-
-## Pages
-
-| Route | Description |
-| --- | --- |
-| `/` | Home: hero, signal track, offerings, impact, story, speakers, partners, reviews, FAQ |
-| `/about-us` | Manifesto, stats, timeline, team and reviews |
-| `/event` | Date axis and filterable typographic event index |
-| `/event/[slug]` | Event details, sticky register panel and ticket recommendations |
-| `/contact-us` | Secure Resend-backed enquiry form and contact channels |
-| `/thank-you` | Post-submission page |
-| 404 | Custom not-found page |
-
-## Getting started
+Use Node.js 20 or later and npm. The repository includes `package-lock.json`; use npm to keep dependency resolution consistent.
 
 ```bash
-npm install
-npm run dev      # http://localhost:3000
-npm run build    # production build
-npm run start    # serve the production build
-npm run lint
+git clone https://github.com/namannn04/geekroom.git
+cd geekroom
+npm ci
+cp .env.example .env.local
+npm run dev
 ```
 
-## Contact form setup
+Open [localhost:3000](http://localhost:3000). Configure the environment variables below to enable contact form submissions.
 
-The contact form posts to a same-origin server route; the Resend API key and
-Turnstile secret never enter the browser bundle. Copy `.env.example` to
-`.env.local` and configure:
+### Available commands
 
-- `RESEND_API_KEY`: a server-side Resend API key.
-- `CONTACT_TO_EMAIL`: the private inbox that receives enquiries.
-- `CONTACT_FROM_EMAIL`: a sender on a domain verified in Resend, formatted as
-  `Geek Room Website <team@geekroom.co.in>`.
-- `NEXT_PUBLIC_TURNSTILE_SITE_KEY`: the public Cloudflare Turnstile widget key.
-- `TURNSTILE_SECRET_KEY`: the server-only Turnstile verification secret.
-- `CONTACT_ALLOWED_ORIGINS`: optional comma-separated production origins.
+- `npm run dev` — start the development server.
+- `npm run build` — create a production build.
+- `npm run start` — serve the production build after building.
+- `npm run lint` — run ESLint.
 
-Also add the same values to the deployment provider's environment settings.
-The API rejects cross-origin and oversized requests, validates every field and
-Turnstile token server-side, uses a honeypot, and applies a small per-instance
-IP rate limit before calling Resend.
+## Environment configuration
+
+Use `.env.example` as the reference for `.env.local` and your deployment environment.
+
+- **`RESEND_API_KEY`** — server-side API key used to send contact emails.
+- **`CONTACT_TO_EMAIL`** — inbox that receives enquiries.
+- **`CONTACT_FROM_EMAIL`** — sender on a domain verified in Resend, such as `Geek Room Website <team@geekroom.co.in>`.
+- **`NEXT_PUBLIC_TURNSTILE_SITE_KEY`** — public Cloudflare Turnstile widget key.
+- **`TURNSTILE_SECRET_KEY`** — server-side Turnstile verification secret.
+- **`CONTACT_ALLOWED_ORIGINS`** — optional comma-separated origins allowed to submit the form. When omitted, origins must match the request host.
+
+Keep API keys and server-side secrets out of source control. Only the Turnstile site key should use the `NEXT_PUBLIC_` prefix. For local form testing, use Turnstile credentials suitable for your development hostname.
+
+The contact endpoint validates fields and Turnstile tokens, checks request origins and size, includes a honeypot, and limits requests per IP within each server instance.
 
 ## Project structure
 
-```
+```text
+public/images/             Brand, event, team, speaker, and partner assets
 src/
-  app/            # routes (App Router)
+  app/                     Pages, metadata, and API routes
+    api/contact/           Contact form endpoint
+    event/[slug]/          Individual event pages
+    partners/wayzyy/       Wayzyy partner page
   components/
-    layout/       # Navbar, Footer
-    motion/       # SmoothScroll (Lenis) and PageTransition
-    ui/           # shared building blocks (SectionHead, DotField, GeekMark, JoinCta, ...)
-    home/         # homepage sections
-    about/        # About Us sections
-    events/       # EventTicket, EventIndex, EventHero
-    contact/      # contact form
-  lib/gsap.ts     # GSAP plugin registration and defaults
+    about/                 About page sections
+    contact/               Contact form components
+    events/                Event listing and ticket components
+    home/                  Homepage sections
+    layout/                Navigation and footer
+    motion/                Scrolling, transitions, and deferred decoration
+    three/                 3D visuals
+    ui/                    Shared interface components
   data/
-    site.ts       # site config, team, speakers, partners, FAQ, milestones
-    events.ts     # events catalogue
-public/images/    # brand, event, team, speaker and partner images
+    events.ts              Event catalogue and related helpers
+    site.ts                Community content and site configuration
+  lib/                     Shared motion and visual utilities
 ```
 
-## Editing content
+## Pages
 
-All copy lives in `src/data/`. To add a new event, append an entry to `events` in
-`src/data/events.ts` and drop its image into `public/images/events/` — the listing, detail
-page and sidebars pick it up automatically.
+- `/` — community homepage.
+- `/about-us` — story, milestones, team, and community reviews.
+- `/event` — event catalogue and category filters.
+- `/event/[slug]` — event details and registration.
+- `/partners/wayzyy` — Wayzyy partnership details.
+- `/brochure` — community brochure.
+- `/contact-us` — enquiry form and contact channels.
+- `/thank-you` — contact submission confirmation.
 
-## Performance and accessibility
+## Updating content
 
-Internal links use native Next.js navigation without an animation delay. Optional
-WebGL decoration mounts only after idle time while visible, on screens at least
-1024px wide with no reduced-motion preference. The hero keeps a static SVG while
-loading and on smaller screens; hidden tabs release decorative WebGL scenes.
-Below-the-fold featured event images use lazy loading rather than preload.
+Edit community content, navigation, speakers, partners, and FAQs in `src/data/site.ts`.
 
-The mobile menu supports Escape, keyboard focus containment and scroll locking,
-and the site includes a keyboard-visible skip link, robots.txt and a generated
-sitemap covering static pages and all event detail routes.
+To add or update an event:
 
-Validation: run `npm run lint` and `npm run build`, then check the production
-server at mobile and desktop widths, with reduced motion, keyboard navigation,
-browser back/forward, and an unknown event URL (404). Build-reported First Load
-JS excludes deferred WebGL downloads; it is not a measurement of real-user latency.
+1. Add its image to `public/images/events/`.
+2. Add or edit its entry in `src/data/events.ts`, following the existing event type and entries.
+3. Use a unique slug and check dates, category, image path, and registration links.
+4. Review the event catalogue and individual event page locally.
+
+Event pages and the sitemap use the shared event catalogue. Content is maintained in source files; this repository currently has no database configuration or `db:seed` command.
+
+## Design and accessibility
+
+The visual system pairs a paper background (`#eeece6`) with dark ink (`#0d0e0c`) and signal orange (`#ff5a1f`). Typography uses Anybody, Schibsted Grotesk, and JetBrains Mono.
+
+Motion supports reduced-motion preferences. Decorative WebGL content is deferred on eligible desktop screens, while smaller screens retain a static hero graphic. Navigation includes a visible-on-focus skip link and a mobile menu with Escape handling, focus containment, and scroll locking.
+
+## Validation and deployment
+
+Before submitting changes:
+
+```bash
+npm run lint
+npm run build
+```
+
+Check affected pages at mobile and desktop widths, keyboard navigation, reduced-motion behavior, and event links. For contact form changes, verify both successful submissions and validation failures with configured credentials.
+
+Deploy to a platform that supports Next.js with a Node.js server runtime. The contact API requires server-side execution. Configure environment variables on the deployment platform, then build and start with:
+
+```bash
+npm ci
+npm run build
+npm run start
+```
+
+## Contributing
+
+Keep changes focused and include a clear description of the behavior or content being updated. Follow the existing TypeScript, component, and styling conventions, run the checks above for code changes, and include screenshots for visible interface changes.
+
+For community enquiries and partnerships, contact [team@geekroom.co.in](mailto:team@geekroom.co.in).
