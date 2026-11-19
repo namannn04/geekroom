@@ -85,7 +85,21 @@ export default function Navbar() {
 
         <ul className="hidden items-center gap-1 md:flex">
           {navLinks.map((l) => {
-            const active = isActive(pathname, l.href);
+            const active = !l.external && isActive(pathname, l.href);
+            if (l.external) {
+              return (
+                <li key={l.href} className="relative">
+                  <a
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="relative z-10 flex items-center gap-1 rounded-full px-4 py-2 font-mono text-xs tracking-[0.14em] text-muted uppercase transition-colors hover:text-paper"
+                  >
+                    {l.label} <ArrowUpRight className="size-3" />
+                  </a>
+                </li>
+              );
+            }
             return (
               <li key={l.href} className="relative">
                 <Link
@@ -150,10 +164,18 @@ export default function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: reduced ? 0 : i * 0.03, duration: reduced ? 0 : 0.2 }}
                 >
-                  <Link href={l.href} aria-current={isActive(pathname, l.href) ? "page" : undefined} className="flex items-baseline gap-4 py-2">
-                    <span className="font-mono text-xs text-orange">0{i + 1}</span>
-                    <span className={`display text-6xl ${isActive(pathname, l.href) ? "text-signal" : ""}`}>{l.label}</span>
-                  </Link>
+                  {l.external ? (
+                    <a href={l.href} target="_blank" rel="noopener noreferrer" className="flex items-baseline gap-4 py-2">
+                      <span className="font-mono text-xs text-orange">0{i + 1}</span>
+                      <span className="display text-6xl">{l.label}</span>
+                      <ArrowUpRight className="size-6 self-center text-muted" />
+                    </a>
+                  ) : (
+                    <Link href={l.href} aria-current={isActive(pathname, l.href) ? "page" : undefined} className="flex items-baseline gap-4 py-2">
+                      <span className="font-mono text-xs text-orange">0{i + 1}</span>
+                      <span className={`display text-6xl ${isActive(pathname, l.href) ? "text-signal" : ""}`}>{l.label}</span>
+                    </Link>
+                  )}
                 </motion.li>
               ))}
             </ul>

@@ -10,10 +10,11 @@ export const site = {
   },
 };
 
-export const navLinks = [
+export const navLinks: { label: string; href: string; external?: boolean }[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about-us" },
   { label: "Events", href: "/event" },
+  { label: "Spaces", href: "https://spaces.geekroom.co.in/", external: true },
   { label: "Contact", href: "/contact-us" },
 ];
 
