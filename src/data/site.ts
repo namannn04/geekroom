@@ -288,7 +288,7 @@ export const achievements = [
   { value: "500+", label: "partner companies", short: "companies" },
   { value: "100+", label: "companies at HackBLR", short: "at HackBLR" },
   { value: "25K+", label: "Hackathon registrations", short: "Hackathon regs" },
-  { value: "300+", label: "Hackthon Project Submissions", short: "Project Submissions" },
+  { value: "300+", label: "Hackathon Project Submissions", short: "Project Submissions" },
   { value: "500+", label: "In-person builders at Code Kshetra", short: "Code Kshetra" },
   { value: "4.5★", label: "average event rating", short: "rating" },
 ];
