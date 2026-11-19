@@ -284,12 +284,12 @@ export const milestones = [
 /** Headline achievements that circle the 3D mark in the hero. `short` is used on small screens. */
 export const achievements = [
   { value: "150K+", label: "builders in the community", short: "builders" },
-  { value: "70+", label: "events run", short: "events" },
-  { value: "80+", label: "partner companies", short: "companies" },
+  { value: "80+", label: "events run", short: "events" },
+  { value: "500+", label: "partner companies", short: "companies" },
   { value: "100+", label: "companies at HackBLR", short: "at HackBLR" },
-  { value: "25K+", label: "Code Cubicle registrations", short: "CC regs" },
-  { value: "14.5K+", label: "Code Kshetra 2.0 applications", short: "CK apps" },
-  { value: "3.7K+", label: "builders at Code Cubicle 6.0", short: "CC 6.0" },
+  { value: "25K+", label: "Hackathon registrations", short: "Hackathon regs" },
+  { value: "300+", label: "Hackthon Project Submissions", short: "Project Submissions" },
+  { value: "500+", label: "In-person builders at Code Kshetra", short: "Code Kshetra" },
   { value: "4.5★", label: "average event rating", short: "rating" },
 ];
 
