@@ -3,9 +3,22 @@
 import Script from "next/script";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowUpRight, LoaderCircle } from "lucide-react";
+import { ArrowUpRight, LoaderCircle, Send } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { contactTopics, type ContactTopic } from "@/data/services";
 
-const topics = ["Partnership", "Host a hackathon", "Speaker session", "Hiring challenge", "Just saying hi"];
+const topics = contactTopics;
+
+/** A prompt per topic, so people tell us what we need on the first message. */
+const prompts: Record<ContactTopic, string> = {
+  Partnership: "Tell us about your company and what kind of partnership you have in mind…",
+  "Host a hackathon": "What would builders make with your product? Rough dates, city or online, and audience size…",
+  "Hiring challenge": "Which roles are you hiring for, how many, and what should candidates be able to build?",
+  "Speaker session": "Who would speak, on what topic, and would you prefer a meetup, hackathon or online session?",
+  "GitHub star campaign": "Link your repo, tell us where it is today and where you want it to be…",
+  "Technical writing": "What should we write about, who is the reader, and where will it be published?",
+  "Just saying hi": "Hi Geek Room! …",
+};
 const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 
 type TurnstileApi = {
@@ -35,7 +48,16 @@ export default function ContactForm() {
   const router = useRouter();
   const widgetContainer = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | null>(null);
-  const [topic, setTopic] = useState(topics[0]);
+  const reduced = useReducedMotion();
+  const [topic, setTopic] = useState<ContactTopic>(topics[0]);
+  const [sent, setSent] = useState(false);
+
+  // Service pages link here with ?topic=…, so the right chip is already selected
+  useEffect(() => {
+    const requested = new URLSearchParams(window.location.search).get("topic");
+    const match = topics.find((t) => t === requested);
+    if (match) setTopic(match);
+  }, []);
   const [turnstileToken, setTurnstileToken] = useState("");
   const [status, setStatus] = useState<"idle" | "sending" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -104,7 +126,8 @@ export default function ContactForm() {
         return;
       }
 
-      router.push("/thank-you");
+      setSent(true);
+      window.setTimeout(() => router.push("/thank-you"), reduced ? 0 : 1100);
     } catch {
       setStatus("error");
       setErrorMessage("We could not reach the server. Check your connection and try again.");
@@ -116,7 +139,30 @@ export default function ContactForm() {
     "w-full rounded-2xl border border-line-strong bg-ink px-4 py-3.5 text-paper outline-none transition-colors placeholder:text-subtle focus:border-orange";
 
   return (
-    <form onSubmit={onSubmit} className="relative rounded-[1.75rem] bg-ink-2 p-6 md:p-9">
+    <form onSubmit={onSubmit} className="relative overflow-hidden rounded-[1.75rem] bg-ink-2 p-6 md:p-9">
+      <AnimatePresence>
+        {sent && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="absolute inset-0 z-10 grid place-items-center bg-ink-2/95 text-center"
+            role="status"
+          >
+            <div>
+              <motion.span
+                className="mx-auto grid size-16 place-items-center rounded-full bg-orange text-ink"
+                initial={{ scale: 0.6, x: 0, y: 0, rotate: 0 }}
+                animate={reduced ? { scale: 1 } : { scale: [0.6, 1, 1], x: [0, 0, 240], y: [0, 0, -180], rotate: [0, 0, -20] }}
+                transition={{ duration: 1.1, times: [0, 0.35, 1], ease: [0.65, 0, 0.35, 1] }}
+              >
+                <Send className="size-6" />
+              </motion.span>
+              <p className="display mt-6 text-4xl">Sent</p>
+              <p className="mt-2 text-muted">On its way to the Geek Room team.</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <Script
         src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
         strategy="afterInteractive"
@@ -189,7 +235,7 @@ export default function ContactForm() {
               required
               maxLength={5000}
               rows={5}
-              placeholder="Tell us what you have in mind…"
+              placeholder={prompts[topic]}
               className={`${field} mt-2 resize-none`}
             />
           </label>

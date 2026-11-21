@@ -5,10 +5,16 @@ import { useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import SectionHead from "@/components/ui/SectionHead";
-import { services, site } from "@/data/site";
+import { services } from "@/data/site";
 import { EYES, LEFT, RIGHT, SLASH, toPath, VIEWBOX } from "@/lib/geekmark";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 import { EASE_IN_OUT, EASE_OUT, reveal } from "@/lib/motion";
+import { contactHref } from "@/data/services";
+import { HackathonPreview, HiringPreview, SpeakerPreview } from "@/components/home/OfferPreviews";
+
+/* Live mini demo and service page for each card, in the same order as `services` */
+const previews = [<HiringPreview key="h" />, <HackathonPreview key="k" />, <SpeakerPreview key="s" />];
+const pages = ["/services/hiring-challenges", "/services/hackathons", "/services/speaker-sessions"];
 
 gsap.registerPlugin(DrawSVGPlugin);
 
@@ -94,10 +100,16 @@ export default function Offerings() {
 
       <div className="mt-14 grid gap-4 md:grid-cols-12 md:grid-rows-2">
         {services.map((s, i) => (
-          <article key={s.title} data-offer className={`flex flex-col justify-between rounded-[1.75rem] bg-ink-2 p-7 md:p-10 ${layout[i]}`}>
-            <div className="flex items-start justify-between text-paper">
+          <Link key={s.title} href={pages[i]} data-offer className={`group flex flex-col justify-between rounded-[1.75rem] bg-ink-2 p-7 transition-colors hover:bg-ink-3 md:p-10 ${layout[i]}`}>
+            <div className="flex items-start justify-between gap-6 text-paper">
               {glyphs[i]}
+              <div data-copy className={`ml-auto w-full max-w-[17rem] ${i === 1 ? "hidden" : "hidden sm:block"}`}>
+                {previews[i]}
+              </div>
               <span className="label tabular-nums">0{i + 1}</span>
+            </div>
+            <div data-copy className={`mt-10 ${i === 1 ? "" : "sm:hidden"}`}>
+              {previews[i]}
             </div>
             {s.proof && (
               <dl className="mt-12 border-t border-line md:my-10">
@@ -116,14 +128,18 @@ export default function Offerings() {
               <p data-copy className="mt-4 max-w-[30rem] leading-relaxed text-muted">
                 {s.body}
               </p>
+              <span data-copy className="mt-6 inline-flex items-center gap-2 font-mono text-xs tracking-[0.06em] text-orange uppercase">
+                Explore the service
+                <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </span>
             </div>
-          </article>
+          </Link>
         ))}
       </div>
 
       <Link
         data-cta-offer
-        href={`mailto:${site.email}?subject=Partnering%20with%20Geek%20Room`}
+        href={contactHref("Partnership")}
         className="group mt-4 flex items-center justify-between gap-6 rounded-[1.75rem] bg-orange p-7 text-ink md:p-10"
       >
         <p className="display text-[clamp(1.6rem,3.6vw,3rem)]">Got a different idea? Pitch it to us.</p>

@@ -2,11 +2,12 @@ import "server-only";
 
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { contactTopics } from "@/data/services";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const TOPICS = new Set(["Partnership", "Host a hackathon", "Speaker session", "Hiring challenge", "Just saying hi"]);
+const TOPICS = new Set<string>(contactTopics);
 const MAX_BODY_BYTES = 16_000;
 const RATE_LIMIT = 5;
 const RATE_WINDOW_MS = 10 * 60 * 1000;

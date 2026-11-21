@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import ChaptersMap, { hubFor } from "@/components/about/ChaptersMap";
 import SectionHead from "@/components/ui/SectionHead";
 import { chapters } from "@/data/site";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
@@ -9,6 +10,7 @@ import { EASE_EXPO, reveal } from "@/lib/motion";
 /** Campus chapters as a ruled index. Each row draws its rule and lifts its text as it scrolls in. */
 export default function Chapters() {
   const root = useRef<HTMLElement>(null);
+  const [hub, setHub] = useState<string | null>(null);
 
   useGSAP(
     () => {
@@ -35,12 +37,22 @@ export default function Chapters() {
         intro="Online, Geek Room is open to builders anywhere. Offline, local chapters host their own hackathons, workshops and talks, and plug into the wider network."
       />
 
-      <ol className="mt-14 border-b border-line">
+      <div className="mt-14 grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+      <div className="lg:sticky lg:top-28">
+        <div className="rounded-[1.75rem] border border-line bg-ink-2 p-6 md:p-8">
+          <ChaptersMap active={hub} onHover={setHub} />
+          <p className="mt-4 font-mono text-[11px] text-subtle">Chapters with public activity. Online, builders join from everywhere.</p>
+        </div>
+      </div>
+      <ol className="border-b border-line" onMouseLeave={() => setHub(null)}>
         {chapters.map((c, i) => (
           <li
             key={c.name}
             data-chapter
-            className="relative grid grid-cols-[2.5rem_1fr] gap-x-4 gap-y-1 py-6 md:grid-cols-[3.5rem_1.1fr_0.5fr_1fr] md:items-baseline md:py-7"
+            onMouseEnter={() => setHub(hubFor(c.place))}
+            className={`relative grid grid-cols-[2.5rem_1fr] gap-x-4 gap-y-1 py-6 transition-opacity duration-300 md:grid-cols-[3.5rem_1.1fr_0.5fr_1fr] md:items-baseline md:py-7 lg:grid-cols-[2.5rem_1fr_auto] ${
+              hub && hubFor(c.place) !== hub ? "lg:opacity-40" : ""
+            }`}
           >
             <span data-rule className="absolute inset-x-0 top-0 h-px bg-line-strong" />
             <span className="overflow-hidden">
@@ -58,7 +70,7 @@ export default function Chapters() {
                 {c.place}
               </span>
             </span>
-            <span className="col-start-2 overflow-hidden md:col-start-auto">
+            <span className="col-start-2 overflow-hidden md:col-start-auto lg:col-span-2 lg:col-start-2">
               <span data-lift className="block text-muted">
                 {c.note}
               </span>
@@ -66,6 +78,7 @@ export default function Chapters() {
           </li>
         ))}
       </ol>
+      </div>
     </section>
   );
 }

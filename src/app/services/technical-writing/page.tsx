@@ -23,7 +23,7 @@ import EditorDemo from "@/components/services/writing/EditorDemo";
 import ReviewThread from "@/components/services/writing/ReviewThread";
 import TestTerminal from "@/components/services/writing/TestTerminal";
 import ServiceCta from "@/components/services/ServiceCta";
-import { serviceMail } from "@/data/services";
+import { contactHref } from "@/data/services";
 
 export const metadata: Metadata = {
   title: "Technical Writing",
@@ -89,7 +89,7 @@ export default function TechnicalWritingPage() {
           </Link>
           <div className="flex items-center gap-3 text-paper">
             <PencilIcon size={24} />
-            <p className="label">Service 02 · Content by engineers</p>
+            <p className="label">Service 05 · Content by engineers</p>
           </div>
           <h1 className="display mt-8 max-w-[15ch] text-[clamp(3rem,9vw,7.5rem)]">
             Written by developers who <em>ship</em>.
@@ -101,9 +101,9 @@ export default function TechnicalWritingPage() {
               reviewed by an engineer.
             </p>
             <div className="flex flex-wrap gap-3">
-              <a href={serviceMail("Technical writing")} className="btn-primary">
+              <Link href={contactHref("Technical writing")} className="btn-primary">
                 Commission a post <ArrowUpRight className="size-4" />
-              </a>
+              </Link>
               <a href="#process" className="btn-ghost">
                 How we work
               </a>
@@ -287,7 +287,7 @@ export default function TechnicalWritingPage() {
           </>
         }
         body="Send us the topic, the audience and a link to your product. We'll come back with an outline and a timeline within a few days."
-        mailto={serviceMail("Technical writing")}
+        href={contactHref("Technical writing")}
         secondary={{ href: "/services/github-stars", label: "See GitHub campaigns" }}
       />
     </>

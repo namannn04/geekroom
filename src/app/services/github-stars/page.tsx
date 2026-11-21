@@ -22,7 +22,7 @@ import StargazerFeed from "@/components/services/github/StargazerFeed";
 import ReadmeMakeover from "@/components/services/github/ReadmeMakeover";
 import ContributionGraph from "@/components/services/github/ContributionGraph";
 import ServiceCta from "@/components/services/ServiceCta";
-import { serviceMail } from "@/data/services";
+import { contactHref } from "@/data/services";
 
 export const metadata: Metadata = {
   title: "GitHub Star Campaigns",
@@ -108,7 +108,7 @@ export default function GithubStarsPage() {
           </Link>
           <div className="flex items-center gap-3 text-paper">
             <MarkGithubIcon size={28} />
-            <p className="label">Service 01 · Developer marketing</p>
+            <p className="label">Service 04 · Developer marketing</p>
           </div>
           <h1 className="display mt-8 max-w-[14ch] text-[clamp(3rem,9vw,7.5rem)]">
             Stars from <em>real</em> developers.
@@ -120,9 +120,9 @@ export default function GithubStarsPage() {
               stargazers and contributors.
             </p>
             <div className="flex flex-wrap gap-3">
-              <a href={serviceMail("A GitHub star campaign")} className="btn-primary">
+              <Link href={contactHref("GitHub star campaign")} className="btn-primary">
                 Plan my campaign <ArrowUpRight className="size-4" />
-              </a>
+              </Link>
               <a href="#playbook" className="btn-ghost">
                 See the playbook
               </a>
@@ -345,7 +345,7 @@ export default function GithubStarsPage() {
           </>
         }
         body="Tell us about your repo and where you want it to be. We'll come back with a campaign plan, a timeline and a README fix list."
-        mailto={serviceMail("A GitHub star campaign")}
+        href={contactHref("GitHub star campaign")}
         secondary={{ href: "/services/technical-writing", label: "Pair it with technical writing" }}
       />
     </>

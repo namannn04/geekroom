@@ -10,12 +10,13 @@ import { EASE_EXPO, EASE_OUT, reveal } from "@/lib/motion";
 type Props = {
   title: React.ReactNode;
   body: string;
-  mailto: string;
+  /** Usually the contact form with a topic preselected */
+  href: string;
   secondary?: { href: string; label: string };
 };
 
 /** Closing orange band for service pages; opens along the slash like the site's other CTAs. */
-export default function ServiceCta({ title, body, mailto, secondary }: Props) {
+export default function ServiceCta({ title, body, href, secondary }: Props) {
   const root = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -47,9 +48,9 @@ export default function ServiceCta({ title, body, mailto, secondary }: Props) {
             {body}
           </p>
           <div data-copy className="mt-10 flex flex-wrap gap-3">
-            <a href={mailto} className="btn bg-ink text-paper hover:bg-ink-3">
+            <Link href={href} className="btn bg-ink text-paper hover:bg-ink-3">
               Start a project <ArrowUpRight className="size-3.5" />
-            </a>
+            </Link>
             {secondary && (
               <Link href={secondary.href} className="btn border border-ink/40 hover:border-ink">
                 {secondary.label} <ArrowUpRight className="size-3.5" />
