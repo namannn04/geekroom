@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import AboutHero from "@/components/about/AboutHero";
 import Timeline from "@/components/about/Timeline";
-import Chapters from "@/components/about/Chapters";
+import GlobalReach from "@/components/about/GlobalReach";
 import Team from "@/components/about/Team";
 import Voices from "@/components/home/Voices";
 // import JoinCta from "@/components/ui/JoinCta";
@@ -16,7 +16,7 @@ export default function AboutPage() {
     <>
       <AboutHero />
       <Timeline />
-      <Chapters />
+      <GlobalReach />
       <Team />
       <Voices index="04" />
       {/* <JoinCta /> */}

@@ -6,6 +6,8 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import EventHero from "@/components/events/EventHero";
 import EventTicket from "@/components/events/EventTicket";
 import CommunityPartners from "@/components/ui/CommunityPartners";
+import Countdown from "@/components/events/Countdown";
+import Funnel from "@/components/ui/Funnel";
 import { events, eventsByDate, getEvent, kindLabel } from "@/data/events";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -70,6 +72,15 @@ export default async function EventPage({ params }: Props) {
             </ul>
           )}
 
+          {event.funnel && (
+            <div className="mt-12 rounded-[1.75rem] border border-line bg-ink-2 p-6 md:p-8">
+              <p className="label">From registration to the room</p>
+              <div className="mt-6">
+                <Funnel stages={event.funnel} />
+              </div>
+            </div>
+          )}
+
           <div className="mt-12 max-w-[40rem] space-y-6 text-lg leading-relaxed text-muted md:text-xl">
             {event.description.map((p, i) => (
               <p key={p} className={i === 0 ? "text-paper" : ""}>
@@ -80,6 +91,11 @@ export default async function EventPage({ params }: Props) {
         </div>
 
         <aside className="lg:sticky lg:top-28 lg:h-fit">
+          {event.deadline && (
+            <div className="mb-4">
+              <Countdown iso={event.deadline.iso} label={event.deadline.label} />
+            </div>
+          )}
           <div className="rounded-[1.75rem] bg-orange p-7 text-ink">
             <p className="display text-3xl">{event.register ? "Take part" : "Next edition"}</p>
             <p className="mt-3 leading-relaxed">

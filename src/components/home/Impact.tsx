@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import SectionHead from "@/components/ui/SectionHead";
+import GrowthChart from "@/components/home/GrowthChart";
 import { impact } from "@/data/site";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 import { EASE_EXPO, reveal } from "@/lib/motion";
@@ -51,6 +52,8 @@ export default function Impact() {
         }
         intro="Three years of events, measured. Bars use a log scale so every figure stays readable."
       />
+
+      <GrowthChart />
 
       <dl className="mt-14 border-t border-line">
         {impact.map((s) => (

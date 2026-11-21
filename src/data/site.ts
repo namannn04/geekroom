@@ -37,11 +37,11 @@ export const footerColumns: { title: string; links: FooterLink[] }[] = [
     title: "Services",
     links: [
       { label: "All services", href: "/services" },
+      { label: "Exclusive Hackathons", href: "/services/hackathons" },
+      { label: "Hiring Challenges", href: "/services/hiring-challenges" },
+      { label: "Speaker Sessions", href: "/services/speaker-sessions" },
       { label: "GitHub Star Campaigns", href: "/services/github-stars", badge: "New" },
       { label: "Technical Writing", href: "/services/technical-writing", badge: "New" },
-      { label: "Exclusive Hackathons", href: "/contact-us" },
-      { label: "Hiring Challenges", href: "/contact-us" },
-      { label: "Speaker Sessions", href: "/contact-us" },
     ],
   },
   {
@@ -98,19 +98,21 @@ export type Partner = {
   col: number;
   row: number;
   big?: boolean;
+  /** What we ran together: shown on the back of the logo tile. Only facts from our own event pages. */
+  story?: { event: string; href: string; detail: string };
 };
 
 export const partners: Partner[] = [
   { name: "GitHub", logo: "/images/partners/github.png", col: 1, row: 2, big: true },
-  { name: "Vapi", logo: "/images/partners/vapi.png", col: 6, row: 1 },
-  { name: "Groq", logo: "/images/partners/groq.png", col: 3, row: 2 },
-  { name: "Mastercard", logo: "/images/partners/mastercard.png", col: 4, row: 2 },
-  { name: "Qdrant", logo: "/images/partners/qdrant.png", col: 5, row: 2 },
-  { name: "OmniDimension", logo: "/images/partners/omnidimension.png", col: 6, row: 2 },
-  { name: "Pathway", logo: "/images/partners/pathway.png", col: 3, row: 3 },
-  { name: "Battery Smart", logo: "/images/partners/battery-smart.png", col: 5, row: 3 },
+  { name: "Vapi", logo: "/images/partners/vapi.png", col: 6, row: 1, story: { event: "HackBLR", href: "/event/hackblr1", detail: "Partnered HackBLR, with tracks across voice AI and more" } },
+  { name: "Groq", logo: "/images/partners/groq.png", col: 3, row: 2, story: { event: "Code Kshetra 2.0", href: "/event/ck2.0", detail: "Powered 14,500+ applications for 150 spots" } },
+  { name: "Mastercard", logo: "/images/partners/mastercard.png", col: 4, row: 2, story: { event: "Code Cubicle 3.0", href: "/event/cc3.0", detail: "Our first exclusive hackathon, at the Gurugram office" } },
+  { name: "Qdrant", logo: "/images/partners/qdrant.png", col: 5, row: 2, story: { event: "HackBLR", href: "/event/hackblr1", detail: "Partnered 1,500+ builders in one room in Bengaluru" } },
+  { name: "OmniDimension", logo: "/images/partners/omnidimension.png", col: 6, row: 2, story: { event: "Vibe-a-thon 2.0", href: "/event/vibeathon2", detail: "Set live surprise problem statements for the room" } },
+  { name: "Pathway", logo: "/images/partners/pathway.png", col: 3, row: 3, story: { event: "Code Kshetra 2.0", href: "/event/ck2.0", detail: "Backed one of North India's biggest hackathons" } },
+  { name: "Battery Smart", logo: "/images/partners/battery-smart.png", col: 5, row: 3, story: { event: "HackSmart", href: "/event/hacksmart-2", detail: "Two editions of a hiring hackathon with pre-placement interviews" } },
   { name: "NordVPN", logo: "/images/partners/nordvpn.png", col: 7, row: 3 },
-  { name: "Major League Hacking", logo: "/images/partners/mlh.png", col: 4, row: 4 },
+  { name: "Major League Hacking", logo: "/images/partners/mlh.png", col: 4, row: 4, story: { event: "HackBLR", href: "/event/hackblr1", detail: "HackBLR ran as MLH HackDays, and Code Kshetra 2.0 as an MLH season event" } },
   { name: "Bolt", logo: "/images/partners/bolt.png", col: 6, row: 4 },
 ];
 
@@ -305,21 +307,6 @@ export const achievements = [
   { value: "300+", label: "Hackathon Project Submissions", short: "Project Submissions" },
   { value: "500+", label: "In-person builders at Code Kshetra", short: "Code Kshetra" },
   { value: "4.5★", label: "average event rating", short: "rating" },
-];
-
-/** Campus chapters with public activity. The network spans 20+ campuses. */
-export const chapters = [
-  { name: "MSIT", place: "Delhi", note: "Where Geek Room started, in 2023" },
-  { name: "JIMS Rohini", place: "Delhi", note: "Home of Code Kshetra and Vortex 2.0" },
-  { name: "GTBIT", place: "Delhi", note: "The Datathon at Ignite 2026" },
-  { name: "ADGIPS", place: "Delhi", note: "The official coding society of ADGIPS" },
-  { name: "BVIMR", place: "Delhi", note: "Recurring Developer Spotlight sessions" },
-  { name: "Plaksha University", place: "Mohali", note: "Hack Summit: 73 teams, 6 winners" },
-  { name: "KR Mangalam University", place: "Gurugram", note: "Built the Aarambh induction platform" },
-  { name: "KIET", place: "Ghaziabad", note: "HeLa Crossroads Web3 workshop" },
-  { name: "SRMIST Delhi-NCR", place: "Ghaziabad", note: "Geek n Jam 2026 and TECHSTASY" },
-  { name: "JIMS-EMTC", place: "Greater Noida", note: "Geek Veek 2.0, Engi Prix and BlockGen" },
-  { name: "Geek Room Odisha", place: "Odisha", note: "AI/ML tech talk series" },
 ];
 
 export const reviews = [

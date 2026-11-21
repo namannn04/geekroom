@@ -30,6 +30,10 @@ export type EventItem = {
   register?: { label: string; url: string };
   /** Short bullet highlights shown above the description */
   highlights?: string[];
+  /** A live countdown on the event page, e.g. to registration closing. ISO date, end of day IST. */
+  deadline?: { iso: string; label: string };
+  /** Selection funnel from registration to finale. Figures must match the highlights above. */
+  funnel?: { value: number; suffix?: string; label: string }[];
   tagline?: string;
   description: string[];
 };
@@ -37,6 +41,7 @@ export type EventItem = {
 export const events: EventItem[] = [
   {
     slug: "infer-a-thon",
+    deadline: { iso: "2026-12-05", label: "Registration closes in" },
     kind: "Global Hackathon",
     status: "live",
     iso: "2026-12-05",
@@ -67,6 +72,7 @@ export const events: EventItem[] = [
   },
   {
     slug: "global-ai-hackathon",
+    deadline: { iso: "2026-11-29", label: "Judging round in" },
     kind: "Global Hackathon",
     status: "live",
     iso: "2026-10-09",
@@ -93,6 +99,7 @@ export const events: EventItem[] = [
   },
   {
     slug: "hacksmart-2",
+    deadline: { iso: "2026-12-15", label: "Registration closes in" },
     kind: "Hackathon",
     alsoIn: ["Hiring"],
     status: "live",
@@ -249,6 +256,7 @@ export const events: EventItem[] = [
   },
   {
     slug: "cc6.0",
+    funnel: [{ value: 3700, suffix: "+", label: "Builders registered" }, { value: 1631, label: "Teams formed" }],
     kind: "Hackathon",
     iso: "2026-10-11",
     city: "Noida",
@@ -273,6 +281,7 @@ export const events: EventItem[] = [
   },
   {
     slug: "grandprix",
+    funnel: [{ value: 1500, suffix: "+", label: "Participants" }, { value: 500, suffix: "+", label: "Teams" }, { value: 30, label: "Finalists at Paytm" }],
     kind: "Hackathon",
     iso: "2026-08-22",
     city: "Noida",
@@ -296,6 +305,7 @@ export const events: EventItem[] = [
   },
   {
     slug: "hacksmart",
+    funnel: [{ value: 1000, suffix: "+", label: "Registrations" }, { value: 200, suffix: "+", label: "Builders shortlisted" }],
     kind: "Hackathon",
     alsoIn: ["Hiring"],
     iso: "2026-01-31",
@@ -320,6 +330,7 @@ export const events: EventItem[] = [
   },
   {
     slug: "hackblr1",
+    funnel: [{ value: 551, label: "Teams registered" }, { value: 50, label: "Teams in the offline finale" }],
     kind: "Hackathon",
     iso: "2026-04-26",
     city: "Bengaluru",
@@ -361,6 +372,7 @@ export const events: EventItem[] = [
   },
   {
     slug: "cc5.0",
+    funnel: [{ value: 3741, label: "Registrations" }, { value: 250, label: "Teams shortlisted" }, { value: 15, label: "Teams in the finale" }],
     kind: "Hackathon",
     iso: "2025-09-14",
     city: "Bengaluru",
@@ -449,6 +461,7 @@ export const events: EventItem[] = [
   },
   {
     slug: "ck2.0",
+    funnel: [{ value: 14500, suffix: "+", label: "Applications" }, { value: 150, label: "Teams on site" }],
     kind: "Hackathon",
     iso: "2025-02-15",
     city: "Delhi",
