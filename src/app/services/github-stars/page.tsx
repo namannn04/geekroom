@@ -151,7 +151,7 @@ export default function GithubStarsPage() {
             ["150K+", "Developers in the community"],
             ["25K+", "Hackathon registrations"],
             ["500+", "Partner companies"],
-            ["20+", "Campus chapters"],
+            ["60+", "Countries builders join from"],
           ].map(([v, l], i) => (
             <div key={l} className={`border-b border-line p-5 md:p-8 ${i % 2 ? "border-l" : ""} ${i === 2 ? "lg:border-l" : ""}`}>
               <dd className="display text-[clamp(2rem,5vw,4rem)]">
