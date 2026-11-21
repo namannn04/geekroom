@@ -80,7 +80,7 @@ export default function Navbar() {
       >
         <Link href="/" aria-label="Geek Room home" className="flex items-center gap-2.5">
           <GeekMark className="h-6 w-auto" />
-          <span className="font-display text-[15px] font-bold tracking-tight uppercase">Geek Room</span>
+          <span className="font-display text-[15px] font-bold tracking-tight whitespace-nowrap uppercase">Geek Room</span>
         </Link>
 
         <ul className="hidden items-center gap-1 md:flex">
@@ -93,7 +93,7 @@ export default function Navbar() {
                     href={l.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative z-10 flex items-center gap-1 rounded-full px-4 py-2 font-mono text-xs tracking-[0.14em] text-muted uppercase transition-colors hover:text-paper"
+                    className="relative z-10 flex items-center gap-1 rounded-full px-3 py-2 font-mono text-xs tracking-[0.14em] lg:px-4 text-muted uppercase transition-colors hover:text-paper"
                   >
                     {l.label} <ArrowUpRight className="size-3" />
                   </a>
@@ -105,7 +105,7 @@ export default function Navbar() {
                 <Link
                   href={l.href}
                   aria-current={active ? "page" : undefined}
-                  className={`relative z-10 block rounded-full px-4 py-2 font-mono text-xs tracking-[0.14em] uppercase transition-colors ${
+                  className={`relative z-10 block rounded-full px-3 py-2 font-mono text-xs tracking-[0.14em] lg:px-4 uppercase transition-colors ${
                     active ? "text-ink" : "text-muted hover:text-paper"
                   }`}
                 >
@@ -127,7 +127,7 @@ export default function Navbar() {
           href={site.socials.linktree}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-primary hidden !py-2.5 md:inline-flex"
+          className="btn-primary hidden !py-2.5 lg:inline-flex"
         >
           Join community <ArrowUpRight className="size-3.5" />
         </a>

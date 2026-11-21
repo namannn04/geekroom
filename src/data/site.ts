@@ -1,4 +1,4 @@
-import { kindSlug } from "@/data/events";
+import { eventKinds, events, inKind, kindSlug } from "@/data/events";
 
 export const site = {
   name: "Geek Room",
@@ -14,38 +14,52 @@ export const navLinks: { label: string; href: string; external?: boolean }[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about-us" },
   { label: "Events", href: "/event" },
+  { label: "Services", href: "/services" },
   { label: "Spaces", href: "https://spaces.geekroom.co.in/", external: true },
   { label: "Contact", href: "/contact-us" },
 ];
 
-export const footerColumns = [
+export type FooterLink = { label: string; href: string; badge?: string; count?: number };
+
+/** Footer link groups. Event categories are listed with how many events each one has run. */
+export const footerColumns: { title: string; links: FooterLink[] }[] = [
   {
-    title: "Explore",
+    title: "Company",
     links: [
       { label: "Home", href: "/" },
       { label: "About us", href: "/about-us" },
-      { label: "Our Events", href: "/event" },
+      { label: "Our events", href: "/event" },
+      { label: "Brochure", href: "/brochure" },
       { label: "Contact", href: "/contact-us" },
     ],
   },
   {
-    title: "Events",
+    title: "Services",
+    links: [
+      { label: "All services", href: "/services" },
+      { label: "GitHub Star Campaigns", href: "/services/github-stars", badge: "New" },
+      { label: "Technical Writing", href: "/services/technical-writing", badge: "New" },
+      { label: "Exclusive Hackathons", href: "/contact-us" },
+      { label: "Hiring Challenges", href: "/contact-us" },
+      { label: "Speaker Sessions", href: "/contact-us" },
+    ],
+  },
+  {
+    title: "Event categories",
+    links: eventKinds.map((kind) => ({
+      label: kind === "Hiring" ? "Hiring challenges" : `${kind}s`,
+      href: `/event?category=${kindSlug(kind)}`,
+      count: events.filter((e) => inKind(e, kind)).length,
+    })),
+  },
+  {
+    title: "Flagship events",
     links: [
       { label: "HackBLR", href: "/event/hackblr1" },
       { label: "Hack Geek Room", href: "/event/hackgr" },
       { label: "Code Cubicle", href: "/event/cc6.0" },
       { label: "AI Race Month", href: "/event/grandprix" },
       { label: "Code Kshetra", href: "/event/ck2.0" },
-    ],
-  },
-  {
-    title: "Categories",
-    links: [
-      { label: "Hackathons", href: `/event?category=${kindSlug("Hackathon")}` },
-      { label: "Global Hackathons", href: `/event?category=${kindSlug("Global Hackathon")}` },
-      { label: "Vibe-a-thons", href: `/event?category=${kindSlug("Vibe-a-thon")}` },
-      { label: "Meetups", href: `/event?category=${kindSlug("Meetup")}` },
-      { label: "Hiring", href: `/event?category=${kindSlug("Hiring")}` },
     ],
   },
 ];
