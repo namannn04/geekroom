@@ -3,7 +3,6 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import SectionHead from "@/components/ui/SectionHead";
 import Reveal from "@/components/ui/Reveal";
-import CommunityPartners from "@/components/ui/CommunityPartners";
 import ServiceCta from "@/components/services/ServiceCta";
 import PartnerMark from "@/components/partners/PartnerMark";
 import PartnerDirectory from "@/components/partners/PartnerDirectory";
@@ -159,8 +158,6 @@ export default function PartnersPage() {
           <PartnerTestimonials />
         </Reveal>
       </section>
-
-      <CommunityPartners className="pb-24 md:pb-32" />
 
       <ServiceCta
         title={

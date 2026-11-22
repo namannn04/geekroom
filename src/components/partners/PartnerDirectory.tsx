@@ -111,6 +111,7 @@ export default function PartnerDirectory() {
                       {p.link && (
                         <Link
                           href={p.link.href}
+                          {...(p.link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                           className="mt-4 inline-flex w-fit items-center gap-1 rounded-full border border-line-strong px-3 py-1 font-mono text-[11px] text-muted transition-colors hover:border-orange hover:text-orange"
                         >
                           {p.link.label} <ArrowUpRight className="size-3" />
