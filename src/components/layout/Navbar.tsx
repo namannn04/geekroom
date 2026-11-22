@@ -93,7 +93,7 @@ export default function Navbar() {
                     href={l.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative z-10 flex items-center gap-1 rounded-full px-3 py-2 font-mono text-xs tracking-[0.14em] lg:px-4 text-muted uppercase transition-colors hover:text-paper"
+                    className="relative z-10 flex items-center gap-1 rounded-full px-2.5 py-2 font-mono text-xs tracking-[0.1em] lg:px-4 lg:tracking-[0.14em] text-muted uppercase transition-colors hover:text-paper"
                   >
                     {l.label} <ArrowUpRight className="size-3" />
                   </a>
@@ -105,7 +105,7 @@ export default function Navbar() {
                 <Link
                   href={l.href}
                   aria-current={active ? "page" : undefined}
-                  className={`relative z-10 block rounded-full px-3 py-2 font-mono text-xs tracking-[0.14em] lg:px-4 uppercase transition-colors ${
+                  className={`relative z-10 block rounded-full px-2.5 py-2 font-mono text-xs tracking-[0.1em] lg:px-4 lg:tracking-[0.14em] uppercase transition-colors ${
                     active ? "text-ink" : "text-muted hover:text-paper"
                   }`}
                 >

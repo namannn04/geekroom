@@ -15,6 +15,7 @@ export const navLinks: { label: string; href: string; external?: boolean }[] = [
   { label: "About", href: "/about-us" },
   { label: "Events", href: "/event" },
   { label: "Services", href: "/services" },
+  { label: "Partners", href: "/partners" },
   { label: "Spaces", href: "https://spaces.geekroom.co.in/", external: true },
   { label: "Contact", href: "/contact-us" },
 ];
@@ -29,6 +30,7 @@ export const footerColumns: { title: string; links: FooterLink[] }[] = [
       { label: "Home", href: "/" },
       { label: "About us", href: "/about-us" },
       { label: "Our events", href: "/event" },
+      { label: "Partners", href: "/partners" },
       { label: "Brochure", href: "/brochure" },
       { label: "Contact", href: "/contact-us" },
     ],
