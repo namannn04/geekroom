@@ -17,13 +17,12 @@ export const metadata: Metadata = {
     "The companies, platforms, universities and communities behind Geek Room's hackathons and meetups, from AI labs and cloud platforms to fintech and hiring partners.",
 };
 
-const logoOf = (name: string) => directory.find((p) => p.name === name)?.logo;
+const partnerOf = (name: string) => directory.find((p) => p.name === name);
 
-// Two marquee rows: logos first so the top row reads as a logo wall, wordmarks fill the second
-const withLogo = directory.filter((p) => p.logo);
-const withoutLogo = directory.filter((p) => !p.logo);
-const rowA = [...withLogo, ...withoutLogo.slice(0, 6)];
-const rowB = withoutLogo.slice(6);
+// Two balanced marquee rows, full logos leading each so the first screen reads as a logo wall
+const ordered = [...directory.filter((p) => p.logo && !p.mark), ...directory.filter((p) => !p.logo || p.mark)];
+const rowA = ordered.filter((_, i) => i % 2 === 0);
+const rowB = ordered.filter((_, i) => i % 2 === 1);
 
 function Marquee({ items, reverse = false }: { items: typeof directory; reverse?: boolean }) {
   return (
@@ -31,7 +30,7 @@ function Marquee({ items, reverse = false }: { items: typeof directory; reverse?
       <ul className="testimonial-track flex w-max items-center" style={{ animationDuration: "70s", animationDirection: reverse ? "reverse" : "normal" }}>
         {[...items, ...items, ...items, ...items].map((p, i) => (
           <li key={`${p.name}-${i}`} aria-hidden={i >= items.length || undefined} className="grid h-20 shrink-0 place-items-center px-8 opacity-80 transition-opacity hover:opacity-100 md:px-12">
-            <PartnerMark name={p.name} logo={p.logo} size="lg" />
+            <PartnerMark name={p.name} logo={p.logo} mark={p.mark} invert={p.invert} size="lg" />
           </li>
         ))}
       </ul>
@@ -105,7 +104,7 @@ export default function PartnersPage() {
                 <div className="flex flex-wrap items-center gap-6">
                   {f.partners.map((name) => (
                     <span key={name} className={i === 0 ? "rounded-xl bg-ink px-4 py-3" : ""}>
-                      <PartnerMark name={name} logo={logoOf(name)} />
+                      <PartnerMark name={name} logo={partnerOf(name)?.logo} mark={partnerOf(name)?.mark} invert={partnerOf(name)?.invert} />
                     </span>
                   ))}
                 </div>

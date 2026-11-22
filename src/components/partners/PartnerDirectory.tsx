@@ -104,10 +104,10 @@ export default function PartnerDirectory() {
                       className="group flex flex-col rounded-[1.25rem] border border-line bg-ink-2 p-5 transition-colors hover:border-line-strong"
                     >
                       <div className="grid h-16 place-items-start content-center overflow-hidden">
-                        <PartnerMark name={p.name} logo={p.logo} />
+                        <PartnerMark name={p.name} logo={p.logo} mark={p.mark} invert={p.invert} />
                       </div>
-                      {p.logo && <p className="mt-3 font-display text-lg leading-tight font-bold [font-stretch:90%]">{p.name}</p>}
-                      <p className={`${p.logo ? "mt-1" : "mt-3"} flex-1 text-sm leading-relaxed text-muted`}>{p.role}</p>
+                      {p.logo && !p.mark && <p className="mt-3 font-display text-lg leading-tight font-bold [font-stretch:90%]">{p.name}</p>}
+                      <p className={`${p.logo && !p.mark ? "mt-1" : "mt-3"} flex-1 text-sm leading-relaxed text-muted`}>{p.role}</p>
                       {p.link && (
                         <Link
                           href={p.link.href}
