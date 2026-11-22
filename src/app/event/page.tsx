@@ -3,11 +3,13 @@ import { Suspense } from "react";
 import SectionHead from "@/components/ui/SectionHead";
 // import JoinCta from "@/components/ui/JoinCta";
 import EventIndex, { EventIndexFromUrl } from "@/components/events/EventIndex";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Events",
   description: "Hackathons, global hackathons, vibe-a-thons, meetups and hiring events organised by Geek Room.",
-};
+  path: "/event",
+});
 
 export default function EventsPage() {
   return (

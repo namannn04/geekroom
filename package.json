@@ -22,6 +22,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "resend": "^6.30.0",
+    "sharp": "^0.35.4",
     "three": "^0.186.0"
   },
   "devDependencies": {

@@ -13,12 +13,13 @@ import HackathonSimulator from "@/components/services/hackathon/HackathonSimulat
 import { getEvent } from "@/data/events";
 import { contactHref } from "@/data/services";
 import { stat } from "@/data/stats";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Exclusive Hackathons",
-  description:
-    `Host an exclusive hackathon with Geek Room. We design the problem statements around your product, reach ${stat.builders} builders, shortlist, mentor, judge and run the finale at your office.`,
-};
+  description: `Host an exclusive hackathon with Geek Room. We design the problem statements around your product, reach ${stat.builders} builders, shortlist, mentor, judge and run the finale at your office.`,
+  path: "/services/hackathons",
+});
 
 const cases = ["ck2.0", "cc6.0", "hackblr1", "cc5.0"].map((slug) => getEvent(slug)!).filter((e) => e.funnel);
 

@@ -10,12 +10,13 @@ import LiveSession from "@/components/services/speaker/LiveSession";
 import { LinkedinIcon } from "@/components/ui/Icons";
 import { speakers } from "@/data/site";
 import { contactHref } from "@/data/services";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Speaker Sessions",
-  description:
-    "Put your engineers on stage at Geek Room meetups, hackathons and online sessions. Talks, hands-on workshops and livestreams that get your tech into builders' hands.",
-};
+  description: "Put your engineers on stage at Geek Room meetups, hackathons and online sessions. Talks, hands-on workshops and livestreams that get your tech into builders' hands.",
+  path: "/services/speaker-sessions",
+});
 
 const formats = [
   { icon: Presentation, title: "Stage talks", text: "A slot at our meetups and hackathon openings, in front of a room that came to learn.", time: "20–30 min" },

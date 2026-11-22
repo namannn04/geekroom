@@ -7,12 +7,13 @@ import SectionHead from "@/components/ui/SectionHead";
 import Reveal from "@/components/ui/Reveal";
 import { contactHref, serviceList, type Service } from "@/data/services";
 import { stat } from "@/data/stats";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Services",
-  description:
-    `Work with Geek Room: exclusive hackathons, hiring challenges, speaker sessions, GitHub star campaigns and technical writing, all aimed at a community of ${stat.builders} builders.`,
-};
+  description: `Work with Geek Room: exclusive hackathons, hiring challenges, speaker sessions, GitHub star campaigns and technical writing, all aimed at a community of ${stat.builders} builders.`,
+  path: "/services",
+});
 
 const icons: Record<Service["teaser"], React.ReactNode> = {
   hackathon: <GeekMark className="h-6 w-auto" />,

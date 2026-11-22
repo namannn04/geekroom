@@ -9,6 +9,7 @@ import CommunityPartners from "@/components/ui/CommunityPartners";
 import Countdown from "@/components/events/Countdown";
 import Funnel from "@/components/ui/Funnel";
 import { events, eventsByDate, getEvent, kindLabel } from "@/data/events";
+import { pageMetadata } from "@/lib/metadata";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -19,7 +20,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const event = getEvent((await params).slug);
   if (!event) return {};
-  return { title: event.title, description: event.description[0] };
+  return pageMetadata({ title: event.title, description: event.description[0], path: `/event/${event.slug}` });
 }
 
 export default async function EventPage({ params }: Props) {
