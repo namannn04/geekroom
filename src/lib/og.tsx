@@ -170,7 +170,7 @@ export async function renderOg({ eyebrow, title, subtitle, live, image, logos }:
 
           <div style={{ display: "flex", justifyContent: "space-between", fontFamily: mono, fontSize: 22 * S, color: MUTED }}>
             <div style={{ display: "flex" }}>geekroom.co.in</div>
-            <div style={{ display: "flex" }}>{cover ? `${stat.builders} builders` : `${stat.builders} builders · ${stat.events} events · ${stat.companies} companies`}</div>
+            <div style={{ display: "flex" }}>{cover ? `${stat.builders} builders` : `${stat.builders} builders · ${stat.events} events · ${stat.partners} partners`}</div>
           </div>
         </div>
 

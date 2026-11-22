@@ -6,8 +6,8 @@ export const contentType = "image/png";
 
 export default function Image() {
   return renderOg({
-    eyebrow: "Services",
-    title: "Grow with builders",
-    subtitle: "Exclusive hackathons, hiring challenges, speaker sessions, GitHub star campaigns and technical writing.",
+    eyebrow: "Developer Growth Package",
+    title: "Grow with the smarter community",
+    subtitle: "Ten services, one package: content, community, hackathons and real developer feedback.",
   });
 }

@@ -10,7 +10,7 @@ import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = pageMetadata({
   title: "About Us",
-  description: `How Geek Room grew from a WhatsApp group into a global builder community of ${stat.builders} developers, founders and ${stat.companies} partner companies.`,
+  description: `How Geek Room grew from a WhatsApp group into a global builder community of ${stat.builders} developers and founders, backed by ${stat.partners} partner companies.`,
   path: "/about-us",
 });
 

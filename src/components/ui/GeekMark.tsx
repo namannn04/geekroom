@@ -18,7 +18,7 @@ export default function GeekMark({ className = "" }: { className?: string }) {
       </g>
       <path data-part="slash" d={toPath(SLASH, true)} fill={MARK_COLORS.orange} />
       {EYES.map(({ c, r }) => (
-        <circle key={c[0]} data-part="eye" cx={c[0]} cy={c[1]} r={r} fill={MARK_COLORS.white} />
+        <circle key={c[0]} data-part="eye" cx={c[0]} cy={c[1]} r={r} fill={`var(--mark-eye, ${MARK_COLORS.white})`} />
       ))}
     </svg>
   );

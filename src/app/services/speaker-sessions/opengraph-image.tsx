@@ -1,11 +1,11 @@
 import { renderOg } from "@/lib/og";
-import { serviceList } from "@/data/services";
+import { getService } from "@/data/services";
 
 export const alt = "Geek Room service: speaker sessions";
 export const size = { width: 2400, height: 1260 };
 export const contentType = "image/png";
 
-const service = serviceList.find((s) => s.slug === "speaker-sessions")!;
+const service = getService("speaker-sessions");
 
 export default function Image() {
   return renderOg({

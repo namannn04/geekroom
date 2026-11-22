@@ -26,9 +26,10 @@ import ServiceCta from "@/components/services/ServiceCta";
 import { contactHref } from "@/data/services";
 import { stat } from "@/data/stats";
 import { pageMetadata } from "@/lib/metadata";
+import PackageStrip from "@/components/services/PackageStrip";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Technical Writing",
+  title: "Technical Blogs",
   description: "Technical blog posts, tutorials and launch content written by experienced developers. Every code sample is run before it ships and every draft is reviewed by an engineer.",
   path: "/services/technical-writing",
 });
@@ -91,7 +92,7 @@ export default function TechnicalWritingPage() {
           </Link>
           <div className="flex items-center gap-3 text-paper">
             <PencilIcon size={24} />
-            <p className="label">Service 05 · Content by engineers</p>
+            <p className="label">Service 04 · Technical blogs</p>
           </div>
           <h1 className="display mt-8 max-w-[15ch] text-[clamp(3rem,9vw,7.5rem)]">
             Written by developers who <em>ship</em>.
@@ -103,7 +104,7 @@ export default function TechnicalWritingPage() {
               reviewed by an engineer.
             </p>
             <div className="flex flex-wrap gap-3">
-              <Link href={contactHref("Technical writing")} className="btn-primary">
+              <Link href={contactHref("Technical blogs")} className="btn-primary">
                 Commission a post <ArrowUpRight className="size-4" />
               </Link>
               <a href="#process" className="btn-ghost">
@@ -137,10 +138,40 @@ export default function TechnicalWritingPage() {
         </dl>
       </section>
 
+      {/* Published work */}
+      <section className="shell pb-24 md:pb-32">
+        <SectionHead
+          index="01"
+          title={
+            <>
+              Published where developers <em>read</em>
+            </>
+          }
+          intro="Placed in publications like Towards AI and on Medium, written with partner teams and built to rank."
+        />
+        <div className="mt-14 grid gap-4 md:grid-cols-2">
+          {[
+            { partner: "With Qdrant", pub: "Towards AI", title: "How Qdrant Reduced RAG Token Costs by 67% with Native ColBERT Reranking", domain: "pub.towardsai.net" },
+            { partner: "Partner article", pub: "Medium", title: "The Developer's Guide to Breaking Free from OpenAI API Lock-in", domain: "medium.com/openxai" },
+          ].map((a, i) => (
+            <Reveal key={a.title} delay={i * 0.08} className="h-full">
+              <article className="flex h-full flex-col justify-between rounded-[1.75rem] bg-paper p-7 text-ink md:p-9">
+                <div className="flex items-baseline justify-between gap-4 font-mono text-[11px] tracking-[0.08em] uppercase">
+                  <span className="text-orange-deep">{a.partner}</span>
+                  <span className="text-ink/50">{a.pub}</span>
+                </div>
+                <p className="mt-8 font-serif text-[clamp(1.6rem,2.6vw,2.2rem)] leading-tight">{a.title}</p>
+                <p className="mt-10 border-t border-ink/10 pt-4 text-sm text-ink/60">{a.domain}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
       {/* Formats */}
       <section className="shell py-24 md:py-32">
         <SectionHead
-          index="01"
+          index="02"
           title={
             <>
               What we <em>write</em>
@@ -164,7 +195,7 @@ export default function TechnicalWritingPage() {
       {/* Process */}
       <section id="process" className="shell scroll-mt-28 pb-24 md:pb-32">
         <SectionHead
-          index="02"
+          index="03"
           title={
             <>
               From brief to <em>published</em>
@@ -197,7 +228,7 @@ export default function TechnicalWritingPage() {
       <section className="shell pb-24 md:pb-32">
         <SectionHead
           size="sm"
-          index="03"
+          index="04"
           title={
             <>
               Tested, then <em>reviewed</em>
@@ -227,7 +258,7 @@ export default function TechnicalWritingPage() {
           <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
             <div>
               <span className="inline-flex items-center gap-2 font-mono text-xs text-orange">
-                <GlobeIcon size={14} /> (04) Distribution included
+                <GlobeIcon size={14} /> (05) Distribution included
               </span>
               <h2 className="display mt-6 text-[clamp(2.2rem,5.5vw,4.5rem)]">
                 Published is not <em>done</em>.
@@ -256,11 +287,13 @@ export default function TechnicalWritingPage() {
         </div>
       </section>
 
+      <PackageStrip current="technical-writing" />
+
       {/* FAQ */}
       <section className="shell grid gap-12 pb-24 md:pb-32 lg:grid-cols-[0.8fr_1.2fr]">
         <SectionHead
           size="sm"
-          index="05"
+          index="06"
           title={
             <>
               Good <em>questions</em>
@@ -289,7 +322,7 @@ export default function TechnicalWritingPage() {
           </>
         }
         body="Send us the topic, the audience and a link to your product. We'll come back with an outline and a timeline within a few days."
-        href={contactHref("Technical writing")}
+        href={contactHref("Technical blogs")}
         secondary={{ href: "/services/github-stars", label: "See GitHub campaigns" }}
       />
     </>

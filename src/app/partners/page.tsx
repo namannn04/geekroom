@@ -7,7 +7,7 @@ import ServiceCta from "@/components/services/ServiceCta";
 import PartnerMark from "@/components/partners/PartnerMark";
 import PartnerDirectory from "@/components/partners/PartnerDirectory";
 import PartnerTestimonials from "@/components/partners/PartnerTestimonials";
-import { directory, featuredPartnerships, partnerCategories } from "@/data/partners";
+import { directory, featuredPartnerships } from "@/data/partners";
 import { contactHref } from "@/data/services";
 import { stat } from "@/data/stats";
 import { pageMetadata } from "@/lib/metadata";
@@ -56,7 +56,7 @@ export default function PartnersPage() {
             intro="AI labs, cloud platforms, fintech leaders, universities and communities. Some sponsor, some co-host, some bring their tech, a venue or the prizes. All of them help builders ship."
           />
         </div>
-        <div className="mt-16 space-y-2 border-y border-line py-6 md:mt-20">
+        <div className="theme-dark mt-16 space-y-2 border-y border-line bg-ink py-6 md:mt-20">
           <Marquee items={rowA} />
           <Marquee items={rowB} reverse />
         </div>
@@ -66,9 +66,9 @@ export default function PartnersPage() {
       <section className="shell mt-16 md:mt-20">
         <dl className="grid grid-cols-2 border-t border-line lg:grid-cols-4">
           {[
-            [stat.companies, "Companies worked with"],
+            [stat.partners, "Partner companies"],
             [stat.events, "Events run"],
-            [`${partnerCategories.length}`, "Partner categories"],
+            [stat.companies, "Companies our builders work at"],
             [stat.builders, "Builders reached"],
           ].map(([v, l], i) => (
             <div key={l} className={`border-b border-line p-5 md:p-8 ${i % 2 ? "border-l" : ""} ${i === 2 ? "lg:border-l" : ""}`}>
@@ -93,7 +93,7 @@ export default function PartnersPage() {
           }
           intro="A few of the events our partners made possible, with the numbers from each event page."
         />
-        <div className="mt-14 grid gap-4 md:grid-cols-2">
+        <div className="theme-dark mt-14 grid gap-4 md:grid-cols-2">
           {featuredPartnerships.map((f, i) => (
             <Reveal key={f.event} delay={(i % 2) * 0.08} className="h-full">
               <Link
@@ -139,7 +139,7 @@ export default function PartnersPage() {
               Every <em>partner</em>, by category
             </>
           }
-          intro={`Companies and organizations from our events, Luma listings and public acknowledgements. A selection of the ${stat.companies} we've worked with.`}
+          intro={`Companies and organizations from our events, Luma listings and public acknowledgements. A selection of our ${stat.partners} partner companies.`}
         />
         <div className="mt-14">
           <PartnerDirectory />
@@ -167,8 +167,8 @@ export default function PartnersPage() {
             Put your logo <span className="[font-stretch:150%] font-light">on the wall.</span>
           </>
         }
-        body="Sponsor a hackathon, bring your tech to a track, host a finale or put prizes on the table. Tell us what you have in mind."
-        href={contactHref("Partnership")}
+        body="Run a content series, launch on GitHub and Reddit, hear from real developers or put your product at the center of a hackathon. Tell us what you have in mind."
+        href={contactHref("Developer growth package")}
         secondary={{ href: "/services", label: "See what we offer" }}
       />
     </>

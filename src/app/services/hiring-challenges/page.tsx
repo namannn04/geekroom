@@ -47,7 +47,7 @@ export default function HiringPage() {
     <>
       <ServiceHero
         icon={<Briefcase className="size-6" />}
-        label="Service 02 · Skills-based hiring"
+        label="Also from Geek Room · Skills-based hiring"
         title={
           <>
             Hire what they <em>build</em>.

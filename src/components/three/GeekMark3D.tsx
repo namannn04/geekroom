@@ -10,6 +10,7 @@ import {
   type MutableRefObject,
 } from "react";
 import * as THREE from "three";
+import { useTheme } from "@/components/theme/ThemeProvider";
 import { achievements } from "@/data/site";
 import {
   CENTER,
@@ -91,8 +92,8 @@ function Slash({ material }: { material: THREE.Material }) {
 
 /* ---------- materials ---------- */
 
-function useMaterials() {
-  return useMemo(
+function useMaterials(light: boolean) {
+  const m = useMemo(
     () => ({
       teal: new THREE.MeshPhysicalMaterial({
         color: MARK_COLORS.teal,
@@ -134,14 +135,22 @@ function useMaterials() {
     }),
     [],
   );
+  // Eyes and orbit rings use the theme's foreground so they stay visible on light backgrounds
+  useEffect(() => {
+    const fg = light ? "#141613" : "#eeece6";
+    m.paper.color.set(light ? "#141613" : MARK_COLORS.white);
+    m.ring.color.set(fg);
+    m.ringFaint.color.set(fg);
+  }, [light, m]);
+  return m;
 }
 
 /* ---------- the mark ---------- */
 
 type Progress = MutableRefObject<number>;
 
-function Mark({ progress, reduced }: { progress: Progress; reduced: boolean }) {
-  const m = useMaterials();
+function Mark({ progress, reduced, light }: { progress: Progress; reduced: boolean; light: boolean }) {
+  const m = useMaterials(light);
   const root = useRef<THREE.Group>(null);
   const left = useRef<THREE.Group>(null);
   const right = useRef<THREE.Group>(null);
@@ -224,8 +233,8 @@ const ORBIT_R = 2.85;
 
 type Labels = MutableRefObject<(HTMLDivElement | null)[]>;
 
-function Orbit({ reduced, labels }: { reduced: boolean; labels: Labels }) {
-  const m = useMaterials();
+function Orbit({ reduced, labels, light }: { reduced: boolean; labels: Labels; light: boolean }) {
+  const m = useMaterials(light);
   const spin = useRef<THREE.Group>(null);
   const nodes = useRef<(THREE.Group | null)[]>([]);
   const world = useMemo(() => new THREE.Vector3(), []);
@@ -299,6 +308,7 @@ export default function GeekMark3D({
   const [reduced, setReduced] = useState(false);
   const [compact, setCompact] = useState(false);
   const labels = useRef<(HTMLDivElement | null)[]>([]);
+  const light = useTheme().theme === "light";
 
   useEffect(() => {
     setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -368,8 +378,8 @@ export default function GeekMark3D({
               scale={4}
             />
           </Environment>
-          <Mark progress={progress} reduced={reduced} />
-          <Orbit reduced={reduced} labels={labels} />
+          <Mark progress={progress} reduced={reduced} light={light} />
+          <Orbit reduced={reduced} labels={labels} light={light} />
         </Canvas>
 
         {/* Achievement labels live in plain DOM above the canvas, positioned every frame */}

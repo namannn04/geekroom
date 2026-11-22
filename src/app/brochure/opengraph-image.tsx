@@ -7,8 +7,8 @@ export const contentType = "image/png";
 
 export default function Image() {
   return renderOg({
-    eyebrow: "Partner brochure",
-    title: "Partner with Geek Room",
-    subtitle: `Reach ${stat.builders} developers through hackathons, meetups, hiring challenges and brand partnerships.`,
+    eyebrow: "Partnership proposal · 2027–28",
+    title: "Grow with the smarter community",
+    subtitle: `The Developer Growth Package: ten services across content, community, hackathons and developer feedback, for ${stat.builders} builders.`,
   });
 }

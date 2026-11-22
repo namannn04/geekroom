@@ -31,7 +31,7 @@ export default function ContactPage() {
                 Let&apos;s <em>talk</em>
               </>
             }
-            intro="Partnering on a hackathon, bringing a speaker, or hiring from the community? Drop us a line."
+            intro="Growing with developers, running a hackathon, commissioning content or just need help? Drop us a line."
           />
 
           <div className="mt-10 grid gap-3 sm:grid-cols-2">

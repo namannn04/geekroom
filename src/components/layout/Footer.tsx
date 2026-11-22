@@ -79,7 +79,7 @@ export default function Footer() {
         </div>
         <div className="lg:justify-self-end">
           <p className="max-w-[26rem] leading-relaxed text-muted">
-            Hackathons, hiring challenges, developer marketing and technical content for teams that want to reach {stat.builders} builders.
+            Content, community, hackathons and developer feedback for teams that want to reach {stat.builders} builders.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <a href={`mailto:${site.email}?subject=Partnering%20with%20Geek%20Room`} className="btn-primary">
@@ -100,7 +100,7 @@ export default function Footer() {
             <span className="font-display text-lg font-bold uppercase">Geek Room</span>
           </Link>
           <p className="mt-5 max-w-[320px] text-sm leading-relaxed text-muted">
-            A global builder community: hackathons, vibe-a-thons, meetups and hiring challenges for {stat.builders} developers,
+            The developer growth partner and builder community: content, hackathons and campaigns for {stat.builders} developers,
             founders and companies.
           </p>
           <a

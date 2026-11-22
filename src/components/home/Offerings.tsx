@@ -9,22 +9,20 @@ import { services } from "@/data/site";
 import { EYES, LEFT, RIGHT, SLASH, toPath, VIEWBOX } from "@/lib/geekmark";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 import { EASE_IN_OUT, EASE_OUT, reveal } from "@/lib/motion";
-import { contactHref } from "@/data/services";
-import { HackathonPreview, HiringPreview, SpeakerPreview } from "@/components/home/OfferPreviews";
+import { CommunityPreview, ContentPreview, HackathonPreview } from "@/components/home/OfferPreviews";
 
 /* Live mini demo and service page for each card, in the same order as `services` */
-const previews = [<HiringPreview key="h" />, <HackathonPreview key="k" />, <SpeakerPreview key="s" />];
-const pages = ["/services/hiring-challenges", "/services/hackathons", "/services/speaker-sessions"];
+const previews = [<ContentPreview key="c" />, <HackathonPreview key="k" />, <CommunityPreview key="m" />];
+const pages = ["/services#package", "/services/hackathons", "/services/developer-marketing"];
 
 gsap.registerPlugin(DrawSVGPlugin);
 
 /* One line-drawn glyph per offering; every stroke is drawn on scroll */
 const glyphs = [
-  // Hiring: crosshair on a candidate
-  <svg key="0" viewBox="0 0 64 64" className="size-16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-    <circle data-draw cx="32" cy="32" r="26" />
-    <circle data-draw cx="32" cy="32" r="14" />
-    <path data-draw d="M32 2v14M32 48v14M2 32h14M48 32h14" />
+  // Content: a play button inside a frame
+  <svg key="0" viewBox="0 0 64 64" className="size-16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" aria-hidden>
+    <rect data-draw x="4" y="12" width="56" height="40" rx="8" />
+    <path data-draw d="M27 23v18l15-9z" />
   </svg>,
   // Hackathons: the Geek Room mark itself, traced from the logo and drawn as a line glyph
   <svg
@@ -45,10 +43,14 @@ const glyphs = [
       <circle key={c[0]} data-draw cx={c[0]} cy={c[1]} r={r - 6} strokeWidth="10" />
     ))}
   </svg>,
-  // Speakers: rising signal
-  <svg key="2" viewBox="0 0 64 64" className="size-16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden>
-    <path data-draw d="M4 44c8 0 8-24 16-24s8 32 16 32 8-40 16-40 6 20 8 20" />
-    <path data-draw d="M4 58h56" />
+  // Community: builders connected in a network
+  <svg key="2" viewBox="0 0 64 64" className="size-16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+    <path data-draw d="M14 18L32 32M50 16L32 32M32 32L20 50M32 32L48 48" />
+    <circle data-draw cx="14" cy="18" r="6" />
+    <circle data-draw cx="50" cy="16" r="5" />
+    <circle data-draw cx="32" cy="32" r="7" />
+    <circle data-draw cx="20" cy="50" r="5" />
+    <circle data-draw cx="48" cy="48" r="6" />
   </svg>,
 ];
 
@@ -92,10 +94,10 @@ export default function Offerings() {
         index="02"
         title={
           <>
-            Work with us, <em>get seen</em>
+            Grow with <em>developers</em>
           </>
         }
-        intro="Put your brand in front of the world's sharpest builders, and meet your tech and hiring needs while you're at it."
+        intro="One partnership, every channel. Content builds awareness, community builds trust, and hackathons turn both into real usage."
       />
 
       <div className="mt-14 grid gap-4 md:grid-cols-12 md:grid-rows-2">
@@ -129,7 +131,7 @@ export default function Offerings() {
                 {s.body}
               </p>
               <span data-copy className="mt-6 inline-flex items-center gap-2 font-mono text-xs tracking-[0.06em] text-orange uppercase">
-                Explore the service
+                Explore
                 <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </span>
             </div>
@@ -139,10 +141,10 @@ export default function Offerings() {
 
       <Link
         data-cta-offer
-        href={contactHref("Partnership")}
+        href="/services"
         className="group mt-4 flex items-center justify-between gap-6 rounded-[1.75rem] bg-orange p-7 text-ink md:p-10"
       >
-        <p className="display text-[clamp(1.6rem,3.6vw,3rem)]">Got a different idea? Pitch it to us.</p>
+        <p className="display text-[clamp(1.6rem,3.6vw,3rem)]">Explore the Developer Growth Package</p>
         <span className="grid size-14 shrink-0 place-items-center rounded-full bg-ink text-paper transition-transform duration-300 group-hover:-rotate-45">
           <ArrowUpRight className="size-5" />
         </span>

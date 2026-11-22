@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/motion/SmoothScroll";
 import PageTransition from "@/components/motion/PageTransition";
 import ChinkuDock from "@/components/layout/ChinkuDock";
+import ThemeProvider, { themeScript } from "@/components/theme/ThemeProvider";
 import "./globals.css";
 import { stat } from "@/data/stats";
 
@@ -33,14 +34,14 @@ export const metadata: Metadata = {
     template: "%s | Geek Room",
   },
   description:
-    `Geek Room is a global builder community of ${stat.builders} developers, founders and companies, running hackathons, vibe-a-thons, meetups and hiring challenges online and in person.`,
+    `Geek Room is the developer growth partner behind a community of ${stat.builders} builders: content, community, hackathons and real developer feedback that put products in front of developers.`,
   openGraph: {
     type: "website",
     siteName: "Geek Room",
     url: "/",
     title: "Geek Room",
     description:
-      `Geek Room is a global builder community of ${stat.builders} developers, founders and companies, running hackathons, vibe-a-thons, meetups and hiring challenges online and in person.`,
+      `Geek Room is the developer growth partner behind a community of ${stat.builders} builders: content, community, hackathons and real developer feedback that put products in front of developers.`,
   },
   twitter: {
     card: "summary_large_image",
@@ -54,8 +55,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
+      <head>
+        {/* Applies the saved theme before first paint so there's no flash */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className={`${anybody.variable} ${schibsted.variable} ${jetbrains.variable}`}>
+        <ThemeProvider>
         <Link href="#main-content" className="skip-link">Skip to content</Link>
         <SmoothScroll>
           <PageTransition>
@@ -66,6 +72,7 @@ export default function RootLayout({
           {/* Outside the page transition so its fixed position isn't trapped by transforms */}
           <ChinkuDock />
         </SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );

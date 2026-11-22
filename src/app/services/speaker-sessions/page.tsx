@@ -44,7 +44,7 @@ export default function SpeakerSessionsPage() {
     <>
       <ServiceHero
         icon={<Mic className="size-6" />}
-        label="Service 03 · Developer relations"
+        label="Also from Geek Room · Developer relations"
         title={
           <>
             Your engineers, <em>on stage</em>.

@@ -7,7 +7,7 @@ export default function CommunityPartners({ className = "" }: { className?: stri
   return (
     <section className={`shell ${className}`}>
       <p className="label">Community partners</p>
-      <ul className="mt-3 flex flex-wrap border-t border-line">
+      <ul className="theme-dark mt-3 flex flex-wrap rounded-[1.25rem] border border-line bg-ink px-3 md:px-5">
         {communityPartners.map((p) => (
           <li key={p.name} className="border-b border-line">
             {(() => {

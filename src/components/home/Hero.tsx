@@ -102,16 +102,16 @@ export default function Hero() {
           </h1>
 
           <p data-fadeup className="mt-8 max-w-[31rem] text-lg leading-relaxed text-muted">
-            Geek Room is a global community of {stat.builders} builders, where developers, founders and {stat.companies} partner companies
-            hack, meet and build in public, online and in person.
+            Geek Room is the developer growth partner behind a community of {stat.builders} builders. We put products in front of
+            developers through content, community, hackathons and real developer feedback.
           </p>
 
           <div data-fadeup className="mt-9 flex flex-wrap gap-3">
-            <Link href="/event" className="btn-primary cursor-pointer">
-              See the events <ArrowDownRight className="size-4" />
+            <Link href="/services" className="btn-primary cursor-pointer">
+              Grow with us <ArrowUpRight className="size-4" />
             </Link>
-            <Link href="/contact-us" className="btn-ghost cursor-pointer">
-              Partner with us <ArrowUpRight className="size-4" />
+            <Link href="/event" className="btn-ghost cursor-pointer">
+              See the events <ArrowDownRight className="size-4" />
             </Link>
           </div>
         </div>

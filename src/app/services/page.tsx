@@ -1,200 +1,213 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, Briefcase, Mic } from "lucide-react";
-import { MarkGithubIcon, PencilIcon, StarFillIcon, StarIcon, TriangleDownIcon } from "@primer/octicons-react";
-import GeekMark from "@/components/ui/GeekMark";
+import { ArrowUpRight } from "lucide-react";
 import SectionHead from "@/components/ui/SectionHead";
 import Reveal from "@/components/ui/Reveal";
-import { contactHref, serviceList, type Service } from "@/data/services";
+import ServiceIcon from "@/components/services/ServiceIcon";
+import ServiceCta from "@/components/services/ServiceCta";
+import { contactHref, moreFormats, serviceGroups, serviceList } from "@/data/services";
 import { stat } from "@/data/stats";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = pageMetadata({
   title: "Services",
-  description: `Work with Geek Room: exclusive hackathons, hiring challenges, speaker sessions, GitHub star campaigns and technical writing, all aimed at a community of ${stat.builders} builders.`,
+  description: `The Developer Growth Package: one partnership that puts your product in front of ${stat.builders} developers, founders and builders through content, community, hackathons and real developer feedback.`,
   path: "/services",
 });
 
-const icons: Record<Service["teaser"], React.ReactNode> = {
-  hackathon: <GeekMark className="h-6 w-auto" />,
-  hiring: <Briefcase className="size-6" />,
-  speaker: <Mic className="size-6" />,
-  stars: <MarkGithubIcon size={26} />,
-  writing: <PencilIcon size={24} />,
-};
+const numbers = [
+  [stat.builders, "Builders in the community"],
+  [stat.registrations, "Hackathon registrations"],
+  [stat.events, "Events run"],
+  [stat.speakers, "Speakers and mentors"],
+];
 
-// Bento layout: three event services across the top, the two newer services wider below
-const spans = ["lg:col-span-2", "lg:col-span-2", "lg:col-span-2", "lg:col-span-3", "lg:col-span-3"];
+/* Results from the partnership proposal, each traceable to a partner engagement */
+const results = [
+  { value: "62K", label: "GitHub stars for Pathway", note: "with 1.7K forks", href: "/services/github-stars" },
+  { value: "7.2K", label: "stars for arc-task-gen", note: "from a brand-new repo", href: "/services/github-stars" },
+  { value: "10K+", label: "views per Reddit campaign", note: "for multiple partner companies", href: "/services/reddit-marketing" },
+  { value: "14,500+", label: "applications, Code Kshetra 2.0", note: "for just 150 spots", href: "/event/ck2.0" },
+];
+
+const steps = [
+  { title: "Kickoff", when: "Week 1", text: "Goals, audience and product deep-dive with your team." },
+  { title: "Plan", when: "Week 2", text: "A 12-month calendar of content, sessions and hackathons." },
+  { title: "Launch", when: "Ongoing", text: "Campaigns, content and events go live across every channel." },
+  { title: "Report", when: "Monthly", text: "Reach, sign-ups, GitHub growth and developer feedback in one report." },
+];
 
 export default function ServicesPage() {
   return (
     <>
-      <section className="shell pt-36 pb-16 md:pt-44">
+      {/* Hero */}
+      <section className="shell pt-36 md:pt-44">
         <SectionHead
           as="h1"
-          index="Services"
+          index="Developer Growth Package"
           title={
             <>
-              Grow with <em>builders</em>
+              Grow with the <em>smarter</em> community
             </>
           }
-          intro={`Five ways to put your product in front of developers, run by the team behind ${stat.events} developer events and a ${stat.builders} builder community.`}
+          intro={`A single partnership that puts your product in front of ${stat.builders} developers, founders and builders, through content, community, hackathons and real developer feedback.`}
         />
-      </section>
-
-      <section className="shell grid grid-cols-1 gap-4 pb-24 md:grid-cols-2 md:pb-32 lg:grid-cols-6 [&>*]:min-w-0">
-        {serviceList.map((s, i) => (
-          <Reveal key={s.slug} delay={(i % 3) * 0.08} className={`h-full ${spans[i]} ${i === serviceList.length - 1 ? "md:col-span-2" : ""}`}>
-            <Link
-              href={s.href}
-              className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-line bg-ink-2 p-7 transition-colors duration-300 hover:border-line-strong md:p-9"
-            >
-              <div className="flex items-start justify-between">
-                <span className="grid size-14 place-items-center rounded-full border border-line-strong text-paper transition-colors group-hover:border-orange group-hover:text-orange">
-                  {icons[s.teaser]}
-                </span>
-                <span className="flex items-center gap-2">
-                  {s.isNew && <span className="rounded-full bg-orange px-2 py-0.5 font-mono text-[10px] font-semibold text-ink uppercase">New</span>}
-                  <span className="label tabular-nums">{s.index}</span>
-                </span>
-              </div>
-
-              <div className="mt-8 rounded-xl border border-[#30363d] bg-[#0d1117] p-5 transition-transform duration-500 group-hover:-translate-y-1">
-                <Teaser kind={s.teaser} />
-              </div>
-
-              <p className="label mt-8">{s.eyebrow}</p>
-              <h2 className="display mt-3 text-[clamp(2rem,3.6vw,3.2rem)]">{s.title}</h2>
-              <p className="mt-4 max-w-[34rem] leading-relaxed text-muted">{s.summary}</p>
-              <ul className="mt-6 grid gap-2">
-                {s.points.map((p) => (
-                  <li key={p} className="flex items-center gap-2 text-sm text-paper">
-                    <span className="size-1.5 shrink-0 rounded-full bg-orange" />
-                    {p}
-                  </li>
-                ))}
-              </ul>
-
-              <span className="mt-auto flex items-center justify-between pt-10">
-                <span className="font-mono text-xs tracking-[0.06em] uppercase">Explore the service</span>
-                <span className="grid size-12 place-items-center rounded-full bg-paper text-ink transition-all duration-300 group-hover:-rotate-45 group-hover:bg-orange">
-                  <ArrowUpRight className="size-5" />
-                </span>
-              </span>
-            </Link>
-          </Reveal>
-        ))}
-      </section>
-
-      <section className="shell pb-24 md:pb-32">
-        <div className="flex flex-col gap-6 rounded-[1.75rem] border border-line p-7 md:flex-row md:items-center md:justify-between md:p-10">
-          <div>
-            <p className="display text-[clamp(1.8rem,3.6vw,3rem)]">Not sure which fits?</p>
-            <p className="mt-2 text-muted">Tell us what you want to achieve and we&apos;ll suggest a mix.</p>
-          </div>
-          <Link href={contactHref("Partnership")} className="btn-primary shrink-0">
-            Talk to the team <ArrowUpRight className="size-4" />
+        <div className="mt-10 flex flex-wrap gap-3">
+          <Link href={contactHref("Developer growth package")} className="btn-primary">
+            Book a 30-minute call <ArrowUpRight className="size-4" />
           </Link>
+          <a href="#package" className="btn-ghost">
+            See the ten services
+          </a>
+        </div>
+        <dl className="mt-16 grid grid-cols-2 border-t border-line lg:grid-cols-4">
+          {numbers.map(([v, l], i) => (
+            <div key={l} className={`border-b border-line p-5 md:p-8 ${i % 2 ? "border-l" : ""} ${i === 2 ? "lg:border-l" : ""}`}>
+              <dd className="display text-[clamp(2rem,5vw,4rem)]">
+                {v.replace("+", "")}
+                {v.endsWith("+") && <span className="text-orange">+</span>}
+              </dd>
+              <dt className="mt-2 text-muted">{l}</dt>
+            </div>
+          ))}
+        </dl>
+      </section>
+
+      {/* The package */}
+      <section id="package" className="shell scroll-mt-28 py-24 md:py-32">
+        <SectionHead
+          index="01"
+          title={
+            <>
+              One package, <em>every channel</em>
+            </>
+          }
+          intro="Ten services that work as one developer-relations engine. Content builds awareness, community builds trust, and hackathons turn both into real usage."
+        />
+        <div className="mt-14 space-y-12">
+          {serviceGroups.map((g) => {
+            const items = serviceList.filter((s) => s.group === g.key);
+            return (
+              <div key={g.key}>
+                <p className="flex items-baseline gap-3 border-b border-line pb-4">
+                  <span className="display text-[clamp(1.6rem,3vw,2.4rem)]">{g.title}</span>
+                  <span className="font-mono text-xs text-orange">{g.line}</span>
+                </p>
+                <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+                  {items.map((s, i) => (
+                    <Reveal key={s.slug} delay={(i % 4) * 0.06} className="h-full">
+                      <Link
+                        href={s.href}
+                        className="group flex h-full flex-col rounded-[1.5rem] border border-line bg-ink-2 p-6 transition-colors hover:border-orange"
+                      >
+                        <span className="flex items-center justify-between">
+                          <span className="grid size-11 place-items-center rounded-xl bg-orange/10 text-orange transition-colors group-hover:bg-orange group-hover:text-ink">
+                            <ServiceIcon icon={s.icon} />
+                          </span>
+                          <span className="font-mono text-xs text-subtle tabular-nums">{s.index}</span>
+                        </span>
+                        <span className="mt-8 font-display text-2xl leading-tight font-bold [font-stretch:90%]">{s.title}</span>
+                        <span className="mt-2 flex-1 text-sm leading-relaxed text-muted">{s.summary}</span>
+                        <span className="mt-6 inline-flex items-center gap-1 font-mono text-xs tracking-[0.06em] text-orange uppercase">
+                          Explore <ArrowUpRight className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                        </span>
+                      </Link>
+                    </Reveal>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
         </div>
       </section>
-    </>
-  );
-}
 
-function Teaser({ kind }: { kind: Service["teaser"] }) {
-  switch (kind) {
-    case "stars":
-      return (
-        <div className="flex items-center justify-between gap-4 text-[13px] text-[#e6edf3]">
-          <div className="min-w-0">
-            <p className="truncate">
-              <span className="text-[#4493f8]">your-org</span>
-              <span className="px-1 text-[#8b949e]">/</span>
-              <span className="font-semibold text-[#4493f8]">your-repo</span>
-            </p>
-            <div className="mt-3 flex">
-              <span className="flex items-center gap-1.5 rounded-l-md border border-[#30363d] bg-[#21262d] px-3 py-1 text-[12px] font-medium">
-                <StarIcon size={14} className="text-[#8b949e] group-hover:hidden" />
-                <StarFillIcon size={14} className="hidden text-[#e3b341] group-hover:block" />
-                <span className="group-hover:hidden">Star</span>
-                <span className="hidden group-hover:inline">Starred</span>
-                <span className="ml-1 rounded-full bg-[#30363d] px-1.5 font-semibold">3.2k</span>
-              </span>
-              <span className="grid place-items-center rounded-r-md border border-l-0 border-[#30363d] bg-[#21262d] px-1 text-[#8b949e]">
-                <TriangleDownIcon size={14} />
-              </span>
-            </div>
-          </div>
-          <svg viewBox="0 0 120 48" className="h-12 w-28 shrink-0" aria-hidden>
-            <path d="M2 44 C20 43 26 42 34 30 S50 26 60 25 S72 12 84 11 S100 6 118 3" fill="none" stroke="var(--orange)" strokeWidth="2.5" strokeLinecap="round" />
-          </svg>
+      {/* Results */}
+      <section className="shell pb-24 md:pb-32">
+        <SectionHead
+          index="02"
+          title={
+            <>
+              Results, not <em>reach</em>
+            </>
+          }
+          intro="A few numbers from work we've already done with partners."
+        />
+        <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {results.map((r, i) => (
+            <Reveal key={r.label} delay={i * 0.06} className="h-full">
+              <Link
+                href={r.href}
+                className={`group flex h-full flex-col justify-between rounded-[1.5rem] p-6 transition-colors ${
+                  i === 1 ? "bg-orange text-ink" : "border border-line bg-ink-2 hover:border-line-strong"
+                }`}
+              >
+                <p className="display text-[clamp(2.8rem,5vw,4rem)]">{r.value}</p>
+                <div className="mt-8">
+                  <p className="font-display text-lg leading-snug font-bold [font-stretch:90%]">{r.label}</p>
+                  <p className={`mt-1 text-sm ${i === 1 ? "text-ink/70" : "text-muted"}`}>{r.note}</p>
+                </div>
+              </Link>
+            </Reveal>
+          ))}
         </div>
-      );
-    case "writing":
-      return (
-        <div className="font-mono text-[12px] leading-[1.7]">
-          <p className="font-semibold text-orange"># Build a RAG app in 15 minutes</p>
-          <p className="text-[#8b949e] italic">&gt; Written by a senior engineer</p>
-          <p className="text-[#a5d6ff]">await client.index(&quot;docs&quot;, chunks);</p>
-          <p className="mt-2 text-[#3fb950]">✓ 4 samples passed · reviewed by 2 engineers</p>
-        </div>
-      );
-    case "hackathon":
-      return (
-        <div className="font-mono text-[12px]">
-          <div className="flex items-baseline justify-between">
-            <span className="text-[#8b949e]">Registrations</span>
-            <span className="text-orange">● live</span>
-          </div>
-          <p className="display mt-1 text-4xl text-[#e6edf3]">3,741</p>
-          <div className="mt-3 grid grid-cols-[repeat(24,minmax(0,1fr))] gap-[3px]">
-            {Array.from({ length: 48 }, (_, i) => (
-              <span key={i} className={`aspect-square rounded-full ${i < 40 ? "bg-[#e6edf3]/70" : "bg-[#30363d]"} ${i === 39 ? "!bg-orange" : ""}`} />
-            ))}
-          </div>
-        </div>
-      );
-    case "hiring":
-      return (
-        <ul className="space-y-1.5 font-mono text-[12px] text-[#e6edf3]">
-          {[
-            ["C04", 35, true],
-            ["A17", 33, true],
-            ["B22", 32, true],
-            ["D09", 32, false],
-          ].map(([id, score, pick]) => (
-            <li key={id as string} className="flex items-center gap-3">
-              <span className="w-8 text-[#8b949e]">{id}</span>
-              <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-[#30363d]">
-                <span className="block h-full rounded-full bg-orange" style={{ width: `${((score as number) / 40) * 100}%` }} />
-              </span>
-              <span className="w-6 text-right">{score}</span>
-              <span className={`w-4 ${pick ? "text-[#3fb950]" : "text-transparent"}`}>✓</span>
+      </section>
+
+      {/* How we work */}
+      <section className="shell pb-24 md:pb-32">
+        <SectionHead
+          index="03"
+          title={
+            <>
+              How we <em>work</em>
+            </>
+          }
+        />
+        <ol className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {steps.map((s, i) => (
+            <li key={s.title} className="rounded-[1.5rem] border border-line bg-ink-2 p-6">
+              <div className="flex items-baseline justify-between">
+                <span className="display text-4xl text-orange">0{i + 1}</span>
+                <span className="font-mono text-xs tracking-[0.06em] text-subtle uppercase">{s.when}</span>
+              </div>
+              <p className="mt-6 font-display text-2xl font-bold [font-stretch:90%]">{s.title}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{s.text}</p>
             </li>
           ))}
-        </ul>
-      );
-    case "speaker":
-      return (
-        <div className="flex items-center gap-4">
-          <div className="grid aspect-video w-28 shrink-0 place-items-center rounded-md bg-paper p-2 text-center">
-            <span className="display text-[13px] leading-none text-ink">Shipping agents to prod</span>
+        </ol>
+      </section>
+
+      {/* More formats */}
+      <section className="shell pb-24 md:pb-32">
+        <div className="grid gap-4 md:grid-cols-[0.8fr_1fr_1fr] md:items-stretch">
+          <div className="flex flex-col justify-center">
+            <p className="label">Also from Geek Room</p>
+            <p className="display mt-3 text-[clamp(1.8rem,3vw,2.6rem)]">More ways to work together</p>
           </div>
-          <ul className="min-w-0 flex-1 space-y-1.5 text-[12px] text-[#e6edf3]">
-            <li className="flex items-center gap-2 truncate">
-              <span className="font-mono text-orange">▲ 14</span>
-              <span className="truncate">How do you eval tool calls?</span>
-            </li>
-            <li className="flex items-center gap-2 truncate">
-              <span className="font-mono text-[#8b949e]">▲ 9</span>
-              <span className="truncate">Works with open models?</span>
-            </li>
-            <li className="flex items-center gap-2 truncate">
-              <span className="font-mono text-[#8b949e]">▲ 7</span>
-              <span className="truncate">Can we use it tomorrow?</span>
-            </li>
-          </ul>
+          {moreFormats.map((s) => (
+            <Link key={s.slug} href={s.href} className="group flex flex-col rounded-[1.5rem] border border-line p-6 transition-colors hover:border-orange">
+              <span className="grid size-11 place-items-center rounded-xl bg-ink-3 text-orange">
+                <ServiceIcon icon={s.icon} />
+              </span>
+              <span className="mt-6 font-display text-xl font-bold [font-stretch:90%]">{s.title}</span>
+              <span className="mt-2 flex-1 text-sm leading-relaxed text-muted">{s.summary}</span>
+              <span className="mt-4 inline-flex items-center gap-1 font-mono text-xs tracking-[0.06em] text-orange uppercase">
+                Learn more <ArrowUpRight className="size-3.5" />
+              </span>
+            </Link>
+          ))}
         </div>
-      );
-  }
+      </section>
+
+      <ServiceCta
+        title={
+          <>
+            Ready to grow <span className="[font-stretch:150%] font-light">with developers?</span>
+          </>
+        }
+        body="Book a 30-minute call. We'll map your goals to the package and send you a plan within a week."
+        href={contactHref("Developer growth package")}
+        secondary={{ href: "/brochure", label: "Read the partnership proposal" }}
+      />
+    </>
+  );
 }

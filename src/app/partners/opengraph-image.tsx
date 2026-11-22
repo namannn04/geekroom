@@ -1,5 +1,4 @@
 import { renderOg } from "@/lib/og";
-import { directory } from "@/data/partners";
 import { stat } from "@/data/stats";
 
 export const alt = "Geek Room partners";
@@ -10,7 +9,7 @@ export default function Image() {
   return renderOg({
     eyebrow: "Partners",
     title: "The companies who back the build",
-    subtitle: `${directory.length} partners across AI, cloud, fintech, hiring and communities, out of ${stat.companies} we've worked with.`,
+    subtitle: `${stat.partners} partner companies across AI, cloud, fintech, hiring and communities, with builders from ${stat.companies} companies.`,
     logos: [
       "/images/partners/groq.png",
       "/images/partners/qdrant.png",

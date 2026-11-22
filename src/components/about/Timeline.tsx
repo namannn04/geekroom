@@ -6,6 +6,7 @@ import SectionHead from "@/components/ui/SectionHead";
 import { milestones } from "@/data/site";
 import { gsap, prefersReducedMotion, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { EASE_OUT, reveal } from "@/lib/motion";
+import { paperRgb, useTheme } from "@/components/theme/ThemeProvider";
 
 /**
  * Vertical timeline. The rail fills with scroll, and each date swells and turns
@@ -14,6 +15,7 @@ import { EASE_OUT, reveal } from "@/lib/motion";
 export default function Timeline() {
   const root = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
+  const rgb = paperRgb(useTheme().theme);
 
   useGSAP(
     () => {
@@ -42,10 +44,10 @@ export default function Timeline() {
           .timeline({ scrollTrigger: { trigger: item, start: "top 80%", end: "bottom 30%", scrub: true } })
           .fromTo(
             date,
-            { scale: 0.86, color: "rgba(238,236,230,0.4)" },
+            { scale: 0.86, color: `rgba(${rgb},0.4)` },
             { scale: 1.06, color: "#ff5a1f", ease: "sine.inOut" },
           )
-          .to(date, { scale: 1, color: "rgba(238,236,230,1)", ease: "sine.inOut" });
+          .to(date, { scale: 1, color: `rgba(${rgb},1)`, ease: "sine.inOut" });
         // Reveal: copy lifts in as soon as the row enters
         gsap.from(item.querySelector("[data-text]"), {
           y: 28,
@@ -56,7 +58,7 @@ export default function Timeline() {
         });
       });
     },
-    { scope: root },
+    { scope: root, dependencies: [rgb], revertOnUpdate: true },
   );
 
   return (

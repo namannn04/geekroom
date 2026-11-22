@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { animate, AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
 import { Clock, Gavel, Megaphone, Trophy, Users, Filter } from "lucide-react";
 import { stat } from "@/data/stats";
+import { paperRgb, useTheme } from "@/components/theme/ThemeProvider";
 
 const phases = [
   { key: "announce", label: "Announce", icon: Megaphone, caption: `Your brand and problem statements go out to ${stat.builders} builders.` },
@@ -204,6 +205,7 @@ function Register() {
 }
 
 function Shortlist() {
+  const rgb = paperRgb(useTheme().theme);
   // 6 rows of 25 = 150 cells; ~7% lit for the shortlist, 3 brightest for the finale picks
   const lit = new Set([3, 17, 22, 38, 41, 55, 63, 70, 84, 92, 101, 117, 128, 136, 144]);
   const final = new Set([22, 70, 128]);
@@ -218,9 +220,9 @@ function Shortlist() {
           <motion.span
             key={i}
             className="aspect-square rounded-[3px]"
-            initial={{ backgroundColor: "rgba(238,236,230,0.18)" }}
+            initial={{ backgroundColor: `rgba(${rgb},0.18)` }}
             animate={{
-              backgroundColor: final.has(i) ? "#ff5a1f" : lit.has(i) ? "rgba(255,90,31,0.55)" : "rgba(238,236,230,0.06)",
+              backgroundColor: final.has(i) ? "#ff5a1f" : lit.has(i) ? "rgba(255,90,31,0.55)" : `rgba(${rgb},0.06)`,
               scale: final.has(i) ? [1, 1.35, 1] : 1,
             }}
             transition={{ delay: 0.3 + (i % 25) * 0.03 + (final.has(i) ? 1.2 : 0), duration: 0.5 }}
