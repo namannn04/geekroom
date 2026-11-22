@@ -9,6 +9,7 @@ export const contactTopics = [
   "Speaker session",
   "GitHub star campaign",
   "Technical writing",
+  "Support",
   "Just saying hi",
 ] as const;
 export type ContactTopic = (typeof contactTopics)[number];
