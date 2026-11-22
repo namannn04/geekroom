@@ -24,6 +24,7 @@ import ReviewThread from "@/components/services/writing/ReviewThread";
 import TestTerminal from "@/components/services/writing/TestTerminal";
 import ServiceCta from "@/components/services/ServiceCta";
 import { contactHref } from "@/data/services";
+import { stat } from "@/data/stats";
 
 export const metadata: Metadata = {
   title: "Technical Writing",
@@ -231,7 +232,7 @@ export default function TechnicalWritingPage() {
                 Published is not <em>done</em>.
               </h2>
               <p className="mt-6 max-w-[34rem] text-lg leading-relaxed text-muted">
-                Every post goes out to the developers it was written for: on your blog, cross-posted with canonical links, and shared with 150K+ builders in the Geek Room community.
+                Every post goes out to the developers it was written for: on your blog, cross-posted with canonical links, and shared with {stat.builders} builders in the Geek Room community.
               </p>
               <Link href="/services/github-stars" className="btn-ghost mt-8">
                 Pair it with a GitHub star campaign <ArrowUpRight className="size-3.5" />

@@ -3,16 +3,17 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import "./brochure.css";
+import { stat } from "@/data/stats";
 
 export const metadata: Metadata = {
   title: "Partner with Geek Room",
-  description: "Reach 150K+ developers through Geek Room hackathons, meetups, hiring challenges and brand partnerships.",
+  description: `Reach ${stat.builders} developers through Geek Room hackathons, meetups, hiring challenges and brand partnerships.`,
 };
 
 const images = "/images/brochure";
 
 const reasons = [
-  "Reach 150,000+ developers worldwide",
+  `Reach ${stat.buildersLong} developers worldwide`,
   "Build awareness among Gen Z developers",
   "Hire engineers through hackathons",
   "Run API adoption campaigns",
@@ -20,8 +21,8 @@ const reasons = [
 ];
 
 const reach = [
-  { value: "150K+", label: "Developers" },
-  { value: "80+", label: "Events conducted" },
+  { value: stat.builders, label: "Developers" },
+  { value: stat.events, label: "Events conducted" },
   { value: "20+", label: "Chapters" },
 ];
 
@@ -130,7 +131,7 @@ export default function BrochurePage() {
           <div className="brochure-hero-copy">
             <p className="brochure-eyebrow">Partnerships · Geek Room</p>
             <h1>Partner with <em>Geek Room.</em></h1>
-            <p>Geek Room helps companies reach, engage and hire from a global community of 150K+ developers, founders and engineers through hackathons, campaigns, product activations and skills-based hiring challenges.</p>
+            <p>Geek Room helps companies reach, engage and hire from a global community of {stat.builders} developers, founders and engineers through hackathons, campaigns, product activations and skills-based hiring challenges.</p>
             <div className="brochure-actions">
               <a className="brochure-button brochure-button-primary" href="#partnerships">Explore partnerships <span aria-hidden>↗</span></a>
               <a className="brochure-button brochure-button-outline" href="/global-hackathon-geekroom.pdf" download>Download PDF <span aria-hidden>↓</span></a>
@@ -138,9 +139,9 @@ export default function BrochurePage() {
           </div>
           <div className="brochure-hero-photo">
             <Image src={`${images}/cover-builders.webp`} alt="Developers collaborating at a Geek Room event" fill priority sizes="(max-width: 800px) 100vw, 45vw" />
-            <span className="brochure-photo-tag tag-one">150K+ builders</span>
+            <span className="brochure-photo-tag tag-one">{stat.builders} builders</span>
             <span className="brochure-photo-tag tag-two">20+ campus chapters</span>
-            <span className="brochure-photo-tag tag-three">80+ events conducted</span>
+            <span className="brochure-photo-tag tag-three">{stat.events} events conducted</span>
           </div>
         </div>
       </section>

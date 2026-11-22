@@ -4,11 +4,12 @@ import Timeline from "@/components/about/Timeline";
 import GlobalReach from "@/components/about/GlobalReach";
 import Team from "@/components/about/Team";
 import Voices from "@/components/home/Voices";
+import { stat } from "@/data/stats";
 // import JoinCta from "@/components/ui/JoinCta";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "How Geek Room grew from a WhatsApp group into a global builder community of 150K+ developers, founders and 500+ partner companies.",
+  description: `How Geek Room grew from a WhatsApp group into a global builder community of ${stat.builders} developers, founders and ${stat.companies} partner companies.`,
 };
 
 export default function AboutPage() {

@@ -12,6 +12,7 @@ import GeekMark from "@/components/ui/GeekMark";
 import { EASE_EXPO } from "@/lib/motion";
 import { partners } from "@/data/site";
 import { gsap, prefersReducedMotion, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { stat } from "@/data/stats";
 
 gsap.registerPlugin(SplitText);
 
@@ -101,7 +102,7 @@ export default function Hero() {
           </h1>
 
           <p data-fadeup className="mt-8 max-w-[31rem] text-lg leading-relaxed text-muted">
-            Geek Room is a global community of 150K+ builders, where developers, founders and 500+ partner companies
+            Geek Room is a global community of {stat.builders} builders, where developers, founders and {stat.companies} partner companies
             hack, meet and build in public, online and in person.
           </p>
 

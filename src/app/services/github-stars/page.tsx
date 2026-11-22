@@ -23,11 +23,12 @@ import ReadmeMakeover from "@/components/services/github/ReadmeMakeover";
 import ContributionGraph from "@/components/services/github/ContributionGraph";
 import ServiceCta from "@/components/services/ServiceCta";
 import { contactHref } from "@/data/services";
+import { stat } from "@/data/stats";
 
 export const metadata: Metadata = {
   title: "GitHub Star Campaigns",
   description:
-    "Grow your open-source repo's GitHub stars with real developers. Geek Room audits your README, runs your launch and puts your project in front of 150K+ builders through hackathons, workshops and community channels.",
+    `Grow your open-source repo's GitHub stars with real developers. Geek Room audits your README, runs your launch and puts your project in front of ${stat.builders} builders through hackathons, workshops and community channels.`,
 };
 
 const playbook = [
@@ -44,7 +45,7 @@ const playbook = [
   {
     icon: MegaphoneIcon,
     title: "Community push",
-    text: "Your repo goes out to 150K+ builders across our WhatsApp, Discord, LinkedIn, Instagram and newsletter, framed as something worth trying, not an ad.",
+    text: `Your repo goes out to ${stat.builders} builders across our WhatsApp, Discord, LinkedIn, Instagram and newsletter, framed as something worth trying, not an ad.`,
   },
   {
     icon: PeopleIcon,
@@ -67,7 +68,7 @@ const playbook = [
 const channels = [
   { title: "Hackathon tracks", text: "Code Cubicle, HackBLR and our global hackathons, with a prize track built around your repo." },
   { title: "Live workshops", text: "Hands-on sessions where 100s of developers clone, run and star your project together." },
-  { title: "Community channels", text: "Launch posts across our WhatsApp, Discord, LinkedIn and Instagram, reaching 150K+ builders." },
+  { title: "Community channels", text: `Launch posts across our WhatsApp, Discord, LinkedIn and Instagram, reaching ${stat.builders} builders.` },
   { title: "Campus chapters", text: "20+ chapters across India that run meetups and build sessions with partner tools." },
   { title: "Good first issues", text: "Contributor drives that turn stargazers into people opening issues and pull requests." },
 ];
@@ -116,7 +117,7 @@ export default function GithubStarsPage() {
           <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
             <p className="max-w-[40rem] text-lg leading-relaxed text-muted md:text-xl">
               GitHub stars are how developers decide what to try next. We put your open-source project in front of
-              150K+ builders, make sure the repo is ready for them, and run the campaign that turns visitors into
+              {stat.builders} builders, make sure the repo is ready for them, and run the campaign that turns visitors into
               stargazers and contributors.
             </p>
             <div className="flex flex-wrap gap-3">
@@ -148,10 +149,10 @@ export default function GithubStarsPage() {
       <section className="shell mt-20 md:mt-28">
         <dl className="grid grid-cols-2 border-t border-line lg:grid-cols-4">
           {[
-            ["150K+", "Developers in the community"],
+            [stat.builders, "Developers in the community"],
             ["25K+", "Hackathon registrations"],
-            ["500+", "Partner companies"],
-            ["60+", "Countries builders join from"],
+            [stat.companies, "Partner companies"],
+            [stat.countries, "Countries builders join from"],
           ].map(([v, l], i) => (
             <div key={l} className={`border-b border-line p-5 md:p-8 ${i % 2 ? "border-l" : ""} ${i === 2 ? "lg:border-l" : ""}`}>
               <dd className="display text-[clamp(2rem,5vw,4rem)]">
@@ -202,7 +203,7 @@ export default function GithubStarsPage() {
                 The <em>playbook</em>
               </>
             }
-            intro="Six moves, run by the team behind 80+ developer events. Each one makes the next work harder."
+            intro={`Six moves, run by the team behind ${stat.events} developer events. Each one makes the next work harder.`}
           />
         </div>
         <div className="grid border-t border-l border-line sm:grid-cols-2">

@@ -6,11 +6,12 @@ import GeekMark from "@/components/ui/GeekMark";
 import SectionHead from "@/components/ui/SectionHead";
 import Reveal from "@/components/ui/Reveal";
 import { contactHref, serviceList, type Service } from "@/data/services";
+import { stat } from "@/data/stats";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Work with Geek Room: exclusive hackathons, hiring challenges, speaker sessions, GitHub star campaigns and technical writing, all aimed at a community of 150K+ builders.",
+    `Work with Geek Room: exclusive hackathons, hiring challenges, speaker sessions, GitHub star campaigns and technical writing, all aimed at a community of ${stat.builders} builders.`,
 };
 
 const icons: Record<Service["teaser"], React.ReactNode> = {
@@ -36,7 +37,7 @@ export default function ServicesPage() {
               Grow with <em>builders</em>
             </>
           }
-          intro="Five ways to put your product in front of developers, run by the team behind 80+ developer events and a 150K+ builder community."
+          intro={`Five ways to put your product in front of developers, run by the team behind ${stat.events} developer events and a ${stat.builders} builder community.`}
         />
       </section>
 

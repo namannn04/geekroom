@@ -54,7 +54,7 @@ export const directory: DirectoryPartner[] = [
   { name: "OmniDimension", category: "ai", role: "Voice AI and agent platform.", logo: "/images/partners/omnidimension.png", link: { href: "/event/vibeathon2", label: "Vibe-a-thon 2.0" } },
   { name: "MiniMax", category: "ai", role: "AI models and tools.", logo: "/images/partners/minimax.svg", mark: true, link: { href: "/event/hackblr1", label: "HackBLR" } },
   { name: "ML.ai", category: "ai", role: "AI coding agent, used at INFRA SHIFT.", logo: "/images/partners/mlai.png", mark: true },
-  { name: "2nd Brain Labs", category: "ai", role: "AI and developer tools. Partnered on a Vibe-a-thon featuring Synapse CLI.", logo: "/images/partners/2nd-brain-labs.png" },
+  { name: "2nd Brain Labs", category: "ai", role: "AI and developer tools. Partnered on a Vibe-a-thon featuring Synapse CLI.", logo: "/images/partners/2nd-brain-labs.png", link: { href: "/event/vibeathon-2nd-brain-labs", label: "Vibe-a-thon" } },
   { name: "Hey Bubba AI", category: "ai", role: "AI company and Hack Geek Room sponsor.", logo: "/images/partners/hey-bubba.png", mark: true, link: { href: "/event/hackgr", label: "Hack Geek Room" } },
   { name: "AiHello", category: "ai", role: "AI company and Code Kshetra sponsor.", logo: "/images/partners/aihello.png", invert: true, link: { href: "/event/ck2.0", label: "Code Kshetra 2.0" } },
   { name: "NeoApps.AI", category: "ai", role: "AI application development platform, a Code Kshetra supporter.", logo: "/images/partners/neoapps.png" },

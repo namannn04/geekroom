@@ -12,18 +12,19 @@ import ServiceCta from "@/components/services/ServiceCta";
 import HackathonSimulator from "@/components/services/hackathon/HackathonSimulator";
 import { getEvent } from "@/data/events";
 import { contactHref } from "@/data/services";
+import { stat } from "@/data/stats";
 
 export const metadata: Metadata = {
   title: "Exclusive Hackathons",
   description:
-    "Host an exclusive hackathon with Geek Room. We design the problem statements around your product, reach 150K+ builders, shortlist, mentor, judge and run the finale at your office.",
+    `Host an exclusive hackathon with Geek Room. We design the problem statements around your product, reach ${stat.builders} builders, shortlist, mentor, judge and run the finale at your office.`,
 };
 
 const cases = ["ck2.0", "cc6.0", "hackblr1", "cc5.0"].map((slug) => getEvent(slug)!).filter((e) => e.funnel);
 
 const included = [
   { icon: Lightbulb, title: "Problem design", text: "Tracks and problem statements built around your APIs, so every project is a showcase of your product." },
-  { icon: Megaphone, title: "Outreach", text: "Campaigns across our community channels, campus chapters and socials, reaching 150K+ builders." },
+  { icon: Megaphone, title: "Outreach", text: `Campaigns across our community channels, campus chapters and socials, reaching ${stat.builders} builders.` },
   { icon: ClipboardCheck, title: "Shortlisting", text: "We review every profile and team, so the people in the room are the ones you want to meet." },
   { icon: Mic2, title: "Mentors and judges", text: "Your engineers mentor and judge alongside our network, on a rubric we agree with you up front." },
   { icon: Building2, title: "On-site finale", text: "Venue setup, food, swag, stage and run of show at your office. You turn up, we run it." },
@@ -50,7 +51,7 @@ export default function HackathonsPage() {
             A hackathon built around <em>you</em>.
           </>
         }
-        intro="We've run 80+ developer events, with finales at Microsoft, Mastercard and Paytm. An exclusive hackathon puts your product in the hands of the sharpest builders we know, and gets it seen by the rest of our 150K+ community."
+        intro={`We've run ${stat.events} developer events, with finales at Microsoft, Mastercard and Paytm. An exclusive hackathon puts your product in the hands of the sharpest builders we know, and gets it seen by the rest of our ${stat.builders} community.`}
         primary={{ href: contactHref("Host a hackathon"), label: "Plan a hackathon" }}
         secondary={{ href: "#cases", label: "See past results" }}
         titleWidth="max-w-[13ch]"

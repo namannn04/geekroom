@@ -11,6 +11,7 @@ import ServiceCta from "@/components/services/ServiceCta";
 import CandidateBoard from "@/components/services/hiring/CandidateBoard";
 import { getEvent } from "@/data/events";
 import { contactHref } from "@/data/services";
+import { stat } from "@/data/stats";
 
 export const metadata: Metadata = {
   title: "Hiring Challenges",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
 
 const steps = [
   { icon: Target, title: "Define the role", text: "We turn the job description into a challenge that tests what the role actually needs." },
-  { icon: Users, title: "Reach candidates", text: "Students, final-years and working professionals from our 150K+ community apply." },
+  { icon: Users, title: "Reach candidates", text: `Students, final-years and working professionals from our ${stat.builders} community apply.` },
   { icon: Code2, title: "They build", text: "Online or on site, candidates ship a working project against your problem statement." },
   { icon: FileText, title: "We score", text: "Every submission is scored on a shared rubric, with notes your interviewers can use." },
   { icon: Briefcase, title: "You interview", text: "You get a ranked shortlist with repo, demo and scorecard for each candidate." },
