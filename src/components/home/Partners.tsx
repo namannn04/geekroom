@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
-import { Plus } from "lucide-react";
+import { ArrowUpRight, Plus } from "lucide-react";
 import SectionHead from "@/components/ui/SectionHead";
 import { partners } from "@/data/site";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
@@ -34,6 +34,7 @@ export default function Partners() {
 
   return (
     <section ref={root} className="shell grid grid-cols-[minmax(0,1fr)] gap-12 py-24 md:py-32 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+      <div>
       <SectionHead
         size="sm"
         index="06"
@@ -44,6 +45,10 @@ export default function Partners() {
         }
         intro="Global AI labs, fintech and developer-tool companies that power Geek Room hackathons and meetups. Hover a tile with a dot to see what we built together."
       />
+        <Link href="/partners" className="btn-ghost mt-8">
+          See all partners <ArrowUpRight className="size-3.5" />
+        </Link>
+      </div>
 
       <div data-wall className="grid grid-cols-3 overflow-hidden border-t border-l border-line [perspective:900px] sm:grid-cols-4">
         {partners.map((p) => {
