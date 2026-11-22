@@ -93,9 +93,6 @@ export const directory: DirectoryPartner[] = [
   { name: "Plaksha University", category: "community", role: "University, venue and community partner for Hack Summit, HackBLR and AI Race Month.", logo: "/images/partners/plaksha.webp", link: { href: "/event/grandprix", label: "AI Race Month" } },
   { name: "SheBuilds", category: "community", role: "Builder community and AI Race Month collaborator.", logo: "/images/partners/shebuilds.png", link: { href: "/event/grandprix", label: "AI Race Month" } },
   { name: "HiDevs", category: "community", role: "Developer community partner for HackBLR.", logo: "/images/partners/hidevs.png", mark: true, link: { href: "/event/hackblr1", label: "HackBLR" } },
-  { name: "E-Cell, Plaksha University", category: "community", role: "Co-organizer of Hack Summit." },
-  { name: "Eventopia", category: "community", role: "Event partner." },
-  { name: "LWT Academy", category: "community", role: "Collaborator with the Geek Room JIMS chapter." },
 ];
 
 /** Partnerships with published numbers, told as short stories */
