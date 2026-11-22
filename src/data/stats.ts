@@ -8,6 +8,9 @@ export const totals = {
   events: 80,
   companies: 500,
   countries: 60,
+  registrations: 25_000,
+  speakers: 35,
+  whatsappGroups: 100,
 } as const;
 
 const short = (n: number) => (n >= 1000 ? `${n / 1000}K+` : `${n}+`);
@@ -18,6 +21,9 @@ export const stat = {
   events: short(totals.events),
   companies: short(totals.companies),
   countries: short(totals.countries),
+  registrations: short(totals.registrations),
+  speakers: short(totals.speakers),
+  whatsappGroups: short(totals.whatsappGroups),
   /** Long form for prose that prefers digits: "150,000+" */
   buildersLong: `${totals.builders.toLocaleString("en-US")}+`,
 } as const;

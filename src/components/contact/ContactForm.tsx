@@ -11,12 +11,14 @@ const topics = contactTopics;
 
 /** A prompt per topic, so people tell us what we need on the first message. */
 const prompts: Record<ContactTopic, string> = {
-  Partnership: "Tell us about your company and what kind of partnership you have in mind…",
-  "Host a hackathon": "What would builders make with your product? Rough dates, city or online, and audience size…",
+  "Developer growth package": "Tell us about your product, who you want to reach, and what a great year with developers looks like for you…",
+  "Host a hackathon": "What would builders make with your product? Online or in person, rough dates and audience size…",
+  "Content and video": "Podcasts, YouTube sessions or shorts? Tell us about the product and the story you want told…",
+  "Technical blogs": "What should we write about, who is the reader, and where should it be published?",
+  "Developer marketing": "GitHub, Reddit, SEO and GEO or a launch campaign? Share your repo or product link and your goal…",
+  "Developer feedback": "Which part of your product do you want developers to test, and who is your target user?",
   "Hiring challenge": "Which roles are you hiring for, how many, and what should candidates be able to build?",
   "Speaker session": "Who would speak, on what topic, and would you prefer a meetup, hackathon or online session?",
-  "GitHub star campaign": "Link your repo, tell us where it is today and where you want it to be…",
-  "Technical writing": "What should we write about, who is the reader, and where will it be published?",
   Support: "What do you need help with? Include the event name and the email you registered with, if it's about an event…",
   "Just saying hi": "Hi Geek Room! …",
 };

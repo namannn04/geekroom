@@ -33,14 +33,14 @@ export const metadata: Metadata = {
     template: "%s | Geek Room",
   },
   description:
-    `Geek Room is a global builder community of ${stat.builders} developers, founders and companies, running hackathons, vibe-a-thons, meetups and hiring challenges online and in person.`,
+    `Geek Room is the developer growth partner behind a community of ${stat.builders} builders: content, community, hackathons and real developer feedback that put products in front of developers.`,
   openGraph: {
     type: "website",
     siteName: "Geek Room",
     url: "/",
     title: "Geek Room",
     description:
-      `Geek Room is a global builder community of ${stat.builders} developers, founders and companies, running hackathons, vibe-a-thons, meetups and hiring challenges online and in person.`,
+      `Geek Room is the developer growth partner behind a community of ${stat.builders} builders: content, community, hackathons and real developer feedback that put products in front of developers.`,
   },
   twitter: {
     card: "summary_large_image",

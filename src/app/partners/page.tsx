@@ -167,8 +167,8 @@ export default function PartnersPage() {
             Put your logo <span className="[font-stretch:150%] font-light">on the wall.</span>
           </>
         }
-        body="Sponsor a hackathon, bring your tech to a track, host a finale or put prizes on the table. Tell us what you have in mind."
-        href={contactHref("Partnership")}
+        body="Run a content series, launch on GitHub and Reddit, hear from real developers or put your product at the center of a hackathon. Tell us what you have in mind."
+        href={contactHref("Developer growth package")}
         secondary={{ href: "/services", label: "See what we offer" }}
       />
     </>

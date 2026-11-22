@@ -14,9 +14,10 @@ import { getEvent } from "@/data/events";
 import { contactHref } from "@/data/services";
 import { stat } from "@/data/stats";
 import { pageMetadata } from "@/lib/metadata";
+import PackageStrip from "@/components/services/PackageStrip";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Exclusive Hackathons",
+  title: "3 Hackathons a Year",
   description: `Host an exclusive hackathon with Geek Room. We design the problem statements around your product, reach ${stat.builders} builders, shortlist, mentor, judge and run the finale at your office.`,
   path: "/services/hackathons",
 });
@@ -46,7 +47,7 @@ export default function HackathonsPage() {
     <>
       <ServiceHero
         icon={<GeekMark className="h-7 w-auto" />}
-        label="Service 01 · Brand and engagement"
+        label="Service 05 · Hackathons"
         title={
           <>
             A hackathon built around <em>you</em>.
@@ -92,10 +93,61 @@ export default function HackathonsPage() {
         </div>
       </section>
 
+      {/* Your year of hackathons */}
+      <section className="shell pb-24 md:pb-32">
+        <SectionHead
+          index="02"
+          title={
+            <>
+              Your year of <em>hackathons</em>
+            </>
+          }
+          intro="Three hackathons, each doing a different job: reach, depth and talent."
+        />
+        <div className="mt-14 grid gap-4 md:grid-cols-3">
+          {[
+            { n: "01", when: "Q1", title: "Global online hackathon", text: "Thousands of builders worldwide ship projects on your stack." },
+            { n: "02", when: "Q2–Q3", title: "In-person flagship", text: "Your track at a flagship like HackBLR or Code Kshetra.", hot: true },
+            { n: "03", when: "Q4", title: "Hiring or exclusive hackathon", text: "Find and hire talent on real problems, like HackSmart." },
+          ].map((h, i) => (
+            <Reveal key={h.n} delay={i * 0.08} className="h-full">
+              <div className={`flex h-full flex-col rounded-[1.75rem] p-7 ${h.hot ? "border-2 border-orange bg-ink-2" : "border border-line bg-ink-2"}`}>
+                <div className="flex items-baseline justify-between">
+                  <span className="display text-5xl text-orange">{h.n}</span>
+                  <span className="font-mono text-xs text-subtle">{h.when}</span>
+                </div>
+                <p className="mt-8 font-display text-2xl leading-tight font-bold [font-stretch:90%]">{h.title}</p>
+                <p className="mt-2 leading-relaxed text-muted">{h.text}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+        <div className="mt-4 rounded-[1.75rem] border border-line p-7 md:p-9">
+          <p className="label">Every hackathon includes</p>
+          <ul className="mt-6 grid gap-x-10 gap-y-3 sm:grid-cols-2">
+            {[
+              "Problem statements on your product",
+              "Mentors and judges",
+              `Promotion to ${stat.builders} builders`,
+              "Winner showcase and content",
+              "Post-event usage report",
+              "Talent shortlist on request",
+              "Judging and prize ops",
+              "Social and video coverage",
+            ].map((item) => (
+              <li key={item} className="flex items-center gap-3 text-paper">
+                <span className="grid size-5 shrink-0 place-items-center rounded-full bg-orange text-[11px] font-bold text-ink">✓</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       {/* Case studies */}
       <section id="cases" className="shell scroll-mt-28 pb-24 md:pb-32">
         <SectionHead
-          index="02"
+          index="03"
           title={
             <>
               Real <em>numbers</em>
@@ -146,7 +198,9 @@ export default function HackathonsPage() {
         </div>
       </section>
 
-      <ServiceFaq index="03" faqs={faqs} />
+      <PackageStrip current="hackathons" />
+
+      <ServiceFaq index="04" faqs={faqs} />
 
       <ServiceCta
         title={
@@ -154,7 +208,7 @@ export default function HackathonsPage() {
             Your office, <span className="[font-stretch:150%] font-light">full of builders.</span>
           </>
         }
-        body="Tell us what you want builders to make with your product. We'll come back with tracks, a timeline and a budget."
+        body="Tell us what you want builders to make with your product. We'll come back with tracks, a timeline and a plan."
         href={contactHref("Host a hackathon")}
         secondary={{ href: "/services/hiring-challenges", label: "Hire from it too" }}
       />

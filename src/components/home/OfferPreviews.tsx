@@ -19,42 +19,6 @@ function useTicker(ms: number) {
 
 const frame = "rounded-2xl border border-line bg-ink p-4 font-mono text-[11px]";
 
-/** Hiring: four candidates whose scores keep updating, so the shortlist re-sorts itself. */
-export function HiringPreview() {
-  const { ref, tick, reduced } = useTicker(1600);
-  const base = [
-    { id: "C04", s: 31 },
-    { id: "A17", s: 30 },
-    { id: "B22", s: 29 },
-    { id: "D09", s: 28 },
-  ];
-  // Deterministic wobble so the order changes every tick
-  const rows = base
-    .map((c, i) => ({ ...c, s: c.s + ((tick * (i + 3) + i * 5) % 7) }))
-    .sort((a, b) => b.s - a.s);
-
-  return (
-    <div ref={ref} className={frame} aria-hidden>
-      <div className="flex justify-between text-subtle">
-        <span>Shortlist</span>
-        <span className="text-orange">live scoring</span>
-      </div>
-      <ul className="mt-3 space-y-1.5">
-        {rows.map((r, i) => (
-          <motion.li key={r.id} layout={!reduced} transition={{ type: "spring", stiffness: 300, damping: 30 }} className="flex items-center gap-3">
-            <span className="w-7 text-muted">{r.id}</span>
-            <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-ink-3">
-              <motion.span className="block h-full rounded-full bg-orange" animate={{ width: `${(r.s / 40) * 100}%` }} transition={{ duration: 0.5 }} />
-            </span>
-            <span className="w-5 text-right text-paper tabular-nums">{r.s}</span>
-            <span className={`w-3 ${i < 2 ? "text-[#3fb950]" : "text-transparent"}`}>✓</span>
-          </motion.li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
 /** Hackathon: a registration counter that keeps climbing as dots fill in. */
 export function HackathonPreview() {
   const { ref, tick } = useTicker(220);
@@ -78,27 +42,61 @@ export function HackathonPreview() {
   );
 }
 
-const qs = ["How do you eval tool calls?", "Works with open models?", "Latency of guardrails?"];
+/** Content: a feed of what's been published, cycling through formats. */
+const content = [
+  { kind: "Podcast", title: "Build with Bifrost", meta: "1:07:01" },
+  { kind: "Blog", title: "Qdrant on Towards AI", meta: "8 min" },
+  { kind: "Short", title: "Your product, explained", meta: "0:58" },
+  { kind: "YouTube", title: "SEO pipeline with MCP", meta: "9:52" },
+  { kind: "GEO", title: "Named in Google AI Overview", meta: "live" },
+];
 
-/** Speakers: an audience Q&A where votes keep coming in. */
-export function SpeakerPreview() {
-  const { ref, tick } = useTicker(1300);
-  const votes = qs.map((_, i) => 6 + i * 2 + ((tick * (3 - i) + i) % 9));
-  const order = qs.map((q, i) => ({ q, v: votes[i] })).sort((a, b) => b.v - a.v);
+export function ContentPreview() {
+  const { ref, tick, reduced } = useTicker(1700);
+  const rows = Array.from({ length: 3 }, (_, i) => content[(tick + i) % content.length]);
   return (
     <div ref={ref} className={frame} aria-hidden>
       <div className="flex justify-between text-subtle">
-        <span>Audience Q&amp;A</span>
-        <span className="text-orange">● live</span>
+        <span>Published</span>
+        <span className="text-orange">● this week</span>
       </div>
       <ul className="mt-3 space-y-1.5 font-sans text-[12px]">
-        {order.map((o, i) => (
-          <motion.li key={o.q} layout transition={{ type: "spring", stiffness: 300, damping: 30 }} className={`flex items-center gap-2 rounded-lg border px-2.5 py-1.5 ${i === 0 ? "border-orange/60" : "border-line"}`}>
-            <span className={`font-mono text-[11px] tabular-nums ${i === 0 ? "text-orange" : "text-subtle"}`}>▲ {o.v}</span>
-            <span className="truncate text-paper">{o.q}</span>
+        {rows.map((r, i) => (
+          <motion.li
+            key={`${r.title}-${tick}`}
+            layout={!reduced}
+            initial={reduced ? false : { opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35 }}
+            className={`flex items-center gap-2 rounded-lg border px-2.5 py-1.5 ${i === 0 ? "border-orange/60" : "border-line"}`}
+          >
+            <span className={`w-14 shrink-0 font-mono text-[10px] uppercase ${i === 0 ? "text-orange" : "text-subtle"}`}>{r.kind}</span>
+            <span className="flex-1 truncate text-paper">{r.title}</span>
+            <span className="font-mono text-[10px] text-subtle">{r.meta}</span>
           </motion.li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+/** Community: a repo's star count climbing as campaigns land. */
+export function CommunityPreview() {
+  const { ref, tick } = useTicker(140);
+  const stars = 5200 + ((tick * 23) % 2001);
+  const bars = [3, 4, 4, 5, 6, 6, 7, 8, 9, 10];
+  return (
+    <div ref={ref} className={frame} aria-hidden>
+      <div className="flex justify-between text-subtle">
+        <span>arc-task-gen</span>
+        <span className="text-orange">★ GitHub</span>
+      </div>
+      <p className="display mt-2 text-4xl text-paper tabular-nums">{(stars / 1000).toFixed(1)}K</p>
+      <div className="mt-3 flex h-10 items-end gap-1">
+        {bars.map((h, i) => (
+          <span key={i} className={`flex-1 rounded-sm ${i === bars.length - 1 ? "bg-orange" : "bg-paper/25"}`} style={{ height: `${h * 10}%` }} />
+        ))}
+      </div>
     </div>
   );
 }

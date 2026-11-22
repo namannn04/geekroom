@@ -25,10 +25,11 @@ import ServiceCta from "@/components/services/ServiceCta";
 import { contactHref } from "@/data/services";
 import { stat } from "@/data/stats";
 import { pageMetadata } from "@/lib/metadata";
+import PackageStrip from "@/components/services/PackageStrip";
 
 export const metadata: Metadata = pageMetadata({
-  title: "GitHub Star Campaigns",
-  description: `Grow your open-source repo's GitHub stars with real developers. Geek Room audits your README, runs your launch and puts your project in front of ${stat.builders} builders through hackathons, workshops and community channels.`,
+  title: "GitHub Marketing",
+  description: `Stars, forks and contributors from real developers. Geek Room audits your README, runs your launch and puts your project in front of ${stat.builders} builders through hackathons, workshops and community channels.`,
   path: "/services/github-stars",
 });
 
@@ -57,7 +58,7 @@ const playbook = [
     icon: BookIcon,
     title: "Content that lasts",
     text: "Tutorials and deep dives from our technical writing team keep new developers finding your repo long after launch week.",
-    link: { href: "/services/technical-writing", label: "Technical writing" },
+    link: { href: "/services/technical-writing", label: "Technical blogs" },
   },
   {
     icon: GraphIcon,
@@ -70,7 +71,7 @@ const channels = [
   { title: "Hackathon tracks", text: "Code Cubicle, HackBLR and our global hackathons, with a prize track built around your repo." },
   { title: "Live workshops", text: "Hands-on sessions where 100s of developers clone, run and star your project together." },
   { title: "Community channels", text: `Launch posts across our WhatsApp, Discord, LinkedIn and Instagram, reaching ${stat.builders} builders.` },
-  { title: "Campus chapters", text: "20+ chapters across India that run meetups and build sessions with partner tools." },
+  { title: "WhatsApp groups", text: `${stat.whatsappGroups} active builder groups across colleges, cities and tech stacks.` },
   { title: "Good first issues", text: "Contributor drives that turn stargazers into people opening issues and pull requests." },
 ];
 
@@ -110,7 +111,7 @@ export default function GithubStarsPage() {
           </Link>
           <div className="flex items-center gap-3 text-paper">
             <MarkGithubIcon size={28} />
-            <p className="label">Service 04 · Developer marketing</p>
+            <p className="label">Service 03 · GitHub marketing</p>
           </div>
           <h1 className="display mt-8 max-w-[14ch] text-[clamp(3rem,9vw,7.5rem)]">
             Stars from <em>real</em> developers.
@@ -122,7 +123,7 @@ export default function GithubStarsPage() {
               stargazers and contributors.
             </p>
             <div className="flex flex-wrap gap-3">
-              <Link href={contactHref("GitHub star campaign")} className="btn-primary">
+              <Link href={contactHref("Developer marketing")} className="btn-primary">
                 Plan my campaign <ArrowUpRight className="size-4" />
               </Link>
               <a href="#playbook" className="btn-ghost">
@@ -146,24 +147,30 @@ export default function GithubStarsPage() {
         </div>
       </section>
 
-      {/* Proof band */}
+      {/* Real results */}
       <section className="shell mt-20 md:mt-28">
-        <dl className="grid grid-cols-2 border-t border-line lg:grid-cols-4">
-          {[
-            [stat.builders, "Developers in the community"],
-            ["25K+", "Hackathon registrations"],
-            [stat.companies, "Partner companies"],
-            [stat.countries, "Countries builders join from"],
-          ].map(([v, l], i) => (
-            <div key={l} className={`border-b border-line p-5 md:p-8 ${i % 2 ? "border-l" : ""} ${i === 2 ? "lg:border-l" : ""}`}>
-              <dd className="display text-[clamp(2rem,5vw,4rem)]">
-                {v.replace("+", "")}
-                <span className="text-orange">+</span>
-              </dd>
-              <dt className="mt-2 text-muted">{l}</dt>
-            </div>
-          ))}
-        </dl>
+        <div className="grid gap-4 md:grid-cols-[1fr_1fr_1.1fr] md:items-stretch">
+          <div className="rounded-[1.75rem] border border-line bg-ink-2 p-7">
+            <p className="font-mono text-xs tracking-[0.06em] text-subtle uppercase">Pathway</p>
+            <p className="display mt-6 text-[clamp(3.4rem,7vw,5.5rem)]">
+              62K <span className="font-sans text-xl font-normal normal-case [font-stretch:100%]">stars</span>
+            </p>
+            <p className="mt-2 text-muted">1.7K forks, growing every month</p>
+          </div>
+          <div className="rounded-[1.75rem] bg-orange p-7 text-ink">
+            <p className="font-mono text-xs tracking-[0.06em] uppercase">arc-task-gen</p>
+            <p className="display mt-6 text-[clamp(3.4rem,7vw,5.5rem)]">
+              7.2K <span className="font-sans text-xl font-normal normal-case [font-stretch:100%]">stars</span>
+            </p>
+            <p className="mt-2">From a brand-new repo</p>
+          </div>
+          <div className="flex flex-col justify-center rounded-[1.75rem] border border-line p-7">
+            <p className="label">Real results</p>
+            <p className="mt-3 text-lg leading-relaxed text-paper">
+              Both for Pathway, alongside repos for more partner companies. Star counts are from GitHub, November 2026.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* Star history */}
@@ -314,6 +321,8 @@ export default function GithubStarsPage() {
         </div>
       </section>
 
+      <PackageStrip current="github-stars" />
+
       {/* FAQ */}
       <section className="shell grid gap-12 pb-24 md:pb-32 lg:grid-cols-[0.8fr_1.2fr]">
         <SectionHead
@@ -347,7 +356,7 @@ export default function GithubStarsPage() {
           </>
         }
         body="Tell us about your repo and where you want it to be. We'll come back with a campaign plan, a timeline and a README fix list."
-        href={contactHref("GitHub star campaign")}
+        href={contactHref("Developer marketing")}
         secondary={{ href: "/services/technical-writing", label: "Pair it with technical writing" }}
       />
     </>

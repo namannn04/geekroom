@@ -1,247 +1,420 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import "./brochure.css";
+import { ArrowDown, ArrowUpRight, Check } from "lucide-react";
+import SectionHead from "@/components/ui/SectionHead";
+import Reveal from "@/components/ui/Reveal";
+import PartnerMark from "@/components/partners/PartnerMark";
+import ServiceIcon from "@/components/services/ServiceIcon";
+import { directory } from "@/data/partners";
+import { contactHref, getService, serviceList } from "@/data/services";
+import { site } from "@/data/site";
 import { stat } from "@/data/stats";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = pageMetadata({
-  title: "Partner with Geek Room",
-  description: `Reach ${stat.builders} developers through Geek Room hackathons, meetups, hiring challenges and brand partnerships.`,
+  title: "Partnership Proposal 2027–28",
+  description: `The Geek Room Developer Growth Package: ten services across content, community, hackathons and developer feedback, with package plans for teams that want to reach ${stat.builders} builders.`,
   path: "/brochure",
 });
 
-const images = "/images/brochure";
+const PDF = "/geek-room-partnership-proposal.pdf";
 
-const reasons = [
-  `Reach ${stat.buildersLong} developers worldwide`,
-  "Build awareness among Gen Z developers",
-  "Hire engineers through hackathons",
-  "Run API adoption campaigns",
-  "Get quality products built on your product",
+const formats = ["Global hackathons", "Vibe-a-thons", "In-person finales", "Hiring challenges", "Meetups", "Speaker sessions"];
+const flagships = [
+  { name: "HackBLR", tag: "Hybrid", href: "/event/hackblr1" },
+  { name: "Code Kshetra", tag: "Global", href: "/event/ck2.0" },
+  { name: "Code Cubicle", tag: "India", href: "/event/cc6.0" },
+  { name: "AI Race Month", tag: "Online", href: "/event/grandprix" },
+  { name: "Hack Geek Room", tag: "Global", href: "/event/hackgr" },
 ];
 
-const reach = [
-  { value: stat.builders, label: "Developers" },
-  { value: stat.events, label: "Events conducted" },
-  { value: "20+", label: "Chapters" },
+const numbers = [
+  { label: "Community", value: stat.builders, note: "Builders worldwide" },
+  { label: "Registrations", value: stat.registrations, note: "Hackathon sign-ups" },
+  { label: "Partners", value: stat.companies, note: "Partner companies" },
+  { label: "Events", value: stat.events, note: "Online and in person" },
+  { label: "Projects", value: "300+", note: "Hackathon submissions" },
+  { label: "Stage", value: stat.speakers, note: "Speakers and mentors", hot: true },
 ];
 
-const channels = [
-  { name: "WhatsApp", value: "100+", label: "groups" },
-  { name: "Discord", value: "2K+", label: "members" },
-  { name: "LinkedIn", value: "17,000", label: "followers" },
-  { name: "Instagram", value: "11,000", label: "followers" },
+const wallNames = ["GitHub", "Qdrant", "Mastercard", "Major League Hacking", "Groq", "Vapi", "Pathway", "OmniDimension", "Battery Smart", "NordVPN", "Superlinked"];
+const wall = wallNames.map((n) => directory.find((p) => p.name === n)!).filter(Boolean);
+
+const cases = [
+  { city: "Bengaluru", title: "HackBLR", text: "MLH HackDays with Vapi voice-AI tracks and Qdrant. 1,500+ builders in one room.", href: "/event/hackblr1" },
+  { city: "Global", title: "Code Kshetra 2.0", text: "Powered by Groq, Pathway and MLH. 14,500+ applications for 150 spots.", href: "/event/ck2.0" },
+  { city: "Gurugram", title: "Code Cubicle 3.0", text: "Mastercard's first exclusive hackathon with Geek Room.", href: "/event/cc3.0" },
+  { city: "Gurugram", title: "HackSmart", text: "Two hiring-hackathon editions with Battery Smart, at their HQ.", href: "/event/hacksmart-2" },
 ];
 
-const benefits = [
-  { title: "Event naming rights", body: "Your brand on the event itself, across every touchpoint." },
-  { title: "Mentoring & judging", body: "Your engineers on the floor and on the panel." },
-  { title: "Brand & access", body: "Stage time, booths and direct access to developers." },
-  { title: "Products built on your stack", body: "Problem statements that turn participants into users." },
-];
-
-const operations = ["Event shoot", "Promotion", "Online & offline rounds", "Logistics", "Venue setup"];
-
-const caseStudies = [
+const plans = [
   {
-    tag: "Flagship · Delhi",
-    title: "Code Kshetra",
-    metric: "13,000+",
-    metricLabel: "registrations",
-    body: "A 36-hour flagship hackathon backed by over two months of sustained marketing across our channels, building demand long before day one.",
+    term: "1 month",
+    name: "Monthly",
+    price: "$2,500",
+    per: "per month",
+    sub: "Billed monthly",
+    lead: null,
+    items: ["2 technical blogs / month", "1 YouTube video / month, shared on every channel", "GitHub marketing", "Developer marketing", "Monthly performance report"],
+    best: "Best for a single launch or campaign.",
   },
   {
-    tag: "First in India",
-    title: "Mastercard Hackathon",
-    metric: "7,000+",
-    metricLabel: "registrations",
-    body: "Mastercard's first hackathon with a developer community in India. We brought the right builders to the problem statement, and participants were hired from it.",
+    term: "3 months",
+    name: "Quarterly",
+    price: "$7,000",
+    per: "for 3 months",
+    sub: "≈ $2,333 / mo",
+    save: "Save $500",
+    lead: "All of Monthly, plus",
+    items: ["Reddit marketing", "Shorts and reels", "1 hackathon", "Dedicated Geek Room team"],
+    best: "Best for a product launch cycle.",
   },
   {
-    tag: "EV · Gurugram",
-    title: "HackSmart × Battery Smart",
-    metric: "200+",
-    metricLabel: "projects in under a month",
-    body: "Participants learned Battery Smart's technology and worked on its real charging problems, from 5,000+ registrations.",
+    term: "6 months",
+    name: "Half-yearly",
+    price: "$13,500",
+    per: "for 6 months",
+    sub: "≈ $2,250 / mo",
+    save: "Save $1,500",
+    lead: "All of Quarterly, plus",
+    items: ["3 technical blogs / month", "Podcasts and discussions", "SEO and GEO", "Developer feedback round", "2 hackathons in total"],
+    best: "Best for building lasting momentum.",
   },
   {
-    tag: "MLH Hackdays · Bengaluru",
-    title: "HackBLR",
-    metric: "100+",
-    metricLabel: "companies involved",
-    body: "Teams built voice AI and agent products around real company use cases, working alongside people from more than 100 companies.",
-  },
-];
-
-const eventList = [
-  ["Code Cubicle 6.0", "Noida"], ["AI Race GrandPrix", "Noida"], ["HackBLR (MLH)", "Bengaluru"],
-  ["Hack Geek Room", "NCR"], ["HackSmart 2026", "Gurugram"], ["GR Meetup #2", "Gurugram"],
-  ["Code Cubicle 5.0", "Bengaluru"], ["Code Cubicle 4.0", "Hyderabad"], ["Code Kshetra 2.0", "Delhi"],
-  ["Code Seva", "Gurugram"], ["Hire-A-Thon × InvoLead", "Gurugram"], ["Code Cubicle 3.0", "Gurugram"],
-  ["Code Cubicle 2.0", "Gurugram"], ["Code Cubicle 1.0", "Noida"], ["Code Kshetra 1.0", "Delhi"],
-];
-
-const packages = [
-  {
-    category: "Global · virtual",
-    title: "Global virtual hackathon",
-    tiers: [["Track Partner", "$5,000"], ["Community Partner", "$3,000"], ["Supporting Partner", "$2,000"]],
-    note: "Reach developers across geographies.",
-  },
-  {
-    category: "India · in person",
-    title: "India in-person hackathon",
-    tiers: [["Track Partner", "$2,500"], ["Community Partner", "$1,500"], ["Supporting Partner", "$1,000"]],
-    note: "Major Indian cities, in-person audience.",
-  },
-  {
-    category: "Short format",
-    title: "Vibeathon",
-    tiers: [["Track Partner", "$2,000"]],
-    note: "Two track partner slots available. Price per track.",
-  },
-  {
-    category: "Exclusive · hiring",
-    title: "Hireathon",
-    tiers: [["Exclusive Partner", "$5,000"]],
-    note: "One company. The entire event is designed around its hiring needs.",
+    term: "12 months",
+    name: "Annual",
+    price: "$25,000",
+    per: "per year",
+    sub: "≈ $2,083 / mo",
+    save: "Save $5,000",
+    lead: "All of Half-yearly, plus",
+    items: ["4 technical blogs / month", "2 YouTube videos / month", "3 hackathons in total", "Quarterly strategy review"],
+    best: "Recommended: all 10 services, all year.",
+    popular: true,
   },
 ];
 
-const trackBenefits = [
-  "Dedicated track", "API integration", "Analytics", "Website logo", "Social promotion", "Newsletter",
-  "Workshop session", "Judging involvement", "Recruitment access", "Participant data", "Custom content", "Event branding",
+const alaCarte = [
+  { slug: "github-stars", title: "GitHub Marketing", text: "Stars, forks and contributors for your open-source repo.", items: ["README, docs and example polish", "Community pushes across our channels", "Contributor challenges and good-first-issues"], price: "$1,000", per: "/ month" },
+  { slug: "technical-writing", title: "Technical Blogs", text: "Code-first articles written and tested by engineers.", items: ["Research, code and editing included", "Placement in developer publications", "SEO and GEO optimized"], price: "$200", per: "/ blog" },
+  { slug: "reddit-marketing", title: "Reddit Marketing", text: "A transparent, value-first presence where developers ask for opinions.", items: ["Subreddit mapping and strategy", "Value-first posts and launch threads", "Ongoing comment engagement"], price: "$750", per: "/ month" },
+  { slug: "hackathons", title: "Hackathons", text: "A dedicated track or a hackathon built around your product.", items: ["Problem statements on your product", `Promotion to ${stat.builders} builders`, "Judging, mentors and winner showcase"], price: "$3,000", per: "/ event" },
 ];
 
-function SectionIntro({ eyebrow, children, lead }: { eyebrow: string; children: ReactNode; lead?: string }) {
-  return (
-    <div className="brochure-section-intro">
-      <p className="brochure-eyebrow">{eyebrow}</p>
-      <h2>{children}</h2>
-      {lead && <p className="brochure-lead">{lead}</p>}
-    </div>
-  );
-}
+const steps = [
+  { title: "Kickoff", when: "Week 1", text: "Goals, audience and product deep-dive with your team." },
+  { title: "Plan", when: "Week 2", text: "A 12-month calendar of content, sessions and hackathons." },
+  { title: "Launch", when: "Ongoing", text: "Campaigns, content and events go live across every channel." },
+  { title: "Report", when: "Monthly", text: "Reach, sign-ups, GitHub growth and developer feedback in one report." },
+];
 
 export default function BrochurePage() {
   return (
-    <div className="brochure-site">
-      <section className="brochure-hero">
-        <div className="brochure-container brochure-hero-grid">
-          <div className="brochure-hero-copy">
-            <p className="brochure-eyebrow">Partnerships · Geek Room</p>
-            <h1>Partner with <em>Geek Room.</em></h1>
-            <p>Geek Room helps companies reach, engage and hire from a global community of {stat.builders} developers, founders and engineers through hackathons, campaigns, product activations and skills-based hiring challenges.</p>
-            <div className="brochure-actions">
-              <a className="brochure-button brochure-button-primary" href="#partnerships">Explore partnerships <span aria-hidden>↗</span></a>
-              <a className="brochure-button brochure-button-outline" href="/global-hackathon-geekroom.pdf" download>Download PDF <span aria-hidden>↓</span></a>
+    <>
+      {/* Cover */}
+      <section className="shell pt-36 pb-20 md:pt-44">
+        <p className="font-mono text-xs tracking-[0.08em] text-orange uppercase">Partnership proposal · 2027–28 · Developer Growth Package</p>
+        <div className="mt-8 grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+          <div>
+            <h1 className="display text-[clamp(3.2rem,9vw,7.5rem)]">
+              Grow with the <em>smarter</em> community
+            </h1>
+            <p className="mt-8 max-w-[38rem] text-lg leading-relaxed text-muted md:text-xl">
+              A single partnership that puts your product in front of {stat.builders} developers, founders and builders, through content, community, hackathons and real developer feedback.
+            </p>
+            <div className="mt-10 flex flex-wrap gap-3">
+              <Link href={contactHref("Developer growth package")} className="btn-primary">
+                Book a 30-minute call <ArrowUpRight className="size-4" />
+              </Link>
+              <a href={PDF} download className="btn-ghost">
+                Download the PDF <ArrowDown className="size-3.5" />
+              </a>
             </div>
           </div>
-          <div className="brochure-hero-photo">
-            <Image src={`${images}/cover-builders.webp`} alt="Developers collaborating at a Geek Room event" fill priority sizes="(max-width: 800px) 100vw, 45vw" />
-            <span className="brochure-photo-tag tag-one">{stat.builders} builders</span>
-            <span className="brochure-photo-tag tag-two">20+ campus chapters</span>
-            <span className="brochure-photo-tag tag-three">{stat.events} events conducted</span>
+          <ul className="flex flex-wrap gap-2 lg:justify-end">
+            {[
+              [stat.builders, "builders in the community"],
+              [stat.companies, "partner companies"],
+              [stat.registrations, "hackathon registrations"],
+              [stat.events, "events run"],
+            ].map(([v, l]) => (
+              <li key={l} className="rounded-full border border-line-strong px-4 py-2.5 text-sm">
+                <span className="font-mono text-orange">{v}</span> <span className="text-paper">{l}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* 01 Who we are */}
+      <section className="shell grid gap-12 py-20 md:py-28 lg:grid-cols-[0.75fr_1.25fr] lg:items-start [&>*]:min-w-0">
+        <div>
+          <SectionHead
+            size="sm"
+            index="01"
+            title={
+              <>
+                Built by <em>builders</em>
+              </>
+            }
+          />
+          <p className="label mt-10">What we run</p>
+          <ul className="mt-4 flex flex-wrap gap-2">
+            {formats.map((f) => (
+              <li key={f} className="rounded-full border border-line-strong px-3.5 py-1.5 text-sm text-paper">
+                {f}
+              </li>
+            ))}
+          </ul>
+          <p className="label mt-10">Flagship events</p>
+          <ul className="mt-3 border-t border-line">
+            {flagships.map((f) => (
+              <li key={f.name} className="border-b border-line">
+                <Link href={f.href} className="flex items-center justify-between py-3 transition-colors hover:text-orange">
+                  <span className="font-display text-lg font-bold [font-stretch:90%]">{f.name}</span>
+                  <span className="font-mono text-[11px] tracking-[0.06em] text-subtle uppercase">{f.tag}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+            {numbers.map((n) => (
+              <div key={n.label} className={`rounded-[1.25rem] p-5 md:p-6 ${n.hot ? "bg-orange text-ink" : "border border-line bg-ink-2"}`}>
+                <p className={`font-mono text-[11px] tracking-[0.06em] uppercase ${n.hot ? "text-ink/70" : "text-subtle"}`}>{n.label}</p>
+                <p className="display mt-3 text-[clamp(2.4rem,4.5vw,3.6rem)]">{n.value}</p>
+                <p className={`mt-1 text-sm ${n.hot ? "" : "text-muted"}`}>{n.note}</p>
+              </div>
+            ))}
           </div>
+          {[
+            { v: "14,500+", tag: "Code Kshetra 2.0", text: "applications for just 150 spots. Demand, not just reach." },
+            { v: "1,500+", tag: "HackBLR · MLH HackDays", text: "builders in one room in Bengaluru." },
+          ].map((r) => (
+            <div key={r.tag} className="mt-3 flex flex-wrap items-center gap-x-8 gap-y-2 rounded-[1.25rem] border border-line bg-ink-2 p-5 md:p-6">
+              <p className="display text-[clamp(2.4rem,4.5vw,3.4rem)] text-orange">{r.v}</p>
+              <div>
+                <p className="font-mono text-[11px] tracking-[0.06em] text-subtle uppercase">{r.tag}</p>
+                <p className="mt-1 text-paper">{r.text}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      <section className="brochure-section brochure-trust">
-        <div className="brochure-container brochure-trust-grid">
-          <div>
-            <SectionIntro eyebrow="The company we keep">Trusted <em>by builders.</em></SectionIntro>
-            <p className="brochure-lead">AI labs, cloud platforms, developer tools and global brands have built, hired and launched with our community.</p>
+      {/* 02 Track record */}
+      <section className="shell py-20 md:py-28">
+        <SectionHead
+          index="02"
+          title={
+            <>
+              Partners who <em>back the build</em>
+            </>
+          }
+          intro="From global developer platforms to fintech leaders, these teams trusted Geek Room to put their product in builders' hands."
+        />
+        <ul className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          {wall.map((p) => (
+            <li key={p.name} className="grid h-24 place-items-center rounded-[1.25rem] border border-line bg-ink-2 px-4">
+              <PartnerMark name={p.name} logo={p.logo} mark={p.mark} invert={p.invert} size="sm" />
+            </li>
+          ))}
+          <li className="grid h-24 place-items-center rounded-[1.25rem] border border-dashed border-orange px-4 text-center font-mono text-[11px] tracking-[0.06em] text-orange uppercase">
+            Your logo here next
+          </li>
+        </ul>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {cases.map((c, i) => (
+            <Reveal key={c.title} delay={i * 0.06} className="h-full">
+              <Link href={c.href} className="group flex h-full flex-col rounded-[1.25rem] border border-line bg-ink-2 p-6 transition-colors hover:border-line-strong">
+                <span className="font-mono text-[11px] tracking-[0.06em] text-orange uppercase">{c.city}</span>
+                <span className="mt-4 font-display text-2xl font-bold [font-stretch:90%]">{c.title}</span>
+                <span className="mt-2 text-sm leading-relaxed text-muted">{c.text}</span>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+        <p className="mt-6 font-mono text-xs tracking-[0.06em] text-subtle uppercase">
+          Finales hosted at <span className="text-paper">Microsoft · Paytm · Mastercard</span>
+        </p>
+      </section>
+
+      {/* 03 The package */}
+      <section className="shell py-20 md:py-28">
+        <SectionHead
+          index="03"
+          title={
+            <>
+              One package, <em>every channel</em>
+            </>
+          }
+          intro="Ten services that work as one developer-relations engine. Content builds awareness, community builds trust, and hackathons turn both into real usage."
+        />
+        <ul className="mt-14 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {serviceList.map((s, i) => (
+            <Reveal key={s.slug} delay={(i % 5) * 0.05} className="h-full">
+              <Link href={s.href} className="group flex h-full flex-col rounded-[1.25rem] border border-line bg-ink-2 p-5 transition-colors hover:border-orange">
+                <span className="flex items-center justify-between">
+                  <span className="grid size-10 place-items-center rounded-lg bg-orange/10 text-orange">
+                    <ServiceIcon icon={s.icon} className="size-[18px]" />
+                  </span>
+                  <span className="font-mono text-[11px] text-subtle">{s.index}</span>
+                </span>
+                <span className="mt-8 font-display text-xl leading-tight font-bold [font-stretch:90%]">{s.title}</span>
+                <span className="mt-2 text-sm leading-relaxed text-muted">{s.summary}</span>
+              </Link>
+            </Reveal>
+          ))}
+        </ul>
+      </section>
+
+      {/* 04 Package plans */}
+      <section id="plans" className="shell scroll-mt-28 py-20 md:py-28">
+        <SectionHead
+          index="04"
+          title={
+            <>
+              Pick your <em>commitment</em>
+            </>
+          }
+          intro="Every plan comes with clear deliverables. Commit for longer and you get more channels, more content and more hackathons, at a lower monthly price."
+        />
+        <div className="mt-14 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {plans.map((p) => (
+            <div key={p.name} className={`flex flex-col rounded-[1.5rem] p-6 md:p-7 ${p.popular ? "border-2 border-orange bg-ink-2" : "border border-line bg-ink-2"}`}>
+              <div className="flex items-center justify-between gap-2">
+                <p className={`font-mono text-[11px] tracking-[0.06em] uppercase ${p.popular ? "text-orange" : "text-subtle"}`}>{p.term}</p>
+                {p.popular && <span className="rounded-full bg-paper px-2.5 py-1 font-mono text-[10px] font-semibold tracking-[0.06em] text-ink uppercase">Most popular</span>}
+              </div>
+              <p className="mt-4 font-display text-3xl font-bold [font-stretch:90%]">{p.name}</p>
+              <p className="display mt-4 text-[clamp(2.6rem,4vw,3.4rem)]">{p.price}</p>
+              <p className="font-mono text-[11px] tracking-[0.06em] text-subtle uppercase">{p.per}</p>
+              <div className="mt-4 flex items-center justify-between gap-2 border-b border-line pb-5 text-sm">
+                <span className="text-muted">{p.sub}</span>
+                {p.save && <span className={`rounded-full px-2.5 py-1 font-mono text-[10px] font-semibold tracking-[0.06em] uppercase ${p.popular ? "bg-orange text-ink" : "bg-orange/15 text-orange"}`}>{p.save}</span>}
+              </div>
+              {p.lead && <p className={`mt-5 font-mono text-[11px] tracking-[0.06em] uppercase ${p.popular ? "text-orange" : "text-subtle"}`}>{p.lead}</p>}
+              <ul className="mt-4 flex-1 space-y-2.5">
+                {p.items.map((it) => (
+                  <li key={it} className="flex items-start gap-2.5 text-sm text-paper">
+                    <Check className={`mt-0.5 size-4 shrink-0 ${p.popular ? "text-orange" : "text-teal"}`} />
+                    {it}
+                  </li>
+                ))}
+              </ul>
+              <p className={`mt-6 text-sm ${p.popular ? "font-semibold text-paper" : "text-muted"}`}>{p.best}</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-6 text-sm text-subtle">All prices in USD, exclusive of applicable taxes.</p>
+      </section>
+
+      {/* 05 À la carte */}
+      <section className="shell py-20 md:py-28">
+        <SectionHead
+          index="05"
+          title={
+            <>
+              Individual <em>services</em>
+            </>
+          }
+          intro="Need just one channel? Pick any service on its own, with no package commitment."
+        />
+        <div className="mt-14 grid gap-4 md:grid-cols-2">
+          {alaCarte.map((a) => {
+            const s = getService(a.slug);
+            return (
+              <div key={a.slug} className="grid gap-6 rounded-[1.5rem] border border-line bg-ink-2 p-6 sm:grid-cols-[1fr_auto] md:p-7">
+                <div>
+                  <span className="grid size-10 place-items-center rounded-lg bg-orange/10 text-orange">
+                    <ServiceIcon icon={s.icon} className="size-[18px]" />
+                  </span>
+                  <Link href={s.href} className="mt-5 block font-display text-2xl font-bold [font-stretch:90%] hover:text-orange">
+                    {a.title}
+                  </Link>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{a.text}</p>
+                  <ul className="mt-4 space-y-2">
+                    {a.items.map((it) => (
+                      <li key={it} className="flex items-start gap-2.5 text-sm text-paper">
+                        <Check className="mt-0.5 size-4 shrink-0 text-teal" />
+                        {it}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="flex flex-col justify-end border-line sm:border-l sm:pl-6 sm:text-right">
+                  <p className="font-mono text-[11px] tracking-[0.06em] text-subtle uppercase">Price</p>
+                  <p className="display text-[clamp(2.4rem,4vw,3.2rem)]">{a.price}</p>
+                  <p className="font-mono text-[11px] tracking-[0.06em] text-subtle uppercase">{a.per}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 06 How we work */}
+      <section className="shell py-20 md:py-28">
+        <SectionHead
+          index="06"
+          title={
+            <>
+              How we <em>work</em>
+            </>
+          }
+        />
+        <ol className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {steps.map((s, i) => (
+            <li key={s.title} className="rounded-[1.5rem] border border-line bg-ink-2 p-6">
+              <div className="flex items-baseline justify-between">
+                <span className="display text-4xl text-orange">0{i + 1}</span>
+                <span className="font-mono text-xs tracking-[0.06em] text-subtle uppercase">{s.when}</span>
+              </div>
+              <p className="mt-6 font-display text-2xl font-bold [font-stretch:90%]">{s.title}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{s.text}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* 07 Let's talk */}
+      <section className="shell pb-24 md:pb-32">
+        <div className="relative grid gap-10 overflow-hidden rounded-[2rem] bg-orange p-8 text-ink md:p-14 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+          <Image src="/images/brochure/team-at-event.webp" alt="" fill sizes="100vw" className="object-cover opacity-10 mix-blend-multiply" />
+          <div className="relative">
+            <p className="font-mono text-xs tracking-[0.08em] uppercase">07 · Let&apos;s talk</p>
+            <h2 className="display mt-5 text-[clamp(2.6rem,6.5vw,5.5rem)]">
+              Let&apos;s map your <span className="[font-stretch:150%] font-light">growth plan.</span>
+            </h2>
+            <p className="mt-6 max-w-[32rem] text-lg leading-relaxed">Book a 30-minute call. We&apos;ll map your goals to the package and send you a plan within a week.</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href={contactHref("Developer growth package")} className="btn bg-ink text-paper hover:bg-ink-3">
+                Book a call <ArrowUpRight className="size-3.5" />
+              </Link>
+              <a href={PDF} download className="btn border border-ink/40 hover:border-ink">
+                Download the PDF <ArrowDown className="size-3.5" />
+              </a>
+            </div>
           </div>
-          <div className="brochure-logos"><Image src={`${images}/trusted-partners.webp`} alt="Geek Room partner brands including Battery Smart, Qdrant, Microsoft, AWS, Mastercard, GitHub, Groq and more" width={1010} height={645} sizes="(max-width: 800px) 100vw, 55vw" /></div>
+          <dl className="relative border-t border-ink/20">
+            {[
+              ["Web", "geekroom.co.in", "/"],
+              ["Email", site.email, `mailto:${site.email}`],
+            ].map(([k, v, href]) => (
+              <div key={k} className="flex items-baseline justify-between gap-6 border-b border-ink/20 py-4">
+                <dt className="font-mono text-xs tracking-[0.06em] uppercase">{k}</dt>
+                <dd>
+                  <a href={href} className="font-display text-xl font-bold [font-stretch:90%] hover:underline">
+                    {v}
+                  </a>
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
-
-      <section className="brochure-section brochure-why">
-        <div className="brochure-container">
-          <SectionIntro eyebrow="Why partner with us">What your company <em>can build here.</em></SectionIntro>
-          <div className="brochure-reasons">
-            {reasons.map((reason, index) => <article key={reason} className={index === reasons.length - 1 ? "is-accent" : ""}><span>{String(index + 1).padStart(2, "0")}</span><h3>{reason}</h3></article>)}
-          </div>
-        </div>
-      </section>
-
-      <section className="brochure-section brochure-reach">
-        <div className="brochure-container">
-          <SectionIntro eyebrow="Community & reach">Numbers that <em>compound.</em></SectionIntro>
-          <div className="brochure-stat-grid">{reach.map((stat) => <div key={stat.label}><strong>{stat.value}</strong><span>{stat.label}</span></div>)}</div>
-          <div className="brochure-reach-bottom"><h3>Our volume speaks for us.</h3><p>Thousands of developers talk about our hackathons across our channels, turning reach into relevant conversations.</p></div>
-          <div className="brochure-channel-grid">{channels.map((channel) => <div key={channel.name}><span>{channel.name}</span><strong>{channel.value} <small>{channel.label}</small></strong></div>)}</div>
-        </div>
-      </section>
-
-      <section className="brochure-section brochure-benefits">
-        <div className="brochure-container">
-          <SectionIntro eyebrow="What you get">A partnership built <em>around your goal.</em></SectionIntro>
-          <div className="brochure-benefit-layout">
-            <div className="brochure-benefit-grid">{benefits.map((benefit, index) => <article key={benefit.title} className={index === 3 ? "is-teal" : ""}><span>{String(index + 1).padStart(2, "0")}</span><h3>{benefit.title}</h3><p>{benefit.body}</p></article>)}</div>
-            <aside className="brochure-benefit-aside"><h3>Beyond one city.</h3><p>We take your brand into multiple countries, with products built on your stack and content from each region we run in.</p><div><h4>We run it for you</h4><ul>{operations.map((item) => <li key={item}>{item}</li>)}</ul></div></aside>
-          </div>
-        </div>
-      </section>
-
-      <section className="brochure-section brochure-work" id="work">
-        <div className="brochure-container">
-          <SectionIntro eyebrow="Proof in practice">Built on <em>partner problems.</em></SectionIntro>
-          <div className="brochure-case-grid">{caseStudies.map((study) => <article key={study.title}><span>{study.tag}</span><h3>{study.title}</h3><p className="brochure-case-number"><strong>{study.metric}</strong> {study.metricLabel}</p><p>{study.body}</p></article>)}</div>
-        </div>
-      </section>
-
-      <section className="brochure-photo-band">
-        <Image src={`${images}/team-at-event.webp`} alt="Geek Room community and partners at a live event" fill sizes="100vw" />
-        <div className="brochure-container"><p className="brochure-eyebrow">Our work</p><h2>Rooms full of <em>builders.</em></h2><p>Every event. Every city. Real people building together.</p></div>
-      </section>
-
-      <section className="brochure-section brochure-formats">
-        <div className="brochure-container">
-          <SectionIntro eyebrow="Series · workshops · meetups">More ways to <em>show up.</em></SectionIntro>
-          <div className="brochure-format-grid">
-            <article><Image src={`${images}/code-cubicle.webp`} alt="Code Cubicle 6.0 event artwork" width={1456} height={822} sizes="(max-width: 800px) 100vw, 50vw" /><div><span>Long-running series</span><h3>Code Cubicle</h3><strong>5+ <small>editions · 6th next</small></strong><p>Five editions across Noida, Gurugram, Hyderabad and Bengaluru, hosted at Microsoft, Mastercard and Paytm offices.</p></div></article>
-            <article><Image src={`${images}/workshop-stage.webp`} alt="People gathered for a Geek Room workshop" width={1024} height={961} sizes="(max-width: 800px) 100vw, 50vw" /><div><span>Industry-led</span><h3>Workshops & meetups</h3><strong>15+ <small>workshops</small></strong><p>Industry professionals teach and speak, from Geek Room Meetup #2 to the AI Race Month workshops.</p></div></article>
-          </div>
-        </div>
-      </section>
-
-      <section className="brochure-section brochure-events">
-        <div className="brochure-container">
-          <SectionIntro eyebrow="Selected events · 2024–2026">Explore the <em>hackathons.</em></SectionIntro>
-          <ol>{eventList.map(([name, city], index) => <li key={name}><span>{String(index + 1).padStart(2, "0")}</span><strong>{name}</strong><small>{city}</small></li>)}</ol>
-          <Link className="brochure-text-link" href="/event">See all events <span aria-hidden>↗</span></Link>
-        </div>
-      </section>
-
-      <section className="brochure-section brochure-gallery">
-        <div className="brochure-container"><SectionIntro eyebrow="Inside the room">This is what it <em>looks like.</em></SectionIntro>
-          <div className="brochure-gallery-grid">
-            <Image src={`${images}/gallery-race-month.webp`} alt="AI Race Month workshop" width={2254} height={2731} sizes="(max-width: 800px) 100vw, 40vw" />
-            <Image src={`${images}/gallery-builders.webp`} alt="Developers collaborating around a laptop" width={1200} height={800} sizes="(max-width: 800px) 100vw, 30vw" />
-            <Image src={`${images}/gallery-meetup.webp`} alt="Attendees engaging at a Geek Room meetup" width={1200} height={800} sizes="(max-width: 800px) 100vw, 30vw" />
-            <Image src={`${images}/gallery-hackathon.webp`} alt="Builders working at a Geek Room hackathon" width={2066} height={772} sizes="(max-width: 800px) 100vw, 60vw" />
-          </div>
-        </div>
-      </section>
-
-      <section className="brochure-section brochure-packages" id="partnerships">
-        <div className="brochure-container">
-          <SectionIntro eyebrow="Sponsorship menu">Find your <em>format.</em></SectionIntro>
-          <div className="brochure-package-grid">{packages.map((pkg, index) => <article key={pkg.title} className={index === 3 ? "is-accent" : ""}><p className="brochure-package-category">{pkg.category}</p><h3>{pkg.title}</h3><dl>{pkg.tiers.map(([tier, price]) => <div key={tier}><dt>{tier}</dt><dd>{price}</dd></div>)}</dl><p>{pkg.note}</p></article>)}</div>
-        </div>
-      </section>
-
-      <section className="brochure-section brochure-includes">
-        <div className="brochure-container">
-          <SectionIntro eyebrow="What each tier includes">The details, <em>made clear.</em></SectionIntro>
-          <div className="brochure-includes-grid"><article><p className="brochure-eyebrow">Global & India hackathons</p><h3>Track Partner</h3><ul>{trackBenefits.map((benefit) => <li key={benefit}>{benefit}</li>)}</ul><p><strong>Community & Supporting Partners</strong><br />All Track Partner benefits except the dedicated track and workshop session.</p></article><div><article><p className="brochure-eyebrow">$2,000 / track</p><h3>Vibeathon</h3><p>A short, high-energy format with product or API integration, branding, social promotion, judging, analytics and lead generation.</p></article><article className="is-teal"><p className="brochure-eyebrow">$5,000 · exclusive</p><h3>Hireathon</h3><p>End-to-end execution, a custom challenge, participant sourcing, candidate engagement, evaluation and post-event insights.</p></article></div></div>
-        </div>
-      </section>
-
-      <section className="brochure-cta"><div className="brochure-container"><p className="brochure-eyebrow">Next move</p><h2>Let&apos;s build <em>together.</em></h2><div className="brochure-actions"><a className="brochure-button brochure-button-light" href="mailto:team@geekroom.co.in">team@geekroom.co.in <span aria-hidden>↗</span></a><a className="brochure-button brochure-button-outline" href="/global-hackathon-geekroom.pdf" download>Download the brochure <span aria-hidden>↓</span></a></div></div></section>
-    </div>
+    </>
   );
 }

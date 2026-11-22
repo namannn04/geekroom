@@ -39,12 +39,13 @@ export const footerColumns: { title: string; links: FooterLink[] }[] = [
   {
     title: "Services",
     links: [
-      { label: "All services", href: "/services" },
-      { label: "Exclusive Hackathons", href: "/services/hackathons" },
-      { label: "Hiring Challenges", href: "/services/hiring-challenges" },
-      { label: "Speaker Sessions", href: "/services/speaker-sessions" },
-      { label: "GitHub Star Campaigns", href: "/services/github-stars", badge: "New" },
-      { label: "Technical Writing", href: "/services/technical-writing", badge: "New" },
+      { label: "Developer Growth Package", href: "/services", badge: "New" },
+      { label: "Podcasts & YouTube", href: "/services/podcasts" },
+      { label: "Technical Blogs", href: "/services/technical-writing" },
+      { label: "GitHub & Reddit", href: "/services/github-stars" },
+      { label: "SEO & GEO", href: "/services/seo-geo" },
+      { label: "3 Hackathons a Year", href: "/services/hackathons" },
+      { label: "Developer Feedback", href: "/services/developer-feedback" },
     ],
   },
   {
@@ -119,23 +120,24 @@ export const partners: Partner[] = [
   { name: "Bolt", logo: "/images/partners/bolt.png", col: 6, row: 4 },
 ];
 
+/** Home "Work with us" cards: the three pillars of the Developer Growth Package */
 export const services = [
   {
-    title: "Hiring Challenges",
-    body: "Run hiring challenges with us and move past old-school recruitment, and evaluate candidates on the real skills that make them right for your team, like our Hire-A-Thon with InvoLead and HackSmart with Battery Smart.",
+    title: "Content that builds awareness",
+    body: "Podcasts, YouTube sessions, technical blogs, shorts and SEO and GEO, made by developers for developers and built to keep ranking.",
   },
   {
-    title: "Exclusive Hackathons",
-    body: "Host an exclusive hackathon with Geek Room, like our finales at Microsoft, Mastercard and Paytm, and get strong branding and engagement across 10+ media channels.",
+    title: "Hackathons that drive real usage",
+    body: "Three hackathons a year: a global online hackathon, your track at a flagship like HackBLR or Code Kshetra, and a hiring or exclusive hackathon.",
     proof: [
       { value: stat.buildersLong, label: "Community members" },
-      { value: stat.events, label: "Events conducted" },
+      { value: stat.registrations, label: "Hackathon registrations" },
       { value: stat.companies, label: "Companies partnered" },
     ],
   },
   {
-    title: "Speaker Sessions",
-    body: "Run speaker sessions to showcase your brand and tech, and help grow the open-source and build-in-public culture as hackers adopt your tools natively.",
+    title: "Community that builds trust",
+    body: "Developer marketing, GitHub and Reddit campaigns and real developer feedback, reaching builders inside the communities they already trust.",
   },
 ];
 
@@ -257,7 +259,8 @@ export const team: Person[] = [
 export const faqs: { q: string; a: string; link?: { href: string; label: string } }[] = [
   {
     q: "What does Geek Room do?",
-    a: `Geek Room helps companies reach and engage a global community of ${stat.buildersLong} developers, founders and engineers through hackathons, meetups, roadshows, campaigns, speaker sessions and dedicated promotions. We also run skills-based hiring challenges so teams can evaluate talent by what they can build.`,
+    a: `Geek Room is a developer growth partner. Our Developer Growth Package puts your product in front of ${stat.buildersLong} developers, founders and engineers through ten services: podcasts, YouTube sessions, technical blogs, shorts, SEO and GEO, GitHub, Reddit and developer marketing, hackathons and developer feedback. We also run hiring challenges and speaker sessions.`,
+    link: { href: "/services", label: "See the ten services" },
   },
   {
     q: "How do we join Geek Room?",
@@ -274,7 +277,8 @@ export const faqs: { q: string; a: string; link?: { href: string; label: string 
   },
   {
     q: "If I am an organizer / brand, how do I partner with Geek Room?",
-    a: "Drop us a mail at team@geekroom.co.in and we'll get talking about hosting something amazing together.",
+    a: "Book a 30-minute call through our contact page or mail team@geekroom.co.in. We'll map your goals to the package and send you a plan within a week.",
+    link: { href: "/contact-us?topic=Developer%20growth%20package", label: "Book a call" },
   },
 ];
 
