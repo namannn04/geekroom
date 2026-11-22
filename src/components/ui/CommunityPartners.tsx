@@ -20,7 +20,7 @@ export default function CommunityPartners({ className = "" }: { className?: stri
                     alt={"wordmark" in p ? "" : p.name}
                     width={240}
                     height={55}
-                    className={`w-auto opacity-90 transition-opacity group-hover:opacity-100 ${"square" in p ? "h-[4.5rem]" : "h-10"}`}
+                    className={`w-auto opacity-90 transition-opacity group-hover:opacity-100 ${"height" in p ? p.height : "h-10"}`}
                   />
                   {"wordmark" in p && <span className="font-display text-3xl font-extrabold [font-stretch:90%]">{p.name}</span>}
                   <ArrowUpRight className="size-5 text-subtle group-hover:text-orange" />

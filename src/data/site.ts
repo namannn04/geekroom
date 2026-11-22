@@ -368,7 +368,8 @@ export const pillars = ["Learn", "Connect", "Grow", "Build in public", "Ship", "
 /** Community partners: shown on the home page and on events that opt in via `communityPartners` */
 export const communityPartners = [
   { name: "W3V", url: "https://web3voyager.com", logo: "/images/partners/w3v.png" },
-  { name: "BangPypers", url: "https://bangpypers.github.io", logo: "/images/partners/bangpypers.svg", square: true },
+  { name: "BangPypers", url: "https://bangpypers.github.io", logo: "/images/partners/bangpypers.svg", height: "h-[4.5rem]" },
+  { name: "Sangram AI", url: "https://www.linkedin.com/company/sangram-ai/", logo: "/images/partners/sangram-ai.png", height: "h-14" },
   // Internal: opens our own page about Wayzyy
   { name: "Wayzyy", url: "/partners/wayzyy", logo: "/images/partners/wayzyy.svg", wordmark: true },
 ];
