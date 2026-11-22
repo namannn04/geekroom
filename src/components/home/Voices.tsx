@@ -5,12 +5,14 @@ import { SplitText } from "gsap/SplitText";
 import SectionHead from "@/components/ui/SectionHead";
 import { reviews } from "@/data/site";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
+import { paperRgb, useTheme } from "@/components/theme/ThemeProvider";
 
 gsap.registerPlugin(SplitText);
 
 /** Reviews set large; each quote's words light up in reading order as it scrolls past. */
 export default function Voices({ index = "07" }: { index?: string }) {
   const root = useRef<HTMLElement>(null);
+  const rgb = paperRgb(useTheme().theme);
 
   useGSAP(
     () => {
@@ -19,9 +21,9 @@ export default function Voices({ index = "07" }: { index?: string }) {
         const split = SplitText.create(q, { type: "words" });
         gsap.fromTo(
           split.words,
-          { color: "rgba(238,236,230,0.18)" },
+          { color: `rgba(${rgb},0.18)` },
           {
-            color: "rgba(238,236,230,1)",
+            color: `rgba(${rgb},1)`,
             stagger: 0.08,
             ease: "none",
             scrollTrigger: { trigger: q, start: "top 88%", end: "top 45%", scrub: true },
@@ -31,7 +33,7 @@ export default function Voices({ index = "07" }: { index?: string }) {
       });
       return () => splits.forEach((s) => s.revert());
     },
-    { scope: root },
+    { scope: root, dependencies: [rgb], revertOnUpdate: true },
   );
 
   return (

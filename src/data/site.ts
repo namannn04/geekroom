@@ -90,7 +90,7 @@ export const features = [
   },
   {
     title: "Network with the best people in industry",
-    body: `Every Geek Room event is a chance to meet, talk to and learn from people across the industry. We've hosted finales at Microsoft, Mastercard and Paytm, and worked with ${stat.companies} companies including Google, Meta, GitHub, Groq, Qdrant, Pathway, Vapi and Oracle.`,
+    body: `Every Geek Room event is a chance to meet, talk to and learn from people across the industry. We've hosted finales at Microsoft, Mastercard and Paytm, partnered with ${stat.partners} companies including GitHub, Groq, Qdrant, Pathway and Vapi, and our builders come from ${stat.companies} companies.`,
     image: "/images/home/network.jpg",
   },
 ];
@@ -132,7 +132,7 @@ export const services = [
     proof: [
       { value: stat.buildersLong, label: "Community members" },
       { value: stat.registrations, label: "Hackathon registrations" },
-      { value: stat.companies, label: "Companies partnered" },
+      { value: stat.partners, label: "Partner companies" },
     ],
   },
   {
@@ -285,7 +285,7 @@ export const faqs: { q: string; a: string; link?: { href: string; label: string 
 export const stats = [
   { value: 4.5, suffix: "★", label: "Average event rating", decimals: 1 },
   { value: totals.events, suffix: "+", label: "Events run" },
-  { value: totals.companies, suffix: "+", label: "Partner companies" },
+  { value: totals.partners, suffix: "+", label: "Partner companies" },
 ];
 
 export const milestones = [
@@ -308,9 +308,9 @@ export const milestones = [
 export const achievements = [
   { value: stat.builders, label: "builders in the community", short: "builders" },
   { value: stat.events, label: "events run", short: "events" },
-  { value: stat.companies, label: "partner companies", short: "companies" },
-  { value: "100+", label: "companies at HackBLR", short: "at HackBLR" },
-  { value: "25K+", label: "Hackathon registrations", short: "Hackathon regs" },
+  { value: stat.partners, label: "partner companies", short: "partners" },
+  { value: stat.companies, label: "companies our builders work at", short: "companies" },
+  { value: stat.registrations, label: "Hackathon registrations", short: "Hackathon regs" },
   { value: "300+", label: "Hackathon Project Submissions", short: "Project Submissions" },
   { value: "500+", label: "In-person builders at Code Kshetra", short: "Code Kshetra" },
   { value: "4.5★", label: "average event rating", short: "rating" },
@@ -361,8 +361,8 @@ export const corporateTestimonials: Testimonial[] = [
 /** Headline numbers used in the impact band (all taken from Geek Room's own figures). */
 export const impact = [
   { value: totals.builders, suffix: "+", label: "Builders in the community" },
-  { value: 25000, suffix: "+", label: "Hackathon registrations" },
-  { value: totals.companies, suffix: "+", label: "Partner companies, from AI labs to global brands" },
+  { value: totals.registrations, suffix: "+", label: "Hackathon registrations" },
+  { value: totals.companies, suffix: "+", label: "Companies our builders work at, from AI labs to global brands" },
   { value: 300, suffix: "+", label: "Hackathon project submissions" },
   { value: totals.events, suffix: "+", label: "Events run" },
 ];

@@ -101,7 +101,7 @@ export default function PartnerDirectory() {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.96 }}
                       transition={{ duration: 0.25 }}
-                      className="group flex flex-col rounded-[1.25rem] border border-line bg-ink-2 p-5 transition-colors hover:border-line-strong"
+                      className="theme-dark group flex flex-col rounded-[1.25rem] border border-line bg-ink-2 p-5 transition-colors hover:border-line-strong"
                     >
                       <div className="grid h-16 place-items-start content-center overflow-hidden">
                         <PartnerMark name={p.name} logo={p.logo} mark={p.mark} invert={p.invert} />

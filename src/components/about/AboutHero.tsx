@@ -55,8 +55,8 @@ export default function AboutHero() {
         <div className="max-w-[36rem] space-y-5 text-lg leading-relaxed text-muted">
           <p>
             Geek Room started in 2023 with one goal: bring together everyone in tech who thinks alike. What began as a
-            WhatsApp group for MSIT students is now a global builder community: {stat.builders} developers and founders, {stat.companies}
-            partner companies, online hackathons open to builders worldwide and 20+ local chapters.
+            WhatsApp group for MSIT students is now a global builder community: {stat.builders} developers and founders from {stat.companies}
+            companies, {stat.partners} partner companies, online hackathons open to builders worldwide and 20+ local chapters.
           </p>
           <p>
             Along the way we&apos;ve hit plenty of milestones and built lasting relationships with partners and, above

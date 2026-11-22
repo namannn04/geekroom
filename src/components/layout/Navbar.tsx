@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { navLinks, site } from "@/data/site";
+import ThemeToggle from "@/components/theme/ThemeToggle";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -101,7 +102,7 @@ export default function Navbar() {
               );
             }
             return (
-              <li key={l.href} className="relative">
+              <li key={l.href} className={`relative ${l.href === "/" ? "md:max-lg:hidden" : ""}`}>
                 <Link
                   href={l.href}
                   aria-current={active ? "page" : undefined}
@@ -123,6 +124,8 @@ export default function Navbar() {
           })}
         </ul>
 
+        <div className="flex items-center gap-2">
+        <ThemeToggle />
         <a
           href={site.socials.linktree}
           target="_blank"
@@ -144,6 +147,7 @@ export default function Navbar() {
           <span className={`absolute h-[1.5px] w-4 bg-current transition-transform duration-300 ${open ? "rotate-45" : "-translate-y-1"}`} />
           <span className={`absolute h-[1.5px] w-4 bg-current transition-transform duration-300 ${open ? "-rotate-45" : "translate-y-1"}`} />
         </button>
+        </div>
       </nav>
 
       <AnimatePresence>

@@ -2,7 +2,7 @@
  * Partner directory for the /partners page.
  * Companies and organizations from Geek Room's events, Luma listings, partner pages and public
  * acknowledgements. Roles differ by event: some sponsored, co-hosted, provided technology,
- * supplied a venue or supported prizes. Not every one of the 500+ companies we've worked with.
+ * supplied a venue or supported prizes. A selection of our 50+ partner companies.
  */
 
 export type PartnerCategory = {

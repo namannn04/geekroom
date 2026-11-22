@@ -50,7 +50,7 @@ export default function Partners() {
         </Link>
       </div>
 
-      <div data-wall className="grid grid-cols-3 overflow-hidden border-t border-l border-line [perspective:900px] sm:grid-cols-4">
+      <div data-wall className="theme-dark grid grid-cols-3 overflow-hidden rounded-[1.25rem] border-t border-l border-line bg-ink [perspective:900px] sm:grid-cols-4">
         {partners.map((p) => {
           const logo = <Image src={p.logo} alt={p.name} width={120} height={60} className="max-h-11 h-auto w-auto object-contain opacity-85" />;
           if (!p.story) {

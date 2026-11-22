@@ -58,7 +58,7 @@ export default async function OpengraphImage() {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 120 * S, fontWeight: 800, lineHeight: 1, letterSpacing: -2 * S }}>GEEK ROOM</div>
           <div style={{ marginTop: 24 * S, fontSize: 40 * S, color: "#ff5a1f" }}>
-            {`${stat.builders} builders · ${stat.companies} partner companies`}
+            {`${stat.builders} builders · ${stat.partners} partner companies`}
           </div>
         </div>
       </div>

@@ -32,7 +32,7 @@ const flagships = [
 const numbers = [
   { label: "Community", value: stat.builders, note: "Builders worldwide" },
   { label: "Registrations", value: stat.registrations, note: "Hackathon sign-ups" },
-  { label: "Partners", value: stat.companies, note: "Partner companies" },
+  { label: "Partners", value: stat.partners, note: "Partner companies" },
   { label: "Events", value: stat.events, note: "Online and in person" },
   { label: "Projects", value: "300+", note: "Hackathon submissions" },
   { label: "Stage", value: stat.speakers, note: "Speakers and mentors", hot: true },
@@ -135,7 +135,7 @@ export default function BrochurePage() {
           <ul className="flex flex-wrap gap-2 lg:justify-end">
             {[
               [stat.builders, "builders in the community"],
-              [stat.companies, "partner companies"],
+              [stat.partners, "partner companies"],
               [stat.registrations, "hackathon registrations"],
               [stat.events, "events run"],
             ].map(([v, l]) => (
@@ -215,7 +215,7 @@ export default function BrochurePage() {
           }
           intro="From global developer platforms to fintech leaders, these teams trusted Geek Room to put their product in builders' hands."
         />
-        <ul className="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+        <ul className="theme-dark mt-14 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           {wall.map((p) => (
             <li key={p.name} className="grid h-24 place-items-center rounded-[1.25rem] border border-line bg-ink-2 px-4">
               <PartnerMark name={p.name} logo={p.logo} mark={p.mark} invert={p.invert} size="sm" />

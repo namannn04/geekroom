@@ -9,6 +9,6 @@ export default function Image() {
   return renderOg({
     eyebrow: "About Geek Room",
     title: `From a group chat to ${stat.builders} builders`,
-    subtitle: `Founded in 2023. ${stat.events} events, ${stat.companies} partner companies and builders from ${stat.countries} countries.`,
+    subtitle: `Founded in 2023. ${stat.events} events, ${stat.partners} partner companies and builders from ${stat.countries} countries.`,
   });
 }

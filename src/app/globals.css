@@ -18,8 +18,46 @@
   --orange: #ff5a1f;
   --orange-deep: #d9430e;
   --teal: #19b3bf;
+  --paper-rgb: 238, 236, 230;
+  --mark-eye: #fefefe;
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/*
+ * Light theme: the same tokens, inverted. "ink" stays the page colour and "paper" the
+ * foreground, so every component flips without changes. Orange panels and logo walls
+ * keep their dark tokens (see .theme-dark below).
+ */
+[data-theme="light"] {
+  --ink: #f5f3ee;
+  --ink-2: #ebe8e1;
+  --ink-3: #dfdcd3;
+  --paper: #141613;
+  --muted: rgba(20, 22, 19, 0.72);
+  --subtle: rgba(20, 22, 19, 0.56);
+  --line: rgba(20, 22, 19, 0.12);
+  --line-strong: rgba(20, 22, 19, 0.22);
+  --paper-rgb: 20, 22, 19;
+  --mark-eye: #141613;
+}
+
+/* Dark islands: logo walls stay dark in the light theme, and text on orange stays dark */
+[data-theme="light"] .theme-dark,
+[data-theme="light"] .bg-orange {
+  --ink: #0d0e0c;
+  --ink-2: #151714;
+  --ink-3: #1e201c;
+  --paper: #eeece6;
+  --muted: rgba(238, 236, 230, 0.7);
+  --subtle: rgba(238, 236, 230, 0.52);
+  --line: rgba(238, 236, 230, 0.1);
+  --line-strong: rgba(238, 236, 230, 0.2);
+  --paper-rgb: 238, 236, 230;
+  --mark-eye: #fefefe;
+}
+[data-theme="light"] .theme-dark {
+  color: var(--paper);
 }
 
 @theme inline {
@@ -41,6 +79,13 @@
 
 html {
   color-scheme: dark;
+  /* Smooth the switch between themes, without animating every page load */
+  transition: background-color 300ms var(--ease-out), color 300ms var(--ease-out);
+}
+html[data-theme="light"] {
+  color-scheme: light;
+}
+html {
   /* Page still scrolls; the scrollbar just isn't drawn */
   scrollbar-width: none;
 }

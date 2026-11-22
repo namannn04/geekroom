@@ -6,6 +6,9 @@
 export const totals = {
   builders: 150_000,
   events: 80,
+  /** Companies that partnered with Geek Room: sponsors, co-hosts, tech, venue and prize partners */
+  partners: 50,
+  /** Companies our participants work at (not partners) */
   companies: 500,
   countries: 60,
   registrations: 25_000,
@@ -19,6 +22,7 @@ const short = (n: number) => (n >= 1000 ? `${n / 1000}K+` : `${n}+`);
 export const stat = {
   builders: short(totals.builders),
   events: short(totals.events),
+  partners: short(totals.partners),
   companies: short(totals.companies),
   countries: short(totals.countries),
   registrations: short(totals.registrations),

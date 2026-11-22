@@ -22,7 +22,7 @@ export default function Page() {
           {[
             [stat.whatsappGroups, "WhatsApp groups", "Active builder groups across colleges, cities and tech stacks."],
             [stat.builders, "Builders reached", "Developers, founders and students in our community."],
-            [stat.companies, "Partner companies", "A network that amplifies what we launch together."],
+            [stat.partners, "Partner companies", "A network that amplifies what we launch together."],
           ].map(([v, t, d]) => (
             <div key={t} className="grid grid-cols-[minmax(0,9rem)_1fr] items-center gap-6 rounded-[1.25rem] border border-line bg-ink-2 p-6">
               <p className="display text-[clamp(2.4rem,4vw,3.4rem)] text-orange">{v}</p>

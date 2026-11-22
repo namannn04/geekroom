@@ -22,6 +22,14 @@ export default function DotField({ className = "", gap = 26 }: { className?: str
     let raf = 0;
     const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     let visible = true;
+    // Dot colour follows the theme's foreground ("r, g, b" from --paper-rgb)
+    const readRgb = () => getComputedStyle(document.documentElement).getPropertyValue("--paper-rgb").trim() || "238, 236, 230";
+    let rgb = readRgb();
+    const themeObserver = new MutationObserver(() => {
+      rgb = readRgb();
+      if (reduced) draw(performance.now());
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
     const resize = () => {
       const r = canvas.getBoundingClientRect();
@@ -57,7 +65,7 @@ export default function DotField({ className = "", gap = 26 }: { className?: str
           const k = Math.max(near, wave * 0.18);
           const size = 1 + k * 2.6;
           // Near the pointer dots heat up to signal orange; elsewhere they stay paper
-          ctx.fillStyle = k > 0.2 ? `rgba(255,90,31,${0.2 + k * 0.8})` : `rgba(238,236,230,${0.08 + k * 0.4})`;
+          ctx.fillStyle = k > 0.2 ? `rgba(255,90,31,${0.2 + k * 0.8})` : `rgba(${rgb},${0.08 + k * 0.4})`;
           ctx.beginPath();
           ctx.arc(x, y, size, 0, Math.PI * 2);
           ctx.fill();
@@ -92,6 +100,7 @@ export default function DotField({ className = "", gap = 26 }: { className?: str
     if (!reduced) window.addEventListener("pointermove", onMove, { passive: true });
     document.addEventListener("pointerleave", onLeave);
     return () => {
+      themeObserver.disconnect();
       io.disconnect();
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", onResize);
