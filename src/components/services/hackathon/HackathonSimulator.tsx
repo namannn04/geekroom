@@ -3,9 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { animate, AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
 import { Clock, Gavel, Megaphone, Trophy, Users, Filter } from "lucide-react";
+import { stat } from "@/data/stats";
 
 const phases = [
-  { key: "announce", label: "Announce", icon: Megaphone, caption: "Your brand and problem statements go out to 150K+ builders." },
+  { key: "announce", label: "Announce", icon: Megaphone, caption: `Your brand and problem statements go out to ${stat.builders} builders.` },
   { key: "register", label: "Registrations", icon: Users, caption: "Registrations climb as the campaign runs across every channel." },
   { key: "shortlist", label: "Shortlist", icon: Filter, caption: "We read every profile and shortlist the teams worth flying in." },
   { key: "build", label: "Build", icon: Clock, caption: "Teams build with your tools, mentors from your team on the floor." },

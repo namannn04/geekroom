@@ -1,4 +1,5 @@
 import { site } from "@/data/site";
+import { stat } from "@/data/stats";
 
 /** Topics a visitor can pick on the contact form. The API accepts exactly these. */
 export const contactTopics = [
@@ -39,7 +40,7 @@ export const serviceList: Service[] = [
     title: "Exclusive Hackathons",
     summary:
       "A hackathon built around your product, run end to end by the team behind Code Cubicle, Code Kshetra and HackBLR, with finales at offices like Microsoft, Mastercard and Paytm.",
-    points: ["Problem statements around your tools", "Outreach to 150K+ builders", "Shortlisting, mentoring and judging", "Finale at your office"],
+    points: ["Problem statements around your tools", `Outreach to ${stat.builders} builders`, "Shortlisting, mentoring and judging", "Finale at your office"],
     topic: "Host a hackathon",
     teaser: "hackathon",
   },
@@ -74,7 +75,7 @@ export const serviceList: Service[] = [
     eyebrow: "Developer marketing",
     title: "GitHub Star Campaigns",
     summary:
-      "Put your open-source repo in front of 150K+ real developers. We plan the launch, fix the README, and run the campaign that turns visitors into stargazers.",
+      `Put your open-source repo in front of ${stat.builders} real developers. We plan the launch, fix the README, and run the campaign that turns visitors into stargazers.`,
     points: ["Repo and README audit", "Launch-day push across our channels", "Hackathon and workshop tracks", "Weekly star and traffic reports"],
     topic: "GitHub star campaign",
     teaser: "stars",

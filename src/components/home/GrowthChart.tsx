@@ -2,12 +2,13 @@
 
 import { useRef } from "react";
 import { motion, useInView, useReducedMotion } from "motion/react";
+import { stat } from "@/data/stats";
 
 /* Only the community sizes we've published: founding, May 2024 and today */
 const points = [
   { t: 2023.0, v: 0, label: "2023", note: "A WhatsApp group at MSIT" },
   { t: 2024.37, v: 30000, label: "May 2024", note: "30,000 members" },
-  { t: 2026.88, v: 150000, label: "Today", note: "150K+ builders" },
+  { t: 2026.88, v: 150000, label: "Today", note: `${stat.builders} builders` },
 ];
 
 /* Event moments on the time axis (not on the curve, since we don't publish sizes for them) */
@@ -44,7 +45,7 @@ export default function GrowthChart() {
         <p className="label">Community size, 2023 to today</p>
         <p className="font-mono text-[11px] text-subtle">Curve through our published milestones</p>
       </div>
-      <svg viewBox={`0 0 ${W} ${H}`} className="mt-4 w-full overflow-visible" role="img" aria-label="Community growth from a WhatsApp group in 2023 to 30,000 members in May 2024 and 150K+ builders today.">
+      <svg viewBox={`0 0 ${W} ${H}`} className="mt-4 w-full overflow-visible" role="img" aria-label={`Community growth from a WhatsApp group in 2023 to 30,000 members in May 2024 and ${stat.builders} builders today.`}>
         <defs>
           <linearGradient id="growth-fill" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="var(--orange)" stopOpacity="0.3" />

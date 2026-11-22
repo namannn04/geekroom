@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { EYES, LEFT, MARK_COLORS, RIGHT, SLASH, STROKE_W, toPath, VIEWBOX } from "@/lib/geekmark";
+import { stat } from "@/data/stats";
 
 // Link-preview card shown when the site is shared on X, LinkedIn, Discord, WhatsApp, etc.
 export const alt = "Geek Room — the global builder community";
@@ -57,7 +58,7 @@ export default async function OpengraphImage() {
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 120 * S, fontWeight: 800, lineHeight: 1, letterSpacing: -2 * S }}>GEEK ROOM</div>
           <div style={{ marginTop: 24 * S, fontSize: 40 * S, color: "#ff5a1f" }}>
-            150K+ builders · 500+ partner companies
+            {`${stat.builders} builders · ${stat.companies} partner companies`}
           </div>
         </div>
       </div>

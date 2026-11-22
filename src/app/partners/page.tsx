@@ -9,6 +9,7 @@ import PartnerDirectory from "@/components/partners/PartnerDirectory";
 import PartnerTestimonials from "@/components/partners/PartnerTestimonials";
 import { directory, featuredPartnerships, partnerCategories } from "@/data/partners";
 import { contactHref } from "@/data/services";
+import { stat } from "@/data/stats";
 
 export const metadata: Metadata = {
   title: "Partners",
@@ -64,10 +65,10 @@ export default function PartnersPage() {
       <section className="shell mt-16 md:mt-20">
         <dl className="grid grid-cols-2 border-t border-line lg:grid-cols-4">
           {[
-            ["500+", "Companies worked with"],
-            ["80+", "Events run"],
+            [stat.companies, "Companies worked with"],
+            [stat.events, "Events run"],
             [`${partnerCategories.length}`, "Partner categories"],
-            ["150K+", "Builders reached"],
+            [stat.builders, "Builders reached"],
           ].map(([v, l], i) => (
             <div key={l} className={`border-b border-line p-5 md:p-8 ${i % 2 ? "border-l" : ""} ${i === 2 ? "lg:border-l" : ""}`}>
               <dd className="display text-[clamp(2rem,5vw,4rem)]">
@@ -137,7 +138,7 @@ export default function PartnersPage() {
               Every <em>partner</em>, by category
             </>
           }
-          intro="Companies and organizations from our events, Luma listings and public acknowledgements. A selection of the 500+ we've worked with."
+          intro={`Companies and organizations from our events, Luma listings and public acknowledgements. A selection of the ${stat.companies} we've worked with.`}
         />
         <div className="mt-14">
           <PartnerDirectory />

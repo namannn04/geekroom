@@ -156,7 +156,7 @@ export default function EventTicket({
           </svg>
 
           <span className="hidden font-mono text-xs text-ink/60 @2xl:block">
-            {event.status === "live" ? "Register →" : "View event →"}
+            {event.status === "live" && event.register?.label.startsWith("Register") ? "Register →" : "View event →"}
           </span>
         </div>
       </Link>

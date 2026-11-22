@@ -7,6 +7,7 @@ import SmoothScroll from "@/components/motion/SmoothScroll";
 import PageTransition from "@/components/motion/PageTransition";
 import ChinkuDock from "@/components/layout/ChinkuDock";
 import "./globals.css";
+import { stat } from "@/data/stats";
 
 // Anybody exposes a width axis (50–150%) that the display type and scroll animations lean on
 const anybody = Anybody({
@@ -32,12 +33,12 @@ export const metadata: Metadata = {
     template: "%s | Geek Room",
   },
   description:
-    "Geek Room is a global builder community of 150K+ developers, founders and companies, running hackathons, vibe-a-thons, meetups and hiring challenges online and in person.",
+    `Geek Room is a global builder community of ${stat.builders} developers, founders and companies, running hackathons, vibe-a-thons, meetups and hiring challenges online and in person.`,
   openGraph: {
     type: "website",
     title: "Geek Room",
     description:
-      "Geek Room is a global builder community of 150K+ developers, founders and companies, running hackathons, vibe-a-thons, meetups and hiring challenges online and in person.",
+      `Geek Room is a global builder community of ${stat.builders} developers, founders and companies, running hackathons, vibe-a-thons, meetups and hiring challenges online and in person.`,
   },
   twitter: {
     card: "summary_large_image",

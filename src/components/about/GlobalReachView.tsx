@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
 import SectionHead from "@/components/ui/SectionHead";
 import { continents, type Continent } from "@/data/reach";
+import { stat, totals } from "@/data/stats";
 
 export type MapPin = { name: string; continent: Continent; x: number; y: number };
 
@@ -46,17 +47,17 @@ export default function GlobalReachView({ dots, pins, origin, width, height }: P
         index="02"
         title={
           <>
-            Builders from <em>60+</em> countries
+            Builders from <em>{stat.countries}</em> countries
           </>
         }
-        intro="Our global hackathons are online and open to anyone. Builders have registered from 60+ countries across six continents, and the map keeps filling in."
+        intro={`Our global hackathons are online and open to anyone. Builders have registered from ${stat.countries} countries across six continents, and the map keeps filling in.`}
       />
 
       <div ref={root} className="mt-14 overflow-hidden rounded-[1.75rem] border border-line bg-ink-2">
         {/* Headline numbers */}
         <dl className="grid grid-cols-2 border-b border-line md:grid-cols-4">
           {[
-            ["60", "Countries"],
+            [`${totals.countries}`, "Countries"],
             ["6", "Continents"],
             [`${counts.Asia}`, "Countries in Asia"],
             [`${counts.Africa}`, "Countries in Africa"],

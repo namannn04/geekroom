@@ -5,9 +5,10 @@ import GeekMark from "@/components/ui/GeekMark";
 import SectionHead from "@/components/ui/SectionHead";
 import { stats } from "@/data/site";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
+import { stat, totals } from "@/data/stats";
 
 const cells: { value: number; suffix: string; label: string; decimals?: number }[] = [
-  { value: 150000, suffix: "+", label: "Builders" },
+  { value: totals.builders, suffix: "+", label: "Builders" },
   ...stats,
 ];
 const fmt = (v: number, decimals = 0) =>
@@ -45,7 +46,7 @@ export default function AboutHero() {
         index="2023"
         title={
           <>
-            From a group chat to <em>150K+</em> builders
+            From a group chat to <em>{stat.builders}</em> builders
           </>
         }
       />
@@ -54,7 +55,7 @@ export default function AboutHero() {
         <div className="max-w-[36rem] space-y-5 text-lg leading-relaxed text-muted">
           <p>
             Geek Room started in 2023 with one goal: bring together everyone in tech who thinks alike. What began as a
-            WhatsApp group for MSIT students is now a global builder community: 150K+ developers and founders, 500+
+            WhatsApp group for MSIT students is now a global builder community: {stat.builders} developers and founders, {stat.companies}
             partner companies, online hackathons open to builders worldwide and 20+ local chapters.
           </p>
           <p>
