@@ -39,7 +39,7 @@ export type DirectoryPartner = {
 export const directory: DirectoryPartner[] = [
   // Cloud, compute and data
   { name: "Amazon Web Services", category: "infrastructure", role: "Cloud platform. HackSmart partner.", logo: "/images/partners/aws.svg", link: { href: "/event/hacksmart", label: "HackSmart" } },
-  { name: "Google Cloud", category: "infrastructure", role: "Cloud platform.", logo: "/images/partners/google-cloud.svg", mark: true },
+  { name: "Google Cloud", category: "infrastructure", role: "Cloud platform.", logo: "/images/partners/google-cloud.png" },
   { name: "Microsoft", category: "infrastructure", role: "Cloud and developer platform, and host of our Code Cubicle finales.", logo: "/images/partners/microsoft.png", link: { href: "/event/cc5.0", label: "Code Cubicle 5.0" } },
   { name: "Pathway", category: "infrastructure", role: "Real-time data processing framework for AI and analytics.", logo: "/images/partners/pathway.png", link: { href: "/event/ck2.0", label: "Code Kshetra 2.0" } },
   { name: "Qdrant", category: "infrastructure", role: "Vector database and AI search infrastructure.", logo: "/images/partners/qdrant.png", link: { href: "/event/hackblr1", label: "HackBLR" } },
@@ -54,16 +54,16 @@ export const directory: DirectoryPartner[] = [
   { name: "OmniDimension", category: "ai", role: "Voice AI and agent platform.", logo: "/images/partners/omnidimension.png", link: { href: "/event/vibeathon2", label: "Vibe-a-thon 2.0" } },
   { name: "MiniMax", category: "ai", role: "AI models and tools.", logo: "/images/partners/minimax.svg", mark: true, link: { href: "/event/hackblr1", label: "HackBLR" } },
   { name: "ML.ai", category: "ai", role: "AI coding agent, used at INFRA SHIFT.", logo: "/images/partners/mlai.png", mark: true },
-  { name: "2nd Brain Labs", category: "ai", role: "AI and developer tools. Partnered on a Vibe-a-thon featuring Synapse CLI." },
+  { name: "2nd Brain Labs", category: "ai", role: "AI and developer tools. Partnered on a Vibe-a-thon featuring Synapse CLI.", logo: "/images/partners/2nd-brain-labs.png" },
   { name: "Hey Bubba AI", category: "ai", role: "AI company and Hack Geek Room sponsor.", logo: "/images/partners/hey-bubba.png", mark: true, link: { href: "/event/hackgr", label: "Hack Geek Room" } },
   { name: "AiHello", category: "ai", role: "AI company and Code Kshetra sponsor.", logo: "/images/partners/aihello.png", invert: true, link: { href: "/event/ck2.0", label: "Code Kshetra 2.0" } },
-  { name: "NeoApps.AI", category: "ai", role: "AI application development platform, a Code Kshetra supporter.", logo: "/images/partners/neoapps.svg", mark: true },
+  { name: "NeoApps.AI", category: "ai", role: "AI application development platform, a Code Kshetra supporter.", logo: "/images/partners/neoapps.png" },
 
   // Developer platforms and tools
   { name: "GitHub", category: "devtools", role: "Code hosting and developer collaboration.", logo: "/images/partners/github.png" },
   { name: "TRAE", category: "devtools", role: "AI coding tool, supporting events including HackBLR.", logo: "/images/partners/trae.svg", mark: true, link: { href: "/event/hackblr1", label: "HackBLR" } },
   { name: "AWS Kiro", category: "devtools", role: "AWS's agentic development environment.", logo: "/images/partners/kiro.svg", mark: true },
-  { name: "n8n", category: "devtools", role: "Workflow automation platform.", logo: "/images/partners/n8n.svg", mark: true },
+  { name: "n8n", category: "devtools", role: "Workflow automation platform.", logo: "/images/partners/n8n.png" },
   { name: "Cloudinary", category: "devtools", role: "Media management and delivery platform.", logo: "/images/partners/cloudinary.svg", mark: true },
   { name: "Devfolio", category: "devtools", role: "Hackathon platform.", logo: "/images/partners/devfolio.png", mark: true, link: { href: "/event/cc2.0", label: "Code Cubicle 2.0" } },
   { name: "HackCulture", category: "devtools", role: "Hackathon platform and partner for Code Cubicle 6.0.", logo: "/images/partners/hackculture.png", invert: true, link: { href: "/event/cc6.0", label: "Code Cubicle 6.0" } },
