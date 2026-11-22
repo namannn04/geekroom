@@ -94,9 +94,13 @@ export default function Navbar() {
                     href={l.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="relative z-10 flex items-center gap-1 rounded-full px-2.5 py-2 font-mono text-xs tracking-[0.1em] lg:px-4 lg:tracking-[0.14em] text-muted uppercase transition-colors hover:text-paper"
+                    className="relative z-10 flex items-center gap-1 rounded-full px-2.5 py-2 font-mono text-xs tracking-[0.1em] lg:px-3 lg:tracking-[0.12em] xl:px-4 xl:tracking-[0.14em] text-muted uppercase transition-colors hover:text-paper"
                   >
-                    {l.label} <ArrowUpRight className="size-3" />
+                    {l.label}
+                    {l.badge && (
+                      <span className="rounded-full bg-orange px-1.5 py-px text-[9px] leading-tight font-semibold tracking-[0.06em] text-ink">{l.badge}</span>
+                    )}
+                    <ArrowUpRight className="size-3" />
                   </a>
                 </li>
               );
@@ -106,7 +110,7 @@ export default function Navbar() {
                 <Link
                   href={l.href}
                   aria-current={active ? "page" : undefined}
-                  className={`relative z-10 block rounded-full px-2.5 py-2 font-mono text-xs tracking-[0.1em] lg:px-4 lg:tracking-[0.14em] uppercase transition-colors ${
+                  className={`relative z-10 block rounded-full px-2.5 py-2 font-mono text-xs tracking-[0.1em] lg:px-3 lg:tracking-[0.12em] xl:px-4 xl:tracking-[0.14em] uppercase transition-colors ${
                     active ? "text-ink" : "text-muted hover:text-paper"
                   }`}
                 >
@@ -172,6 +176,9 @@ export default function Navbar() {
                     <a href={l.href} target="_blank" rel="noopener noreferrer" className="flex items-baseline gap-4 py-2">
                       <span className="font-mono text-xs text-orange">0{i + 1}</span>
                       <span className="display text-6xl">{l.label}</span>
+                      {l.badge && (
+                        <span className="self-center rounded-full bg-orange px-2.5 py-1 font-mono text-xs font-semibold tracking-[0.06em] text-ink uppercase">{l.badge}</span>
+                      )}
                       <ArrowUpRight className="size-6 self-center text-muted" />
                     </a>
                   ) : (

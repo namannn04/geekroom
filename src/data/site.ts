@@ -11,13 +11,13 @@ export const site = {
   },
 };
 
-export const navLinks: { label: string; href: string; external?: boolean }[] = [
+export const navLinks: { label: string; href: string; external?: boolean; badge?: string }[] = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about-us" },
   { label: "Events", href: "/event" },
   { label: "Services", href: "/services" },
   { label: "Partners", href: "/partners" },
-  { label: "Spaces", href: "https://spaces.geekroom.co.in/", external: true },
+  { label: "Spaces", href: "https://spaces.geekroom.co.in/", external: true, badge: "Beta" },
   { label: "Contact", href: "/contact-us" },
 ];
 
@@ -39,12 +39,12 @@ export const footerColumns: { title: string; links: FooterLink[] }[] = [
   {
     title: "Services",
     links: [
-      { label: "Developer Growth Package", href: "/services", badge: "New" },
+      { label: "Developer Growth Package", href: "/services" },
       { label: "Podcasts & YouTube", href: "/services/podcasts" },
       { label: "Technical Blogs", href: "/services/technical-writing" },
       { label: "GitHub & Reddit", href: "/services/github-stars" },
       { label: "SEO & GEO", href: "/services/seo-geo" },
-      { label: "3 Hackathons a Year", href: "/services/hackathons" },
+      { label: "Hackathons", href: "/services/hackathons" },
       { label: "Developer Feedback", href: "/services/developer-feedback" },
     ],
   },

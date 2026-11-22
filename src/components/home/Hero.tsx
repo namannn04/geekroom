@@ -128,7 +128,7 @@ export default function Hero() {
       </div>
 
       {/* Partner strip: two rows moving against each other on scroll */}
-      <div data-strip className="border-y border-line py-7">
+      <div data-strip className="theme-dark border-y border-line bg-ink py-7">
         <p className="label shell mb-5">Hackathons powered by</p>
         <div className="flex flex-col gap-4 overflow-hidden">
           {[
