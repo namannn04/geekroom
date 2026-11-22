@@ -17,6 +17,7 @@ const prompts: Record<ContactTopic, string> = {
   "Speaker session": "Who would speak, on what topic, and would you prefer a meetup, hackathon or online session?",
   "GitHub star campaign": "Link your repo, tell us where it is today and where you want it to be…",
   "Technical writing": "What should we write about, who is the reader, and where will it be published?",
+  Support: "What do you need help with? Include the event name and the email you registered with, if it's about an event…",
   "Just saying hi": "Hi Geek Room! …",
 };
 const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
