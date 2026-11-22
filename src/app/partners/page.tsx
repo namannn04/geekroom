@@ -103,7 +103,7 @@ export default function PartnersPage() {
               >
                 <div className="flex flex-wrap items-center gap-6">
                   {f.partners.map((name) => (
-                    <span key={name} className={i === 0 ? "rounded-xl bg-ink px-4 py-3" : ""}>
+                    <span key={name} className={`inline-flex items-center ${i === 0 ? "rounded-xl bg-ink px-4 py-3" : ""}`}>
                       <PartnerMark name={name} logo={partnerOf(name)?.logo} mark={partnerOf(name)?.mark} invert={partnerOf(name)?.invert} />
                     </span>
                   ))}
