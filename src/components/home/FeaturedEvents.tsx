@@ -5,16 +5,16 @@ import { useRef, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import SectionHead from "@/components/ui/SectionHead";
 import EventTicket from "@/components/events/EventTicket";
-import { formatChip, getEvent } from "@/data/events";
+import { eventsByDate, formatChip } from "@/data/events";
 import { gsap, prefersReducedMotion, useGSAP } from "@/lib/gsap";
 import { EASE_EXPO, reveal } from "@/lib/motion";
 
-// Hand-picked run: what's live, what's next, then recent editions
-const track = ["infer-a-thon", "global-ai-hackathon", "vibeathon-2nd-brain-labs", "hacksmart-2", "trackshift-2026", "pears", "hacksmart", "hackblr1"].map(
-  (slug) => getEvent(slug)!,
-);
-// The run isn't chronological, so stops sit at even steps along the axis
-const pos = (i: number) => i / (track.length - 1);
+// Only what's live, newest first. When nothing is live, the four most recent events instead.
+const live = eventsByDate.filter((e) => e.status === "live");
+const track = live.length ? live : eventsByDate.filter((e) => e.iso && e.status !== "upcoming").slice(0, 4);
+const isLive = live.length > 0;
+// Stops sit at even steps along the axis; a single event sits in the middle
+const pos = (i: number) => (track.length > 1 ? i / (track.length - 1) : 0.5);
 
 /**
  * "Signal track": on desktop the section pins and scroll drives a horizontal run of
@@ -35,6 +35,8 @@ export default function FeaturedEvents() {
         const rail = root.current!.querySelector<HTMLElement>("[data-track]")!;
         const pin = root.current!.querySelector<HTMLElement>("[data-pin]")!;
         const distance = () => rail.scrollWidth - window.innerWidth + 80;
+        // A short run that already fits on screen doesn't need the pinned horizontal scroll
+        if (distance() <= 0) return;
         const setPlayhead = gsap.quickSetter("[data-playhead]", "left") as (v: string) => void;
 
         const run = gsap.to(rail, {
@@ -50,7 +52,7 @@ export default function FeaturedEvents() {
             onUpdate: (self) => {
               setPlayhead(`${self.progress * 100}%`);
               // Only touch React when the active event actually changes
-              const next = Math.round(self.progress * (track.length - 1));
+              const next = Math.round(self.progress * Math.max(0, track.length - 1));
               if (next !== activeRef.current) {
                 activeRef.current = next;
                 setActive(next);
@@ -104,10 +106,22 @@ export default function FeaturedEvents() {
           index="01"
           title={
             <>
-              Events on the <em>track</em>
+              {isLive ? (
+                <>
+                  Live <em>right now</em>
+                </>
+              ) : (
+                <>
+                  Events on the <em>track</em>
+                </>
+              )}
             </>
           }
-          intro={`From global online hackathons and vibe-a-thons to in-person finales, meetups, campaigns and dedicated promotions, we handle it all. See what's live, what's next and where we've been.`}
+          intro={
+            isLive
+              ? "Hackathons and vibe-a-thons running now, online and in person. Register, build and ship with the community."
+              : "From global online hackathons and vibe-a-thons to in-person finales and meetups. Here's where we've been most recently."
+          }
         />
         <Link href="/event" className="btn-ghost shrink-0 self-start md:self-auto">
           Check Out our Events <ArrowUpRight className="size-3.5" />
@@ -122,7 +136,7 @@ export default function FeaturedEvents() {
               <span className={current.status ? "text-orange" : "text-paper"}>{when}</span>{" "}
               · {current.title} · {String(active + 1).padStart(2, "0")}/{String(track.length).padStart(2, "0")}
             </p>
-            <p className="label">Scroll ↓ to travel</p>
+            {track.length > 1 && <p className="label">Scroll ↓ to travel</p>}
           </div>
           <div className="relative mt-5 h-8">
             <span className="absolute inset-x-0 top-1/2 h-px bg-line-strong" />
