@@ -10,12 +10,13 @@ import PartnerTestimonials from "@/components/partners/PartnerTestimonials";
 import { directory, featuredPartnerships, partnerCategories } from "@/data/partners";
 import { contactHref } from "@/data/services";
 import { stat } from "@/data/stats";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Partners",
-  description:
-    "The companies, platforms, universities and communities behind Geek Room's hackathons and meetups, from AI labs and cloud platforms to fintech and hiring partners.",
-};
+  description: "The companies, platforms, universities and communities behind Geek Room's hackathons and meetups, from AI labs and cloud platforms to fintech and hiring partners.",
+  path: "/partners",
+});
 
 const partnerOf = (name: string) => directory.find((p) => p.name === name);
 

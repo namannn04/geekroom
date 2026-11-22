@@ -36,6 +36,8 @@ export const metadata: Metadata = {
     `Geek Room is a global builder community of ${stat.builders} developers, founders and companies, running hackathons, vibe-a-thons, meetups and hiring challenges online and in person.`,
   openGraph: {
     type: "website",
+    siteName: "Geek Room",
+    url: "/",
     title: "Geek Room",
     description:
       `Geek Room is a global builder community of ${stat.builders} developers, founders and companies, running hackathons, vibe-a-thons, meetups and hiring challenges online and in person.`,

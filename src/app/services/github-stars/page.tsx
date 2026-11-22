@@ -24,12 +24,13 @@ import ContributionGraph from "@/components/services/github/ContributionGraph";
 import ServiceCta from "@/components/services/ServiceCta";
 import { contactHref } from "@/data/services";
 import { stat } from "@/data/stats";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "GitHub Star Campaigns",
-  description:
-    `Grow your open-source repo's GitHub stars with real developers. Geek Room audits your README, runs your launch and puts your project in front of ${stat.builders} builders through hackathons, workshops and community channels.`,
-};
+  description: `Grow your open-source repo's GitHub stars with real developers. Geek Room audits your README, runs your launch and puts your project in front of ${stat.builders} builders through hackathons, workshops and community channels.`,
+  path: "/services/github-stars",
+});
 
 const playbook = [
   {

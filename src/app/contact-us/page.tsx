@@ -4,11 +4,13 @@ import SectionHead from "@/components/ui/SectionHead";
 import ContactForm from "@/components/contact/ContactForm";
 import { InstagramIcon, LinkedinIcon } from "@/components/ui/Icons";
 import { site } from "@/data/site";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contact Us",
-  description: "Get in touch with the Geek Room team.",
-};
+  description: "Partnerships, hackathons, hiring challenges, speaker sessions or support: get in touch with the Geek Room team.",
+  path: "/contact-us",
+});
 
 export default function ContactPage() {
   const cards = [

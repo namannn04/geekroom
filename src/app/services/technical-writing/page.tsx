@@ -25,12 +25,13 @@ import TestTerminal from "@/components/services/writing/TestTerminal";
 import ServiceCta from "@/components/services/ServiceCta";
 import { contactHref } from "@/data/services";
 import { stat } from "@/data/stats";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Technical Writing",
-  description:
-    "Technical blog posts, tutorials and launch content written by experienced developers. Every code sample is run before it ships and every draft is reviewed by an engineer.",
-};
+  description: "Technical blog posts, tutorials and launch content written by experienced developers. Every code sample is run before it ships and every draft is reviewed by an engineer.",
+  path: "/services/technical-writing",
+});
 
 const formats = [
   { icon: TerminalIcon, title: "Tutorials", text: "Step-by-step builds that end with working code, not a screenshot of one." },

@@ -3,11 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight, BadgeCheck, Calendar, IndianRupee, KeyRound, Receipt, Smartphone } from "lucide-react";
 import SectionHead from "@/components/ui/SectionHead";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Wayzyy: community partner",
   description: "Wayzyy is a short-term rental marketplace for India with all-inclusive pricing, verified stays and hosts who keep 100% of their nightly rate.",
-};
+  path: "/partners/wayzyy",
+});
 
 // UTM so Wayzyy can see traffic from this site; every outbound link below reuses it
 const WAYZYY = "https://wayzyy.com";

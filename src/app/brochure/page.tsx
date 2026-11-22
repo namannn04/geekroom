@@ -4,11 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import "./brochure.css";
 import { stat } from "@/data/stats";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Partner with Geek Room",
   description: `Reach ${stat.builders} developers through Geek Room hackathons, meetups, hiring challenges and brand partnerships.`,
-};
+  path: "/brochure",
+});
 
 const images = "/images/brochure";
 

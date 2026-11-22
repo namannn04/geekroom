@@ -12,12 +12,13 @@ import CandidateBoard from "@/components/services/hiring/CandidateBoard";
 import { getEvent } from "@/data/events";
 import { contactHref } from "@/data/services";
 import { stat } from "@/data/stats";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Hiring Challenges",
-  description:
-    "Skills-based hiring with Geek Room. Candidates solve your real problems, we score their work on a shared rubric, and you interview the people who already proved they can build.",
-};
+  description: "Skills-based hiring with Geek Room. Candidates solve your real problems, we score their work on a shared rubric, and you interview the people who already proved they can build.",
+  path: "/services/hiring-challenges",
+});
 
 const steps = [
   { icon: Target, title: "Define the role", text: "We turn the job description into a challenge that tests what the role actually needs." },
