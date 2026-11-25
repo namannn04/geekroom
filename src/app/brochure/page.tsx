@@ -7,7 +7,7 @@ import Reveal from "@/components/ui/Reveal";
 import PartnerMark from "@/components/partners/PartnerMark";
 import ServiceIcon from "@/components/services/ServiceIcon";
 import { directory } from "@/data/partners";
-import { contactHref, getService, serviceList } from "@/data/services";
+import { getService, serviceList } from "@/data/services";
 import { site } from "@/data/site";
 import { stat } from "@/data/stats";
 import { pageMetadata } from "@/lib/metadata";
@@ -124,9 +124,9 @@ export default function BrochurePage() {
               A single partnership that puts your product in front of {stat.builders} developers, founders and builders, through content, community, hackathons and real developer feedback.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
-              <Link href={contactHref("Developer growth package")} className="btn-primary">
+              <a href={site.calendly} target="_blank" rel="noopener noreferrer" className="btn-primary">
                 Book a 30-minute call <ArrowUpRight className="size-4" />
-              </Link>
+              </a>
               <a href={PDF} download className="btn-ghost">
                 Download the PDF <ArrowDown className="size-3.5" />
               </a>
@@ -390,9 +390,9 @@ export default function BrochurePage() {
             </h2>
             <p className="mt-6 max-w-[32rem] text-lg leading-relaxed">Book a 30-minute call. We&apos;ll map your goals to the package and send you a plan within a week.</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href={contactHref("Developer growth package")} className="btn bg-ink text-paper hover:bg-ink-3">
+              <a href={site.calendly} target="_blank" rel="noopener noreferrer" className="btn bg-ink text-paper hover:bg-ink-3">
                 Book a call <ArrowUpRight className="size-3.5" />
-              </Link>
+              </a>
               <a href={PDF} download className="btn border border-ink/40 hover:border-ink">
                 Download the PDF <ArrowDown className="size-3.5" />
               </a>

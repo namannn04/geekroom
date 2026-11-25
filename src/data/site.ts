@@ -4,6 +4,7 @@ import { stat, totals } from "@/data/stats";
 export const site = {
   name: "Geek Room",
   email: "team@geekroom.co.in",
+  calendly: "https://calendly.com/team-geekroom/30min",
   socials: {
     linktree: "https://linktr.ee/geekroom",
     linkedin: "https://www.linkedin.com/company/geekr00m/",
@@ -277,8 +278,8 @@ export const faqs: { q: string; a: string; link?: { href: string; label: string 
   },
   {
     q: "If I am an organizer / brand, how do I partner with Geek Room?",
-    a: "Book a 30-minute call through our contact page or mail team@geekroom.co.in. We'll map your goals to the package and send you a plan within a week.",
-    link: { href: "/contact-us?topic=Developer%20growth%20package", label: "Book a call" },
+    a: "Book a 30-minute call or mail team@geekroom.co.in. We'll map your goals to the package and send you a plan within a week.",
+    link: { href: site.calendly, label: "Book a call" },
   },
 ];
 
