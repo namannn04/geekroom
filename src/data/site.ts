@@ -194,11 +194,25 @@ export const team: Person[] = [
     x: "https://x.com/themanasai",
   },
   {
+    name: "Deepti Rawat",
+    role: "",
+    image: "/images/team/deepti.jpg",
+    linkedin: "https://www.linkedin.com/in/the-deepti/",
+    x: "https://x.com/Deepsiick",
+  },
+  {
     name: "Akshay Kumar Sharma",
     role: "",
     image: "/images/team/akshay.jpg",
     linkedin: "https://www.linkedin.com/in/akshay-kumar-sharma-devvoyager/",
     x: "https://x.com/cappybaradeploy",
+  },
+  {
+    name: "Jagriti Rai",
+    role: "",
+    image: "/images/team/jagriti.jpg",
+    linkedin: "https://www.linkedin.com/in/jagriti-rai-379452335/",
+    x: "https://x.com/jagritiwth",
   },
   {
     name: "Naman Dadhich",
@@ -241,19 +255,6 @@ export const team: Person[] = [
     image: "/images/team/ishaan.jpg",
     linkedin: "https://www.linkedin.com/in/ishaanvats74/",
     x: "https://x.com/IshaanVats74",
-  },
-  {
-    name: "Jagriti Rai",
-    role: "",
-    image: "/images/team/jagriti.jpg",
-    linkedin: "https://www.linkedin.com/in/jagriti-rai-379452335/",
-    x: "https://x.com/jagritiwth",
-  },
-  {
-    name: "Deepti Rawat",
-    role: "",
-    image: "/images/team/deepti.jpg",
-    linkedin: "https://www.linkedin.com/in/the-deepti/",
   },
 ];
 
